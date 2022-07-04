@@ -1,0 +1,11 @@
+#pragma once
+#include <mtao/types.hpp>
+
+namespace vem {
+    struct GramStructure {
+        mtao::MatXd FF() const { return {}; }
+        mtao::MatXd FG() const = 0;
+        mtao::MatXd GF() const = 0;
+        mtao::MatXd GG() const = 0;
+    };
+}
