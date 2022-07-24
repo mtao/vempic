@@ -1,4 +1,4 @@
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/utils.hpp"
 
 #include <spdlog/spdlog.h>
 

@@ -35,7 +35,14 @@ find_package(nlohmann_json REQUIRED)
 find_package(Filesystem REQUIRED)
 
 
-add_library(vem 
+set(VEM_POLY_SRCS
+    src/polynomials/gradient.cpp
+    src/polynomials/partial_derivative.cpp
+    src/polynomials/utils.cpp
+    )
+
+#add_library(vem 
+set(STUFF
     src/edge_lengths.cpp
     src/cell_normals.cpp
     src/from_polygons.cpp
@@ -85,6 +92,12 @@ add_library(vem
     src/flux_moment_cell3.cpp
     )
 
+#target_link_libraries(vem PUBLIC mtao::geometry vem_serialization
+#    igl::embree
+#    #openvdb
+#    mandoline 
+#    )
+#target_include_directories(vem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(vem_serialization
     src/serialization/inventory.cpp
@@ -93,13 +106,8 @@ add_library(vem_serialization
     src/serialization/frame_inventory.cpp
     src/serialization/serialize_text.cpp
     src/serialization/serialize_particles.cpp
-    src/serialization/serialize_mesh.cpp
+    #src/serialization/serialize_mesh.cpp
     #src/serialization/serialize_vdb.cpp
-    )
-target_link_libraries(vem PUBLIC mtao::geometry vem_serialization
-    igl::embree
-    #openvdb
-    mandoline 
     )
 target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt
     nlohmann_json::nlohmann_json
@@ -110,33 +118,30 @@ target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt
     PRIVATE
     partio
     )
-    #mandoline_cutmesh2
-    #mandoline_cutmesh3)
-target_include_directories(vem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(vem_serialization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+#
+#
+#if(VEM_USE_OPENGL)
+#add_library(vem_visualize
+#    src/visualize/vem_scalar_field_viewer.cpp
+#    src/visualize/vem_mesh_creation_gui.cpp
+#    src/visualize/inventory_viewer.cpp
+#    )
+#target_link_libraries(vem_visualize PUBLIC vem mtao::visualization
+#    nlohmann_json::nlohmann_json)
+#endif()
+#
+#
+#if(BUILD_TESTING AND CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+#    ADD_SUBDIRECTORY(tests)
+#endif()
 
-
-if(VEM_USE_OPENGL)
-add_library(vem_visualize
-    src/visualize/vem_scalar_field_viewer.cpp
-    src/visualize/vem_mesh_creation_gui.cpp
-    src/visualize/inventory_viewer.cpp
-    )
-target_link_libraries(vem_visualize PUBLIC vem mtao::visualization
-    nlohmann_json::nlohmann_json)
-endif()
-
-
-if(BUILD_TESTING AND CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    ADD_SUBDIRECTORY(tests)
-endif()
-
-add_subdirectory(poisson_2d)
-add_subdirectory(fluidsim_2d)
-add_subdirectory(fluidsim_3d)
-add_subdirectory(wavesim_2d)
-#add_subdirectory(wavesim_3d)
-##add_subdirectory(gradwavesim_2d)
-add_subdirectory(examples)
-add_subdirectory(viewer)
-add_subdirectory(tools)
+#add_subdirectory(poisson_2d)
+#add_subdirectory(fluidsim_2d)
+#add_subdirectory(fluidsim_3d)
+#add_subdirectory(wavesim_2d)
+##add_subdirectory(wavesim_3d)
+###add_subdirectory(gradwavesim_2d)
+#add_subdirectory(examples)
+#add_subdirectory(viewer)
+#add_subdirectory(tools)

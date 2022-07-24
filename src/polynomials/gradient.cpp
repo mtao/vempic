@@ -1,4 +1,4 @@
-#include "vem/polynomial_gradient.hpp"
+#include "vem/polynomials/gradient.hpp"
 
 #include <spdlog/spdlog.h>
 

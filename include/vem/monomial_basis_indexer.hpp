@@ -8,19 +8,28 @@
 #include "vem/monomial_basis_indexer_new.hpp"
 
 namespace vem {
+namespace detail {
+template <int D, int E>
+class MonomialBasisIndexer;
+}
     using MonomialBasisIndexer = detail::MonomialBasisIndexer<2,2>;
     using MonomialBasisIndexer3 = detail::MonomialBasisIndexer<3,3>;
-    /*
+
+namespace detail {
 // an indexer into coefficients that are _JUST_ monomials
+// D is the dimension of the monomial, E is the dimension of the embedding
+template <int D, int E = D>
 class MonomialBasisIndexer : public PartitionedCoefficientIndexer {
    public:
+    using MeshType = VEMMesh<E>;
+    using Vec = typename mtao::Vector<double, E>;
     // pass in the number of samples are held on the interior of each edge
     MonomialBasisIndexer(MonomialBasisIndexer &&o) = default;
     MonomialBasisIndexer(const MonomialBasisIndexer &o)
-        : MonomialBasisIndexer(o.mesh(), o._cell_degrees, o._cell_diameters) {}
+        : MonomialBasisIndexer(o.mesh(), o._degrees, o._diameters) {}
     // MonomialBasisIndexer(const MonomialBasisIndexer &o) = default;
-    MonomialBasisIndexer(const VEMMesh2 &mesh, size_t degree);
-    MonomialBasisIndexer(const VEMMesh2 &mesh, std::vector<size_t> degrees,
+    MonomialBasisIndexer(const MeshType &mesh, size_t degree);
+    MonomialBasisIndexer(const MeshType &mesh, std::vector<size_t> degrees,
                          std::vector<double> diameters = {});
 
     MonomialBasisIndexer relative_degree_indexer(int degree_offset) const;
@@ -36,18 +45,18 @@ class MonomialBasisIndexer : public PartitionedCoefficientIndexer {
 
     // given a cell and a monomial index (no offsetting!) get the polynomial
     // NOTE that this works for arbitrarily high monomial indices
-    std::function<double(const mtao::Vec2d &)> monomial(
-        size_t cell_index, size_t monomial_index) const;
+    std::function<double(const Vec &)> monomial(size_t cell_index,
+                                                size_t monomial_index) const;
     // similar for gradients
-    std::function<mtao::Vec2d(const mtao::Vec2d &)> monomial_gradient(
+    std::function<Vec(const Vec &)> monomial_gradient(
         size_t cell_index, size_t monomial_index) const;
     template <typename Derived>
     double evaluate_monomial(size_t cell, size_t index,
                              const Eigen::MatrixBase<Derived> &P) const;
 
     template <typename Derived>
-    mtao::Vec2d evaluate_monomial_gradient(
-        size_t cell, size_t index, const Eigen::MatrixBase<Derived> &P) const;
+    Vec evaluate_monomial_gradient(size_t cell, size_t index,
+                                   const Eigen::MatrixBase<Derived> &P) const;
 
     // integrate each monomial in each domain
     mtao::VecXd monomial_integrals(size_t cell_index) const;
@@ -57,44 +66,56 @@ class MonomialBasisIndexer : public PartitionedCoefficientIndexer {
     mtao::VecXd monomial_edge_integrals(size_t cell_index) const;
 
     double diameter(size_t index) const;
+    Vec center(size_t index) const;
 
-    std::vector<double> &cell_diameters() { return _cell_diameters; }
-    const std::vector<double> &cell_diameters() const {
-        return _cell_diameters;
+    [[deprecated]] std::vector<double> &cell_diameters() { return _diameters; }
+    [[deprecated]] const std::vector<double> &cell_diameters() const {
+        return _diameters;
     }
+    // beware that after setting degrees the offset data needs
+    // to be regenerated
+    [[deprecated]] std::vector<size_t> &cell_degrees() { return _degrees; }
+    [[deprecated]] const std::vector<size_t> &cell_degrees() const {
+        return _degrees;
+    }
+
+    std::vector<double> &diameters() { return _diameters; }
+    const std::vector<double> &diameters() const { return _diameters; }
     // beware that after setting degrees the offset data needs to be regenerated
-    std::vector<size_t> &cell_degrees() { return _cell_degrees; }
-    const std::vector<size_t> &cell_degrees() const { return _cell_degrees; }
+    std::vector<size_t> &degrees() { return _degrees; }
+    const std::vector<size_t> &degrees() const { return _degrees; }
 
     // returns a coeff_size -> 2*coeff_size matrix of gradient entries
     Eigen::SparseMatrix<double> gradient() const;
     Eigen::SparseMatrix<double> divergence() const;
 
-    const VEMMesh2 &mesh() const { return _mesh; }
+    const MeshType &mesh() const { return _mesh; }
 
    private:
-    const VEMMesh2 &_mesh;
+    const MeshType &_mesh;
     // offsets according to the numbers of monomials stored in each cell
-    std::vector<size_t> _cell_degrees;
-    std::vector<double> _cell_diameters;
+    std::vector<size_t> _degrees;
+    std::vector<double> _diameters;
 
    private:
     void fill_diameters();
 };
-
+template <int D, int E>
 template <typename Derived>
-double MonomialBasisIndexer::evaluate_monomial(
+double MonomialBasisIndexer<D, E>::evaluate_monomial(
     size_t cell, size_t index, const Eigen::MatrixBase<Derived> &P) const {
     if (index == 0) {
         return 1;
     }
-    auto C = _mesh.C.col(cell);
-    auto E = polynomials::two::index_to_exponents(index);
-    double diameter = _cell_diameters.at(cell);
-    auto EE = mtao::eigen::stl2eigen(E)
+    auto C = center(cell);
+    auto Ex = polynomials::index_to_exponents<D>(index);
+    double diameter = _diameters.at(cell);
+    auto EE = mtao::eigen::stl2eigen(Ex)
                   .array()
                   .template cast<typename Derived::Scalar>();
     return ((P - C) / diameter).array().pow(EE).prod();
 }
-*/
+}  // namespace detail
 }  // namespace vem
+#include "vem/monomial_basis_indexer2.hpp"
+#include "vem/monomial_basis_indexer_impl.hpp"

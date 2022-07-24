@@ -1,5 +1,5 @@
 
-#include "vem/polynomial_partial_derivative.hpp"
+#include "vem/polynomials/partial_derivative.hpp"
 
 #include <spdlog/spdlog.h>
 
