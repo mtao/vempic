@@ -6,8 +6,8 @@
 #include <mtao/eigen/mat_to_triplets.hpp>
 #include <mtao/iterator/enumerate.hpp>
 
-#include "vem/polynomial_partial_derivative.hpp"
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/partial_derivative.hpp"
+#include "vem/polynomials/utils.hpp"
 
 namespace vem::polynomials {
 namespace {

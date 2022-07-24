@@ -3,7 +3,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/utils.hpp"
 
 namespace vem::polynomials {
 namespace two {

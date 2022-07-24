@@ -92,12 +92,18 @@ set(STUFF
     src/flux_moment_cell3.cpp
     )
 
-#target_link_libraries(vem PUBLIC mtao::geometry vem_serialization
-#    igl::embree
-#    #openvdb
-#    mandoline 
-#    )
-#target_include_directories(vem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(VEM_SRCS
+    ${VEM_POLY_SRCS}
+    )
+
+add_library(vem ${VEM_SRCS})
+
+target_link_libraries(vem PUBLIC mtao::geometry vem_serialization
+    igl::embree
+    #openvdb
+    mandoline 
+    )
+target_include_directories(vem PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(vem_serialization
     src/serialization/inventory.cpp
@@ -106,7 +112,7 @@ add_library(vem_serialization
     src/serialization/frame_inventory.cpp
     src/serialization/serialize_text.cpp
     src/serialization/serialize_particles.cpp
-    #src/serialization/serialize_mesh.cpp
+    src/serialization/serialize_mesh.cpp
     #src/serialization/serialize_vdb.cpp
     )
 target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt

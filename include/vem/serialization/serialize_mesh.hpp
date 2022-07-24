@@ -1,6 +1,7 @@
 #pragma once
 
-#include "vem/mesh.hpp"
+#include "vem/two/mesh.hpp"
+#include "vem/three/mesh.hpp"
 #include "vem/serialization/inventory.hpp"
 namespace vem::serialization {
 
