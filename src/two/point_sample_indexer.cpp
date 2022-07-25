@@ -1,4 +1,4 @@
-#include "vem/rkhs_basis_indexer.hpp"
+#include "vem/point_sample_indexer.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -11,44 +11,44 @@
 namespace vem {
 // the vertex_count offsets are so that the internal edges are offset by the
 // boundary ones
-RKHSBasisIndexer::RKHSBasisIndexer(const VEMMesh2 &mesh,
+PointSampleIndexer::PointSampleIndexer(const VEMMesh2 &mesh,
                                    size_t num_internal_indices)
     : PartitionedCoefficientIndexer(mesh.edge_count(), num_internal_indices,
                                     mesh.vertex_count()),
       _mesh(mesh) {}
-RKHSBasisIndexer::RKHSBasisIndexer(
+PointSampleIndexer::PointSampleIndexer(
     const VEMMesh2 &mesh, const std::vector<size_t> &internal_edge_sizes)
     : vem::PartitionedCoefficientIndexer(internal_edge_sizes,
                                          mesh.vertex_count()),
       _mesh(mesh) {
 }
 
-size_t RKHSBasisIndexer::edge_offset(size_t index) const {
+size_t PointSampleIndexer::edge_offset(size_t index) const {
     return PartitionedCoefficientIndexer::partition_offset(index);
 }
-size_t RKHSBasisIndexer::num_internal_edge_indices(size_t index) const {
+size_t PointSampleIndexer::num_internal_edge_indices(size_t index) const {
     return PartitionedCoefficientIndexer::num_coefficients(index);
 }
-size_t RKHSBasisIndexer::num_coefficients() const {
+size_t PointSampleIndexer::num_coefficients() const {
     return PartitionedCoefficientIndexer::num_coefficients();
 }
-size_t RKHSBasisIndexer::num_edge_indices(size_t index) const {
+size_t PointSampleIndexer::num_edge_indices(size_t index) const {
     return num_internal_edge_indices(index) + 2;
 }
 
-size_t RKHSBasisIndexer::size() const {
+size_t PointSampleIndexer::size() const {
     return PartitionedCoefficientIndexer::num_partitions();
 }
 
-std::array<size_t, 2> RKHSBasisIndexer::edge_internal_index_range(
+std::array<size_t, 2> PointSampleIndexer::edge_internal_index_range(
     size_t index) const {
     return PartitionedCoefficientIndexer::coefficient_range(index);
 }
 
-const std::vector<size_t> &RKHSBasisIndexer::edge_offsets() const {
+const std::vector<size_t> &PointSampleIndexer::edge_offsets() const {
     return partition_offsets();
 }
-mtao::ColVecs2d RKHSBasisIndexer::edge_sample_points(size_t index,
+mtao::ColVecs2d PointSampleIndexer::edge_sample_points(size_t index,
                                                      bool interior) const {
     size_t sample_count = num_edge_indices(index);
     auto p = mtao::quadrature::gauss_lobatto_sample_points<double>(sample_count,
@@ -76,7 +76,7 @@ mtao::ColVecs2d RKHSBasisIndexer::edge_sample_points(size_t index,
     return P;
 }
 
-mtao::VecXd RKHSBasisIndexer::integrate_edges(
+mtao::VecXd PointSampleIndexer::integrate_edges(
     const mtao::VecXd &coefficients) const {
     mtao::VecXd R(_mesh.edge_count());
 
@@ -95,7 +95,7 @@ mtao::VecXd RKHSBasisIndexer::integrate_edges(
     return R;
 }
 
-mtao::VecXd RKHSBasisIndexer::integrate_edges(
+mtao::VecXd PointSampleIndexer::integrate_edges(
     size_t cell, const mtao::VecXd &coefficients) const {
     const auto &fbm = _mesh.face_boundary_map.at(cell);
     mtao::VecXd R(fbm.size());
@@ -116,7 +116,7 @@ mtao::VecXd RKHSBasisIndexer::integrate_edges(
     return R;
 }
 
-mtao::VecXd RKHSBasisIndexer::integrate_edges(
+mtao::VecXd PointSampleIndexer::integrate_edges(
     size_t cell, const std::function<double(const mtao::Vec2d &)> &f) const {
     const auto &fbm = _mesh.face_boundary_map.at(cell);
     mtao::VecXd R(fbm.size());
@@ -145,7 +145,7 @@ mtao::VecXd RKHSBasisIndexer::integrate_edges(
 }
 // given a vector field V, returns N \cdot V where the orientation is by each
 // edge's default orientation
-mtao::VecXd RKHSBasisIndexer::boundary_fluxes(const mtao::ColVecs2d &V) const {
+mtao::VecXd PointSampleIndexer::boundary_fluxes(const mtao::ColVecs2d &V) const {
     mtao::VecXd R(_mesh.edge_count());
 
     for (auto &&[edge_index, pr] : mtao::iterator::enumerate(
@@ -166,7 +166,7 @@ mtao::VecXd RKHSBasisIndexer::boundary_fluxes(const mtao::ColVecs2d &V) const {
     }
     return R;
 }
-std::set<size_t> RKHSBasisIndexer::cell_indices(size_t cell_index) const {
+std::set<size_t> PointSampleIndexer::cell_indices(size_t cell_index) const {
     std::set<size_t> ret;
     for (auto &&[eidx, sgn] : _mesh.face_boundary_map.at(cell_index)) {
         ret.merge(edge_interior_indices(eidx));
@@ -176,7 +176,7 @@ std::set<size_t> RKHSBasisIndexer::cell_indices(size_t cell_index) const {
     }
     return ret;
 }
-std::set<size_t> RKHSBasisIndexer::edge_interior_indices(
+std::set<size_t> PointSampleIndexer::edge_interior_indices(
     size_t bound_index) const {
     // auto e = _mesh.col(bound_index);
     // auto ee = e.cast<size_t>();
@@ -189,7 +189,7 @@ std::set<size_t> RKHSBasisIndexer::edge_interior_indices(
     }
     return ret;
 }
-std::set<size_t> RKHSBasisIndexer::edge_indices(size_t boundary_index) const {
+std::set<size_t> PointSampleIndexer::edge_indices(size_t boundary_index) const {
     auto e = _mesh.E.col(boundary_index);
     auto ret = edge_interior_indices(boundary_index);
     ret.emplace(e(0));
@@ -197,7 +197,7 @@ std::set<size_t> RKHSBasisIndexer::edge_indices(size_t boundary_index) const {
     return ret;
 }
 
-std::vector<size_t> RKHSBasisIndexer::ordered_edge_indices(
+std::vector<size_t> PointSampleIndexer::ordered_edge_indices(
     size_t boundary_index) const {
     std::vector<size_t> ret(num_edge_indices(boundary_index));
     auto e = _mesh.E.col(boundary_index);
@@ -216,18 +216,18 @@ std::vector<size_t> RKHSBasisIndexer::ordered_edge_indices(
     return ret;
 }
 
-std::tuple<std::strong_ordering, size_t> RKHSBasisIndexer::get_edge(
+std::tuple<std::strong_ordering, size_t> PointSampleIndexer::get_edge(
     size_t index) const {
     return get_partition(index);
 }
-mtao::ColVecs2d RKHSBasisIndexer::get_positions() const {
+mtao::ColVecs2d PointSampleIndexer::get_positions() const {
     mtao::ColVecs2d P(2, num_coefficients());
     for (int j = 0; j < num_coefficients(); ++j) {
         P.col(j) = get_position(j);
     }
     return P;
 }
-mtao::Vec2d RKHSBasisIndexer::get_position(size_t index) const {
+mtao::Vec2d PointSampleIndexer::get_position(size_t index) const {
     spdlog::trace("Index: {}", index);
     auto [comp, edge_index] = get_partition(index);
 
@@ -254,7 +254,7 @@ mtao::Vec2d RKHSBasisIndexer::get_position(size_t index) const {
         return {};
     }
 }
-std::map<size_t, std::set<size_t>> RKHSBasisIndexer::sample_faces() const {
+std::map<size_t, std::set<size_t>> PointSampleIndexer::sample_faces() const {
     auto ret = vem::utils::vertex_faces(_mesh);
     auto edge_face_map = vem::utils::edge_faces(_mesh);
     for (size_t eidx = 0; eidx < size(); ++eidx) {
@@ -272,7 +272,7 @@ std::map<size_t, std::set<size_t>> RKHSBasisIndexer::sample_faces() const {
     }
     return ret;
 }
-std::map<size_t, std::set<size_t>> RKHSBasisIndexer::sample_edges() const {
+std::map<size_t, std::set<size_t>> PointSampleIndexer::sample_edges() const {
     std::map<size_t, std::set<size_t>> ret;
     for (size_t eidx = 0; eidx < size(); ++eidx) {
         auto vidxs = edge_indices(eidx);
@@ -283,7 +283,7 @@ std::map<size_t, std::set<size_t>> RKHSBasisIndexer::sample_edges() const {
     return ret;
 }
 
-// std::vector<size_t> RKHSBasisIndexer::cell_sample_indices_vec(
+// std::vector<size_t> PointSampleIndexer::cell_sample_indices_vec(
 //    size_t cell_index) const {
 //    auto indset = cell_sample_indices(cell_index);
 //    std::vector<size_t> indices(indset.begin(), indset.end());

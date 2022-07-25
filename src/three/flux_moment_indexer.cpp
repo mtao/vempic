@@ -1,5 +1,5 @@
 #define EIGEN_DONT_PARALLELIZE
-#include "vem/flux_moment_indexer3.hpp"
+#include "vem/three/flux_moment_indexer.hpp"
 
 #include <igl/random_points_on_mesh.h>
 

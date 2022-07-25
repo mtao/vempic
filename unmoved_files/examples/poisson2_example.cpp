@@ -8,7 +8,7 @@
 #include <vem/mesh.hpp>
 #include <vem/monomial_cell_integrals.hpp>
 #include <vem/polynomial_utils.hpp>
-#include <vem/rkhs_basis_indexer.hpp>
+#include <vem/point_sample_indexer.hpp>
 
 #include "vem/poisson_2d/poisson_vem.hpp"
 

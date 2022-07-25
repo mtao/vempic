@@ -5,7 +5,7 @@
 #include <vem/from_polygons.hpp>
 #include <vem/mesh.hpp>
 #include <vem/polynomial_utils.hpp>
-#include <vem/rkhs_basis_indexer.hpp>
+#include <vem/point_sample_indexer.hpp>
 
 #include <vem/monomial_cell_integrals.hpp>
 int main(int argc, char *argv[]) {
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
     }
 
     // two points, so we have 4 samples, accurate to 2*4-3 = 5th
-    vem::RKHSBasisIndexer basis(vem, 1);
+    vem::PointSampleIndexer basis(vem, 1);
 
     fmt::print("Offsets: {}\n", fmt::join(basis.edge_offsets(), " => "));
 

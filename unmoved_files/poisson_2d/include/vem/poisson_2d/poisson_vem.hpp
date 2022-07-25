@@ -3,7 +3,7 @@
 #include <vem/mesh.hpp>
 #include <vem/moment_basis_indexer.hpp>
 #include <vem/monomial_basis_indexer.hpp>
-#include <vem/rkhs_basis_indexer.hpp>
+#include <vem/point_sample_indexer.hpp>
 
 #include "vem/poisson_2d/constraints.hpp"
 #include "vem/poisson_2d/poisson_vem_cell.hpp"
@@ -128,7 +128,7 @@ struct PoissonVEM2 {
     }
 
     const MomentBasisIndexer &moment_indexer() const { return _moment_indexer; }
-    const RKHSBasisIndexer &point_sample_indexer() const {
+    const PointSampleIndexer &point_sample_indexer() const {
         return _point_sample_indexer;
     }
     const VEMMesh2 &mesh() const { return _mesh; }
@@ -143,7 +143,7 @@ struct PoissonVEM2 {
     std::vector<size_t> _monomial_degrees;
 
     // all indexers assume their first idnex is 0
-    RKHSBasisIndexer _point_sample_indexer;
+    PointSampleIndexer _point_sample_indexer;
     MonomialBasisIndexer _monomial_indexer;
     MomentBasisIndexer _moment_indexer;
 };

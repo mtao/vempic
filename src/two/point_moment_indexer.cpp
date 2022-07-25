@@ -1,4 +1,4 @@
-#include "vem/point_moment_indexer.hpp"
+#include "vem/two/point_moment_indexer.hpp"
 #include "vem/utils/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 

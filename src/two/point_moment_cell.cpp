@@ -28,7 +28,7 @@ const MonomialBasisIndexer& PointMomentVEM2Cell::monomial_indexer() const {
 const MomentBasisIndexer& PointMomentVEM2Cell::moment_indexer() const {
     return _indexer->moment_indexer();
 }
-const RKHSBasisIndexer& PointMomentVEM2Cell::point_sample_indexer() const {
+const PointSampleIndexer& PointMomentVEM2Cell::point_sample_indexer() const {
     return _indexer->point_sample_indexer();
 }
 

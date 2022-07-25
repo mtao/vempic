@@ -3,7 +3,7 @@
 #include "vem/moment_basis_indexer.hpp"
 #include "vem/monomial_basis_indexer.hpp"
 #include "vem/point_moment_cell.hpp"
-#include "vem/rkhs_basis_indexer.hpp"
+#include "vem/point_sample_indexer.hpp"
 
 namespace vem {
 class PointMomentIndexer {
@@ -13,10 +13,10 @@ class PointMomentIndexer {
     PointMomentIndexer(const VEMMesh2 &_mesh, size_t max_degree);
 
     const MomentBasisIndexer &moment_indexer() const { return _moment_indexer; }
-    const RKHSBasisIndexer &point_sample_indexer() const {
+    const PointSampleIndexer &point_sample_indexer() const {
         return _point_sample_indexer;
     }
-    const RKHSBasisIndexer &boundary_indexer() const { return _point_sample_indexer; }
+    const PointSampleIndexer &boundary_indexer() const { return _point_sample_indexer; }
 
     const MonomialBasisIndexer &monomial_indexer() const {
         return _monomial_indexer;
@@ -86,7 +86,7 @@ class PointMomentIndexer {
    private:
     const VEMMesh2 &_mesh;
     // all indexers assume their first idnex is 0
-    RKHSBasisIndexer _point_sample_indexer;
+    PointSampleIndexer _point_sample_indexer;
     MomentBasisIndexer _moment_indexer;
     // monomials have to come last because their degrees determine the prior 2
     // degrees

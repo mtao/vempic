@@ -4,7 +4,7 @@
 #include <vem/mesh.hpp>
 #include <vem/moment_basis_indexer.hpp>
 #include <vem/monomial_basis_indexer.hpp>
-#include <vem/rkhs_basis_indexer.hpp>
+#include <vem/point_sample_indexer.hpp>
 
 namespace vem::poisson_2d {
 
@@ -46,9 +46,9 @@ class PoissonVEM2Cell : public VEM2Cell {
     // the number of DOFs in the local system
     int local_system_size() const;
     PoissonVEM2Cell(const VEMMesh2& mesh, size_t index,
-                    const RKHSBasisIndexer& a, const MonomialBasisIndexer& b,
+                    const PointSampleIndexer& a, const MonomialBasisIndexer& b,
                     const MomentBasisIndexer& c);
-    PoissonVEM2Cell(const VEM2Cell& cell, const RKHSBasisIndexer& a,
+    PoissonVEM2Cell(const VEM2Cell& cell, const PointSampleIndexer& a,
                     const MonomialBasisIndexer& b, const MomentBasisIndexer& c);
 
     // size_t edge_count() const;
@@ -113,7 +113,7 @@ class PoissonVEM2Cell : public VEM2Cell {
     mtao::VecXd monomial_values(const Eigen::MatrixBase<Derived>& p) const;
 
    private:
-    const RKHSBasisIndexer& point_indexer;
+    const PointSampleIndexer& point_indexer;
     const MonomialBasisIndexer& monomial_indexer;
     const MomentBasisIndexer& moment_indexer;
 };

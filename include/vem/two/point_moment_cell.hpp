@@ -5,7 +5,7 @@
 #include "vem/cell.hpp"
 #include "vem/mesh.hpp"
 #include "vem/moment_basis_indexer.hpp"
-#include "vem/rkhs_basis_indexer.hpp"
+#include "vem/point_sample_indexer.hpp"
 namespace vem {
 class PointMomentIndexer;
 class PointMomentVEM2Cell : public VEM2Cell {

@@ -5,7 +5,7 @@
 #include <mtao/iterator/enumerate.hpp>
 #include <vem/from_simplicial_matrices.hpp>
 #include <vem/poisson_2d/poisson_vem.hpp>
-#include <vem/rkhs_basis_indexer.hpp>
+#include <vem/point_sample_indexer.hpp>
 
 int main(int argc, char *argv[]) {
     auto [V, F] = mtao::geometry::mesh::read_objD(argv[1]);
@@ -29,9 +29,9 @@ int main(int argc, char *argv[]) {
     }
     */
 
-    vem::RKHSBasisIndexer rkhs_basis(vem, 1);
-    for (int j = 0; j < rkhs_basis.num_coefficients(); ++j) {
-        std::cout << rkhs_basis.get_position(j).transpose() << std::endl;
+    vem::PointSampleIndexer point_sample(vem, 1);
+    for (int j = 0; j < point_sample.num_coefficients(); ++j) {
+        std::cout << point_sample.get_position(j).transpose() << std::endl;
     }
     vem::poisson_2d::PoissonVEM2 pois(vem, 1);
 

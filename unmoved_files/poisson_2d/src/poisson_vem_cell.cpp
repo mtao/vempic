@@ -15,13 +15,13 @@ using namespace vem::polynomials::two;
 namespace vem::poisson_2d {
 
 PoissonVEM2Cell::PoissonVEM2Cell(const VEMMesh2 &mesh, size_t index,
-                                 const RKHSBasisIndexer &a,
+                                 const PointSampleIndexer &a,
                                  const MonomialBasisIndexer &b,
                                  const MomentBasisIndexer &c)
     : PoissonVEM2Cell(VEM2Cell(mesh, index, b.diameter(index)), a, b, c) {}
 
 PoissonVEM2Cell::PoissonVEM2Cell(const VEM2Cell &cell,
-                                 const RKHSBasisIndexer &a,
+                                 const PointSampleIndexer &a,
                                  const MonomialBasisIndexer &b,
                                  const MomentBasisIndexer &c)
     : VEM2Cell(cell),

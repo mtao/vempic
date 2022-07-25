@@ -15,16 +15,16 @@ namespace vem {
 // a fancy name for the point-sample indexer used in this VEM implementation
 // it is pecular in that it is indexed along edges, meaning that there are
 // certain operations over edges vs cells that need to be taken with care
-class RKHSBasisIndexer : public PartitionedCoefficientIndexer {
+class PointSampleIndexer : public PartitionedCoefficientIndexer {
    public:
     // pass in the number of samples are held on the interior of each edge
-    RKHSBasisIndexer(const VEMMesh2 &mesh, size_t num_internal_indices);
-    explicit RKHSBasisIndexer(const VEMMesh2 &mesh,
+    PointSampleIndexer(const VEMMesh2 &mesh, size_t num_internal_indices);
+    explicit PointSampleIndexer(const VEMMesh2 &mesh,
                               const std::vector<size_t> &internal_edge_sizes);
-    RKHSBasisIndexer(const RKHSBasisIndexer &) = default;
-    RKHSBasisIndexer(RKHSBasisIndexer &&) = default;
-    RKHSBasisIndexer &operator=(const RKHSBasisIndexer &) = default;
-    RKHSBasisIndexer &operator=(RKHSBasisIndexer &&) = default;
+    PointSampleIndexer(const PointSampleIndexer &) = default;
+    PointSampleIndexer(PointSampleIndexer &&) = default;
+    PointSampleIndexer &operator=(const PointSampleIndexer &) = default;
+    PointSampleIndexer &operator=(PointSampleIndexer &&) = default;
 
     size_t edge_offset(size_t index) const;
     size_t num_internal_edge_indices(size_t index) const;
@@ -90,7 +90,7 @@ class RKHSBasisIndexer : public PartitionedCoefficientIndexer {
     const VEMMesh2 &_mesh;
 };
 template <typename Func>
-mtao::VecXd RKHSBasisIndexer::evaluate_coefficients(Func &&f) const {
+mtao::VecXd PointSampleIndexer::evaluate_coefficients(Func &&f) const {
     mtao::VecXd R(num_coefficients());
     for (int j = 0; j < _mesh.V.cols(); ++j) {
         R(j) = f(_mesh.V.col(j));
@@ -107,7 +107,7 @@ mtao::VecXd RKHSBasisIndexer::evaluate_coefficients(Func &&f) const {
     return R;
 }
 template <typename Func>
-mtao::ColVecs2d RKHSBasisIndexer::evaluate_vector_field(Func &&f) const {
+mtao::ColVecs2d PointSampleIndexer::evaluate_vector_field(Func &&f) const {
     mtao::ColVecs2d R(2, num_coefficients());
     for (int j = 0; j < _mesh.V.cols(); ++j) {
         R.col(j) = f(_mesh.V.col(j));
@@ -124,7 +124,7 @@ mtao::ColVecs2d RKHSBasisIndexer::evaluate_vector_field(Func &&f) const {
     return R;
 }
 template <typename Func>
-mtao::VecXd RKHSBasisIndexer::evaluate_coefficients(size_t cell_index,
+mtao::VecXd PointSampleIndexer::evaluate_coefficients(size_t cell_index,
                                                     Func &&f) const {
     auto inds = cell_indices(cell_index);
 
@@ -135,7 +135,7 @@ mtao::VecXd RKHSBasisIndexer::evaluate_coefficients(size_t cell_index,
     return R;
 }
 template <typename Func>
-mtao::ColVecs2d RKHSBasisIndexer::evaluate_vector_field(size_t cell_index,
+mtao::ColVecs2d PointSampleIndexer::evaluate_vector_field(size_t cell_index,
                                                         Func &&f) const {
     mtao::ColVecs2d R(2, num_coefficients());
     for (int j = 0; j < _mesh.V.cols(); ++j) {

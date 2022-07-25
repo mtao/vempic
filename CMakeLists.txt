@@ -65,7 +65,7 @@ set(STUFF
     src/polynomial_gradient.cpp
     src/polynomial_partial_derivative.cpp
     src/polynomial_utils.cpp
-    src/rkhs_basis_indexer.cpp
+    src/point_sample_indexer.cpp
     src/set_centroids_as_centers.cpp
     src/utils/boundary_facets.cpp
     src/utils/cells_adjacent_to_edge.cpp
@@ -84,16 +84,25 @@ set(STUFF
     src/cell3.cpp
     src/creator2.cpp
     src/creator3.cpp
-    src/point_moment_indexer.cpp
     src/point_moment_cell.cpp
-    src/flux_moment_indexer.cpp
     src/flux_moment_cell.cpp
-    src/flux_moment_indexer3.cpp
     src/flux_moment_cell3.cpp
+    )
+
+set(VEM_INDEXER_TWO_SRCS
+    src/three/flux_moment_indexer.cpp
+    src/two/flux_moment_indexer.cpp
+    src/two/point_moment_indexer.cpp
+    )
+
+set(VEM_INDEXER_THREE_SRCS
+    src/three/flux_moment_indexer.cpp
     )
 
 set(VEM_SRCS
     ${VEM_POLY_SRCS}
+    ${VEM_INDEXER_TWO_SRCS}
+    ${VEM_INDEXER_THREE_SRCS}
     )
 
 add_library(vem ${VEM_SRCS})

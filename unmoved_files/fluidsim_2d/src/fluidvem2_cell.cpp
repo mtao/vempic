@@ -22,7 +22,7 @@ const MonomialBasisIndexer& FluidVEM2Cell::monomial_indexer() const {
 const MomentBasisIndexer& FluidVEM2Cell::moment_indexer() const {
     return indexer().moment_indexer();
 }
-const RKHSBasisIndexer& FluidVEM2Cell::point_sample_indexer() const {
+const PointSampleIndexer& FluidVEM2Cell::point_sample_indexer() const {
     return indexer().point_sample_indexer();
 }
 
