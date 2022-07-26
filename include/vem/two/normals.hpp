@@ -1,5 +1,5 @@
 #pragma once
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 mtao::ColVecs2d normals(const VEMMesh2 &mesh);

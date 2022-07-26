@@ -1,7 +1,7 @@
 #pragma once
 #include <nlohmann/json.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 class VEMMesh2Creator {

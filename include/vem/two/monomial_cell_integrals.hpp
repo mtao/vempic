@@ -2,7 +2,7 @@
 #include <map>
 #include <mtao/types.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 

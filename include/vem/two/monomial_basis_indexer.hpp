@@ -1,5 +1,6 @@
 #pragma once
 
+#include "cell_boundary_facets.hpp"
 #include "monomial_cell_integrals.hpp"
 #include "vem/monomial_basis_indexer.hpp"
 

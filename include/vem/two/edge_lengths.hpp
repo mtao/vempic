@@ -1,5 +1,5 @@
 #pragma once
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 mtao::VecXd edge_lengths(const VEMMesh2 &mesh);

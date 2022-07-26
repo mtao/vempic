@@ -3,7 +3,7 @@
 #include <mandoline/mesh2.hpp>
 #include <mandoline/mesh3.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 

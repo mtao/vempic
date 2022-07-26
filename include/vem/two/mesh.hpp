@@ -1,8 +1,10 @@
+#pragma once
 #include <map>
 #include <optional>
 #include <set>
 #include <vector>
 #include "../polygon_boundary_indices.hpp"
+#include "../mesh.hpp"
 
 namespace vem {
 struct VEMTopology2 {
@@ -14,7 +16,8 @@ struct VEMTopology2 {
     int edge_count() const { return E.cols(); }
 };
 
-struct VEMMesh2 : public VEMTopology2, std::enable_shared_from_this<VEMMesh2> {
+struct VEMMesh2 : public VEMTopology2
+  , std::enable_shared_from_this<VEMMesh2> {
     // vertex positions
     mtao::ColVecs2d V;
     // centers
@@ -49,4 +52,7 @@ struct VEMMesh2 : public VEMTopology2, std::enable_shared_from_this<VEMMesh2> {
     virtual mtao::Vec2d boundary_center(size_t cell_index) const;
     bool debug_diameter = false;
 };
-}
+
+template<>
+struct VEMMesh<2> : public VEMMesh2 {};
+}// namespace vem

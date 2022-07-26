@@ -2,10 +2,10 @@
 
 #include <Eigen/Sparse>
 
-#include "vem/cell.hpp"
-#include "vem/flux_basis_indexer.hpp"
-#include "vem/mesh.hpp"
-#include "vem/moment_basis_indexer.hpp"
+#include "cell.hpp"
+#include "flux_basis_indexer.hpp"
+#include "mesh.hpp"
+#include "moment_basis_indexer.hpp"
 
 namespace vem {
 class FluxMomentIndexer;

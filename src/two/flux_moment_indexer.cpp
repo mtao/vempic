@@ -5,8 +5,8 @@
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/utils/boundary_facets.hpp"
-#include "vem/utils/coefficient_accumulator.hpp"
+#include "vem/two/boundary_facets.hpp"
+#include "vem/two/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 
 namespace {

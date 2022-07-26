@@ -90,8 +90,7 @@ set(STUFF
     )
 
 set(VEM_INDEXER_TWO_SRCS
-    src/three/flux_moment_indexer.cpp
-    src/two/flux_moment_indexer.cpp
+    #src/two/flux_moment_indexer.cpp
     src/two/point_moment_indexer.cpp
     )
 
@@ -101,8 +100,6 @@ set(VEM_INDEXER_THREE_SRCS
 
 set(VEM_SRCS
     ${VEM_POLY_SRCS}
-    ${VEM_INDEXER_TWO_SRCS}
-    ${VEM_INDEXER_THREE_SRCS}
     ${VEM_INDEXER_TWO_SRCS}
     #${VEM_INDEXER_THREE_SRCS}
     )
@@ -123,7 +120,7 @@ add_library(vem_serialization
     src/serialization/frame_inventory.cpp
     src/serialization/serialize_text.cpp
     src/serialization/serialize_particles.cpp
-    src/serialization/serialize_mesh.cpp
+    #src/serialization/serialize_mesh.cpp
     #src/serialization/serialize_vdb.cpp
     )
 target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt

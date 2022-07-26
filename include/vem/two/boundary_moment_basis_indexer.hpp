@@ -8,7 +8,7 @@
 #include <mtao/quadrature/gauss_lobatto.hpp>
 #include <set>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 #include "vem/partitioned_coefficient_indexer.hpp"
 
 namespace vem {

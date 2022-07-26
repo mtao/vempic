@@ -4,8 +4,10 @@
 #include <set>
 #include <vector>
 #include "../polygon_boundary_indices.hpp"
+#include "../mesh.hpp"
 
 namespace vem {
+    using VEMMesh3 = VEMMesh<3>;
 
 struct VEMMesh3 : public std::enable_shared_from_this<VEMMesh3> {
     // a cached copy of the VEMTopology2's face_loops

@@ -2,15 +2,15 @@
 #include <mtao/eigen/stack.hpp>
 #include <mtao/geometry/interpolation/radial_basis_function.hpp>
 #include <vem/serialization/serialize_eigen.hpp>
-#include <vem/utils/boundary_facets.hpp>
-#include <vem/utils/cells_adjacent_to_edge.hpp>
+#include "boundary_facets.hpp"
+#include "cells_adjacent_to_edge.hpp"
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/flux_moment_indexer.hpp"
-#include "vem/mesh.hpp"
-#include "vem/point_moment_indexer.hpp"
+#include "flux_moment_indexer.hpp"
+#include "mesh.hpp"
+#include "point_moment_indexer.hpp"
 
-namespace vem::utils {
+namespace vem::two{
 template <typename IndexerType>
 struct CoefficientAccumulator {
     const IndexerType &indexer;
@@ -228,7 +228,7 @@ mtao::ColVectors<double, D + 1> CoefficientAccumulator<FluxMomentIndexer>::
     auto Dat = R.template topRows<D>();
     auto W = R.row(D);
 
-    auto edge_cob = utils::edge_coboundary_map(mesh(), active_cells);
+    auto edge_cob = edge_coboundary_map(mesh(), active_cells);
     auto edge_cell_neighbors =
         utils::cells_adjacent_to_edge(mesh(), active_cells);
     int edge_index = 0;

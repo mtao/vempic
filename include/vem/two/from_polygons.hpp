@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vem/mesh.hpp>
+#include <mesh.hpp>
 
 namespace vem {
 

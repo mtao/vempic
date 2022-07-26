@@ -2,7 +2,7 @@
 
 #include <mtao/geometry/grid/staggered_grid.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace vem {
 
