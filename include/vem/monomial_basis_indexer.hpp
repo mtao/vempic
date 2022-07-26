@@ -2,18 +2,17 @@
 #include <Eigen/Sparse>
 #include <mtao/eigen/stl2eigen.hpp>
 
-#include "vem/mesh.hpp"
-#include "vem/partitioned_coefficient_indexer.hpp"
-#include "vem/polynomial_utils.hpp"
-#include "vem/monomial_basis_indexer_new.hpp"
+#include "partitioned_coefficient_indexer.hpp"
+#include "polynomials/utils.hpp"
+#include "monomial_basis_indexer.hpp"
 
 namespace vem {
+    template <int Dim>
+        struct VEMMesh;
 namespace detail {
 template <int D, int E>
 class MonomialBasisIndexer;
 }
-    using MonomialBasisIndexer = detail::MonomialBasisIndexer<2,2>;
-    using MonomialBasisIndexer3 = detail::MonomialBasisIndexer<3,3>;
 
 namespace detail {
 // an indexer into coefficients that are _JUST_ monomials
@@ -117,5 +116,4 @@ double MonomialBasisIndexer<D, E>::evaluate_monomial(
 }
 }  // namespace detail
 }  // namespace vem
-#include "vem/monomial_basis_indexer2.hpp"
 #include "vem/monomial_basis_indexer_impl.hpp"

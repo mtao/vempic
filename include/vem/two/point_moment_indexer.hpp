@@ -1,9 +1,9 @@
 #pragma once
-#include "vem/mesh.hpp"
-#include "vem/moment_basis_indexer.hpp"
-#include "vem/monomial_basis_indexer.hpp"
-#include "vem/point_moment_cell.hpp"
-#include "vem/point_sample_indexer.hpp"
+#include "mesh.hpp"
+#include "moment_basis_indexer.hpp"
+#include "monomial_basis_indexer.hpp"
+#include "point_moment_cell.hpp"
+#include "point_sample_indexer.hpp"
 
 namespace vem {
 class PointMomentIndexer {

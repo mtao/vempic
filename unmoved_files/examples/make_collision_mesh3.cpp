@@ -9,7 +9,7 @@
 #include <vem/flux_moment_cell3.hpp>
 #include <vem/flux_moment_indexer3.hpp>
 #include <vem/from_mandoline3.hpp>
-#include <vem/monomial_basis_indexer_new.hpp>
+#include <vem/monomial_basis_indexer.hpp>
 #include <vem/monomial_cell_integrals.hpp>
 #include <vem/utils/face_boundary_facets.hpp>
 

@@ -5,6 +5,7 @@
 
 namespace vem {
 class MomentBasisIndexer3 : public MonomialBasisIndexer3 {
+    using MonomialBasisIndexer3 = detail::MonomialBasisIndexer<3,3>;
     using MonomialBasisIndexer3::MonomialBasisIndexer3;
 };
 }// namespace vem

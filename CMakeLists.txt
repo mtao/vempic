@@ -54,7 +54,7 @@ set(STUFF
     src/mesh3.cpp
     src/from_simplicial_matrices.cpp
     #src/monomial_basis_indexer.cpp
-    src/monomial_basis_indexer_new.cpp
+    src/monomial_basis_indexer.cpp
     src/monomial_edge_integrals.cpp 
     src/monomial_cell_integrals.cpp 
     src/monomial_cell_integrals3.cpp 
@@ -103,6 +103,8 @@ set(VEM_SRCS
     ${VEM_POLY_SRCS}
     ${VEM_INDEXER_TWO_SRCS}
     ${VEM_INDEXER_THREE_SRCS}
+    ${VEM_INDEXER_TWO_SRCS}
+    #${VEM_INDEXER_THREE_SRCS}
     )
 
 add_library(vem ${VEM_SRCS})

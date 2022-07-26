@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "vem/monomial_basis_indexer_new.hpp"
+#include "vem/monomial_basis_indexer.hpp"
 
 namespace vem {
 

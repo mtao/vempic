@@ -1,5 +1,4 @@
-#include "vem/monomial_basis_indexer_new.hpp"
-#include "vem/monomial_cell_integrals.hpp"
+#include "vem/monomial_basis_indexer.hpp"
 #include "vem/polynomial_gradient.hpp"
 #include "vem/utils/cell_boundary_facets.hpp"
 #include "vem/utils/face_boundary_facets.hpp"
@@ -8,7 +7,7 @@ namespace vem {
 
 namespace {
 template <int D>
-std::vector<size_t> make_num_coeffs(std::vector<size_t> s) {
+std::vector<size_t> make_num_coeffs(const std::vector<size_t>& s) {
     for (auto &&v : s) {
         if (v == size_t(-1)) {
             v = 0;

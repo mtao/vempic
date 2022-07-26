@@ -1,8 +1,8 @@
 #pragma once
-#include "vem/flux_basis_indexer3.hpp"
-#include "vem/flux_moment_cell3.hpp"
-#include "vem/mesh.hpp"
-#include "vem/monomial_basis_indexer_new.hpp"
+#include "flux_basis_indexer.hpp"
+#include "flux_moment_cell.hpp"
+#include "mesh.hpp"
+#include "vem/monomial_basis_indexer.hpp"
 
 namespace vem {
 class FluxMomentIndexer3 {

@@ -4,7 +4,6 @@
 #include <mtao/iterator/range.hpp>
 #include <range/v3/view/span.hpp>
 
-#include "vem/mesh.hpp"
 
 namespace vem {
 // an indexer into coefficients that are _JUST_ coefficients

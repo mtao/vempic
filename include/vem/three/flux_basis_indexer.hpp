@@ -2,7 +2,7 @@
 
 #include <mtao/eigen/shape_checks.hpp>
 
-#include "vem/monomial_basis_indexer_new.hpp"
+#include "vem/monomial_basis_indexer.hpp"
 #include "vem/polynomial_utils.hpp"
 
 namespace vem {
