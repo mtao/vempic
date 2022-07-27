@@ -1,8 +1,8 @@
 #include <map>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
-namespace vem::utils {
+namespace vem::two {
 
 struct BoundaryIntersectionDetector {
    public:

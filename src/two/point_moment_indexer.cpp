@@ -1,5 +1,5 @@
 #include "vem/two/point_moment_indexer.hpp"
-#include "vem/two/coefficient_accumulator.hpp"
+#include "vem/utils/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
@@ -22,7 +22,7 @@ std::vector<size_t> offset_values(const std::vector<size_t> &o, size_t offset) {
     return ret;
 }
 
-std::vector<size_t> max_edge_samples(const vem::VEMMesh2 &mesh,
+std::vector<size_t> max_edge_samples(const vem::two::VEMMesh2 &mesh,
                                      const std::vector<size_t> &o) {
     std::vector<size_t> edge_degrees(mesh.edge_count(), 0);
     for (auto &&[degree, fbm] :
@@ -373,7 +373,7 @@ PointMomentIndexer::_homogeneous_coefficients_from_point_values(
     const std::function<double(const mtao::Vec2d &, const mtao::Vec2d &)> &rbf,
     const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    CoefficientAccumulator<PointMomentIndexer> ca(*this);
+    utils::CoefficientAccumulator<PointMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_values(V, P, cell_particles,
                                                          active_cells, rbf);
 }
@@ -384,7 +384,7 @@ PointMomentIndexer::_homogeneous_coefficients_from_point_sample_function(
         &f,
     const mtao::ColVecs2d &P, const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    CoefficientAccumulator<PointMomentIndexer> ca(*this);
+    utils::CoefficientAccumulator<PointMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_function(f, P, cell_particles,
                                                            active_cells);
 }

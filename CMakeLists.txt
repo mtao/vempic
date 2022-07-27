@@ -44,7 +44,6 @@ set(VEM_POLY_SRCS
 #add_library(vem 
 set(STUFF
     #src/monomial_basis_indexer.cpp
-    src/utils/boundary_facets.cpp
     src/utils/cells_adjacent_to_edge.cpp
     src/utils/cells_adjacent_to_face.cpp
     src/utils/cell_boundary_facets.cpp
@@ -75,14 +74,15 @@ set(VEM_TWO_SRCS
 
     src/two/point_sample_indexer.cpp
     src/two/flux_moment_indexer.cpp
-    #src/two/point_moment_indexer.cpp
+    src/two/point_moment_indexer.cpp
 
     src/two/parent_maps.cpp
     src/two/set_centroids_as_centers.cpp
     src/two/normals.cpp
     src/two/edge_lengths.cpp
     src/two/cell_normals.cpp
-    #src/utils/boundary_intersector.cpp
+    src/two/boundary_intersector.cpp
+    src/two/boundary_facets.cpp
 
 
 

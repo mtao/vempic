@@ -1,7 +1,7 @@
-#include "vem/utils/boundary_intersector.hpp"
+#include "vem/two/boundary_intersector.hpp"
 
-#include "vem/utils/boundary_facets.hpp"
-namespace vem::utils {
+#include "vem/two/boundary_facets.hpp"
+namespace vem::two {
 void BoundaryIntersectionDetector::make_boundaries() {
     _boundary_cell_map.clear();
     _cell_boundary_map.clear();
