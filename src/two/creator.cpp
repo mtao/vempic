@@ -1,4 +1,4 @@
-#include "vem/creator2.hpp"
+#include "vem/two/creator.hpp"
 
 #include <mtao/geometry/mesh/boundary_facets.h>
 
@@ -8,9 +8,9 @@
 #include <mtao/geometry/mesh/dual_edges.hpp>
 #include <mtao/geometry/mesh/read_obj.hpp>
 #include <mtao/json/bounding_box.hpp>
-#include <vem/from_grid.hpp>
-#include <vem/from_mandoline.hpp>
-#include <vem/from_simplicial_matrices.hpp>
+#include <vem/two/from_grid.hpp>
+#include <vem/two/from_mandoline.hpp>
+#include <vem/two/from_triangle_mesh.hpp>
 
 namespace {
 template <class T>
@@ -18,7 +18,7 @@ auto stuff_into_shared_ptr(T &&obj) {
     return std::make_shared<T>(obj);
 }
 }  // namespace
-namespace vem {
+namespace vem::two {
 
 std::string VEMMesh2Creator::MeshType2string(MeshType m) {
     switch (m) {
@@ -39,7 +39,7 @@ bool VEMMesh2Creator::make_obj_mesh() {
     if (std::filesystem::exists(path)) {
         auto [V, F] = mtao::geometry::mesh::read_objD(std::string(path));
         _stored_mesh =
-            stuff_into_shared_ptr(vem::from_triangle_mesh(V.topRows<2>(), F));
+            stuff_into_shared_ptr(from_triangle_mesh(V.topRows<2>(), F));
         spdlog::info("Made a mesh with {} {}", V.cols(), F.cols());
     } else {
         spdlog::error("Path not found, cannot create obj mesh");
@@ -57,7 +57,7 @@ bool VEMMesh2Creator::make_grid_mesh() {
         return false;
     }
     _stored_mesh = stuff_into_shared_ptr(
-        vem::from_grid(grid_mesh_bbox.cast<double>(), x, y));
+        from_grid(grid_mesh_bbox.cast<double>(), x, y));
     last_made_mesh = MeshType::Grid;
     return true;
 }
@@ -129,7 +129,7 @@ bool VEMMesh2Creator::make_mandoline_mesh(bool load_boundary) {
     auto &[V, E] = *_held_boundary_mesh;
     auto [x, y] = grid_mesh_dimensions;
     _stored_mesh = stuff_into_shared_ptr(
-        vem::from_mandoline(grid_mesh_bbox.cast<double>(), x, y, V, E, true));
+        from_mandoline(grid_mesh_bbox.cast<double>(), x, y, V, E, true));
     spdlog::info("Made a cut-cell mesh with #V={} #E={}", V.cols(), E.cols());
     last_made_mesh = MeshType::Cutmesh;
     return true;

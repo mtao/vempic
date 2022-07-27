@@ -11,7 +11,7 @@
 #include "mesh.hpp"
 #include "vem/partitioned_coefficient_indexer.hpp"
 
-namespace vem {
+namespace vem::two {
 // a fancy name for the point-sample indexer used in this VEM implementation
 // it is pecular in that it is indexed along edges, meaning that there are
 // certain operations over edges vs cells that need to be taken with care

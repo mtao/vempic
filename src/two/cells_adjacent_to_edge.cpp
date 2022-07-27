@@ -5,7 +5,7 @@
 namespace vem::utils {
 
 std::vector<std::set<int>> cells_adjacent_to_edge(
-    const VEMMesh2& mesh, const std::set<int>& active_cells) {
+    const two::VEMMesh2& mesh, const std::set<int>& active_cells) {
     std::vector<std::set<int>> ret(mesh.edge_count());
     loop_over_active_indices(
         mesh.cell_count(), active_cells, [&](size_t cell_index) {

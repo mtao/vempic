@@ -1,13 +1,13 @@
 
-#include "vem/flux_moment_cell.hpp"
+#include "vem/two/flux_moment_cell.hpp"
 
 #include <mtao/algebra/pascal_triangle.hpp>
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
 
-#include "vem/flux_moment_indexer.hpp"
+#include "vem/two/flux_moment_indexer.hpp"
 using namespace vem::polynomials::two;
-namespace vem {
+namespace vem::two {
 
 FluxMomentVEM2Cell::FluxMomentVEM2Cell(const FluxMomentIndexer& mom,
                                        size_t index)

@@ -1,7 +1,10 @@
 #pragma once
 #include <compare>
 #include <limits>
+#include <set>
+#include <optional>
 #include <mtao/iterator/range.hpp>
+#include <mtao/types.hpp>
 #include <range/v3/view/span.hpp>
 
 

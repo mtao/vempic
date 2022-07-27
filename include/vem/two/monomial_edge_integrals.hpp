@@ -3,7 +3,7 @@
 
 #include "mesh.hpp"
 
-namespace vem {
+namespace vem::two {
 
 mtao::VecXd scaled_monomial_edge_integrals(const VEMMesh2 &mesh, int index, double scale, int max_degree);
 mtao::VecXd scaled_monomial_edge_integrals(const VEMMesh2 &mesh, int index, double scale, int max_degree, const mtao::Vec2d &center);

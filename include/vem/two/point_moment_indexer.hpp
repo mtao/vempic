@@ -5,7 +5,8 @@
 #include "point_moment_cell.hpp"
 #include "point_sample_indexer.hpp"
 
-namespace vem {
+
+namespace vem::two {
 class PointMomentIndexer {
    public:
     // this is passed by value to allow for moving of the data

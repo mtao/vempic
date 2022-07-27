@@ -1,5 +1,6 @@
 #pragma once
 #include <Eigen/Sparse>
+#include "mesh.hpp"
 #include <mtao/eigen/stl2eigen.hpp>
 
 #include "partitioned_coefficient_indexer.hpp"
@@ -7,8 +8,6 @@
 #include "monomial_basis_indexer.hpp"
 
 namespace vem {
-template<int Dim>
-struct VEMMesh;
 
 namespace detail {
     // an indexer into coefficients that are _JUST_ monomials

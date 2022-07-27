@@ -1,12 +1,12 @@
 
-#include "vem/point_moment_cell.hpp"
+#include "vem/two/point_moment_cell.hpp"
 
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
 
-#include "vem/point_moment_indexer.hpp"
+#include "vem/two/point_moment_indexer.hpp"
 using namespace vem::polynomials::two;
-namespace vem {
+namespace vem::two {
 
 PointMomentVEM2Cell::PointMomentVEM2Cell(const PointMomentIndexer& mom,
                                          size_t index)

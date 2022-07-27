@@ -1,16 +1,16 @@
 #include <spdlog/spdlog.h>
 
 #include <mtao/algebra/pascal_triangle.hpp>
-#include <vem/cell.hpp>
+#include "vem/two/cell.hpp"
 
-#include "vem/clang_hacks.hpp"
-#include "vem/edge_lengths.hpp"
-#include "vem/monomial_cell_integrals.hpp"
-#include "vem/monomial_edge_integrals.hpp"
-#include "vem/polynomial_gradient.hpp"
-#include "vem/utils/volumes.hpp"
+#include "vem/utils/clang_hacks.hpp"
+#include "vem/two/edge_lengths.hpp"
+#include "vem/two/monomial_cell_integrals.hpp"
+#include "vem/two/monomial_edge_integrals.hpp"
+#include "vem/polynomials/gradient.hpp"
+#include "vem/two/volumes.hpp"
 
-namespace vem {
+namespace vem::two {
 using namespace polynomials::two;
 VEM2Cell::VEM2Cell(const VEMMesh2& mesh, const size_t cell_index)
     : VEM2Cell(mesh, cell_index, mesh.diameter(cell_index)) {}
@@ -50,9 +50,9 @@ double VEM2Cell::boundary_area() const {
     }
     return sum;
 }
-double VEM2Cell::volume() const { return utils::volume(_mesh, _cell_index); }
+double VEM2Cell::volume() const { return two::volume(_mesh, _cell_index); }
 double VEM2Cell::edge_length(size_t edge_index) const {
-    return vem::edge_length(_mesh, edge_index);
+    return two::edge_length(_mesh, edge_index);
 }
 std::map<size_t, double> VEM2Cell::edge_lengths() const {
     std::map<size_t, double> ret;
@@ -300,7 +300,7 @@ std::function<double(const mtao::Vec2d&)> VEM2Cell::monomial(
     double cy = C.y();
     // auto [xexp, yexp] = polynomials::two::index_to_exponents(index);
     size_t xexp, yexp;
-    assign_array_to_tuple(polynomials::two::index_to_exponents(index),
+    utils::assign_array_to_tuple(polynomials::two::index_to_exponents(index),
                           std::tie(xexp, yexp));
     double diameter = _diameter;
     return [xexp, yexp, cx, cy, diameter](const mtao::Vec2d& p) -> double {
@@ -325,18 +325,18 @@ std::function<mtao::Vec2d(const mtao::Vec2d&)> VEM2Cell::monomial_gradient(
     // auto [xexp1, yexp1] = polynomials::two::index_to_exponents(ai);
     // auto [xexp2, yexp2] = polynomials::two::index_to_exponents(bi);
     size_t xexp, yexp;
-    assign_array_to_tuple(polynomials::two::index_to_exponents(index),
+    utils::assign_array_to_tuple(polynomials::two::index_to_exponents(index),
                           std::tie(xexp, yexp));
     double ac, bc;
     int ai, bi;
-    assign_array_to_tuple(a, std::tie(ac, ai));
-    assign_array_to_tuple(b, std::tie(bc, bi));
+    utils::assign_array_to_tuple(a, std::tie(ac, ai));
+    utils::assign_array_to_tuple(b, std::tie(bc, bi));
 
     size_t xexp1, yexp1;
     size_t xexp2, yexp2;
-    assign_array_to_tuple(polynomials::two::index_to_exponents(ai),
-                          std::tie(xexp1, yexp1));
-    assign_array_to_tuple(polynomials::two::index_to_exponents(bi),
+    utils::assign_array_to_tuple(polynomials::two::index_to_exponents(ai),
+            std::tie(xexp1, yexp1));
+    utils::assign_array_to_tuple(polynomials::two::index_to_exponents(bi),
                           std::tie(xexp2, yexp2));
 
     // note that xexp2 is the original exp of index and yexp2 is the original

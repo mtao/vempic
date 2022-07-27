@@ -6,7 +6,18 @@
 #include "../polygon_boundary_indices.hpp"
 #include "../mesh.hpp"
 
-namespace vem {
+namespace vem::two
+{
+    class VEMMesh2;
+}
+namespace vem::internal{
+
+template<>
+struct VEMMeshType<2> {
+using type = two::VEMMesh2;
+};
+}
+namespace vem::two {
 struct VEMTopology2 {
     mtao::ColVecs2i E;
     std::vector<std::map<int, bool>> face_boundary_map;
@@ -53,6 +64,5 @@ struct VEMMesh2 : public VEMTopology2
     bool debug_diameter = false;
 };
 
-template<>
-struct VEMMesh<2> : public VEMMesh2 {};
 }// namespace vem
+ //

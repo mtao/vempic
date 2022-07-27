@@ -7,7 +7,7 @@
 #include "mesh.hpp"
 #include "moment_basis_indexer.hpp"
 
-namespace vem {
+namespace vem::two {
 class FluxMomentIndexer;
 class FluxMomentVEM2Cell : public VEM2Cell {
    public:

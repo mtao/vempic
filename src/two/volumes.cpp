@@ -1,6 +1,6 @@
-#include "vem/utils/volumes.hpp"
+#include "vem/two/volumes.hpp"
 
-namespace vem::utils {
+namespace vem::two {
 double volume(const VEMMesh2 &mesh, size_t cell_index) {
     auto c = mesh.C.col(cell_index);
     double v = 0;

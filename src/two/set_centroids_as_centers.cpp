@@ -1,8 +1,8 @@
-#include "vem/set_centroids_as_centers.hpp"
+#include "vem/two/set_centroids_as_centers.hpp"
 #include <mtao/geometry/centroid.hpp>
 #include <mtao/iterator/enumerate.hpp>
 
-namespace vem {
+namespace vem::two {
 
 void set_centroids_as_centers(VEMMesh2 &vem) {
     vem.C.resize(2, vem.cell_count());

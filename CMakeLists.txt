@@ -43,65 +43,80 @@ set(VEM_POLY_SRCS
 
 #add_library(vem 
 set(STUFF
-    src/edge_lengths.cpp
-    src/cell_normals.cpp
-    src/from_polygons.cpp
-    src/from_mandoline.cpp
-    src/from_mandoline3.cpp
-    src/from_grid.cpp
-    src/from_grid3.cpp
-    src/mesh.cpp
-    src/mesh3.cpp
-    src/from_simplicial_matrices.cpp
     #src/monomial_basis_indexer.cpp
-    src/monomial_basis_indexer.cpp
-    src/monomial_edge_integrals.cpp 
-    src/monomial_cell_integrals.cpp 
-    src/monomial_cell_integrals3.cpp 
-    src/monomial_face_integrals.cpp 
-    src/monomial_face_integrals3.cpp 
-    src/normals.cpp
-    src/partitioned_coefficient_indexer.cpp
-    src/polynomial_gradient.cpp
-    src/polynomial_partial_derivative.cpp
-    src/polynomial_utils.cpp
-    src/point_sample_indexer.cpp
-    src/set_centroids_as_centers.cpp
     src/utils/boundary_facets.cpp
     src/utils/cells_adjacent_to_edge.cpp
     src/utils/cells_adjacent_to_face.cpp
     src/utils/cell_boundary_facets.cpp
     src/utils/face_boundary_facets.cpp
-    src/utils/parent_maps.cpp
     src/utils/volumes.cpp
     src/utils/merge_cells.cpp
     src/utils/face_neighboring_cells.cpp
     src/utils/monomial_coefficient_projection.cpp
-    src/utils/boundary_intersector.cpp
     src/utils/boundary_intersector3.cpp
     src/utils/in_triangle_mesh.cpp
-    src/cell.cpp
     src/cell3.cpp
-    src/creator2.cpp
     src/creator3.cpp
-    src/point_moment_cell.cpp
-    src/flux_moment_cell.cpp
     src/flux_moment_cell3.cpp
     )
 
-set(VEM_INDEXER_TWO_SRCS
-    #src/two/flux_moment_indexer.cpp
-    src/two/point_moment_indexer.cpp
+set(VEM_BASE_SRCS
+    src/polygon_boundary_indices.cpp
+    src/partitioned_coefficient_indexer.cpp
+)
+
+set(VEM_TWO_SRCS
+    src/two/mesh.cpp
+    src/two/creator.cpp
+
+    src/two/cell.cpp
+    src/two/point_moment_cell.cpp
+    src/two/flux_moment_cell.cpp
+
+    src/two/point_sample_indexer.cpp
+    src/two/flux_moment_indexer.cpp
+    #src/two/point_moment_indexer.cpp
+
+    src/two/parent_maps.cpp
+    src/two/set_centroids_as_centers.cpp
+    src/two/normals.cpp
+    src/two/edge_lengths.cpp
+    src/two/cell_normals.cpp
+    #src/utils/boundary_intersector.cpp
+
+
+
+    src/two/from_grid.cpp
+    src/two/grid_mesh.cpp
+
+    src/two/from_triangle_mesh.cpp
+    src/two/triangle_mesh.cpp
+
+    src/two/from_mandoline.cpp
+    src/two/mandoline_mesh.cpp
+
+    src/two/monomial_edge_integrals.cpp 
+    src/two/monomial_cell_integrals.cpp 
+    src/two/monomial_face_integrals.cpp 
+
+    #src/two/from_polygons.cpp
+    #src/two/polygon_mesh.cpp
     )
 
-set(VEM_INDEXER_THREE_SRCS
-    src/three/flux_moment_indexer.cpp
+set(VEM_THREE_SRCS
+    #src/from_mandoline3.cpp
+    #src/from_grid3.cpp
+    #src/mesh3.cpp
+    #src/three/flux_moment_indexer.cpp
+    #src/monomial_cell_integrals3.cpp 
+    #src/monomial_face_integrals3.cpp 
     )
 
 set(VEM_SRCS
     ${VEM_POLY_SRCS}
-    ${VEM_INDEXER_TWO_SRCS}
-    #${VEM_INDEXER_THREE_SRCS}
+    ${VEM_BASE_SRCS}
+    ${VEM_TWO_SRCS}
+    #${VEM_THREE_SRCS}
     )
 
 add_library(vem ${VEM_SRCS})

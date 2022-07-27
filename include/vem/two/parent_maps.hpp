@@ -1,7 +1,7 @@
 #pragma once
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
-namespace vem::utils {
+namespace vem::two {
 
 std::map<size_t, std::set<size_t>> vertex_faces(const VEMMesh2 &mesh);
 

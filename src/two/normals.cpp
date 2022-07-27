@@ -1,5 +1,5 @@
-#include "vem/normals.hpp"
-namespace vem {
+#include "vem/two/normals.hpp"
+namespace vem::two {
 mtao::ColVecs2d normals(const VEMMesh2 &mesh) {
     mtao::ColVecs2d R(2, mesh.edge_count());
     for (int edge_index = 0; edge_index < mesh.edge_count(); ++edge_index) {

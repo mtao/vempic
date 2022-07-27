@@ -6,7 +6,9 @@
 #include <vem/utils/loop_over_active.hpp>
 
 #include "vem/two/boundary_facets.hpp"
-#include "vem/two/coefficient_accumulator.hpp"
+#include "vem/two/boundary_facets.hpp"
+#include "vem/two/cells_adjacent_to_edge.hpp"
+#include "vem/utils/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 
 namespace {
@@ -24,7 +26,7 @@ std::vector<size_t> offset_values(const std::vector<size_t> &o, size_t offset) {
     return ret;
 }
 
-std::vector<size_t> max_edge_samples(const vem::VEMMesh2 &mesh,
+std::vector<size_t> max_edge_samples(const vem::two::VEMMesh2 &mesh,
                                      const std::vector<size_t> &o) {
     std::vector<size_t> edge_degrees(mesh.edge_count(), 0);
     for (auto &&[degree, fbm] :
@@ -46,7 +48,131 @@ std::vector<size_t> max_edge_samples(const vem::VEMMesh2 &mesh,
 }
 }  // namespace
 
-namespace vem {
+namespace vem::utils {
+template <>
+template <int D>
+mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
+    homogeneous_boundary_coefficients_from_point_function(
+        const std::function<
+            typename mtao::Vector<double, D>(const mtao::Vec2d &)> &f,
+        const mtao::ColVecs2d &P,
+        const std::vector<std::set<int>> &cell_particles,
+        const std::set<int> &active_cells) const {
+    mtao::ColVectors<double, D + 1> R(D + 1, indexer.boundary_size());
+    R.setZero();
+    auto Dat = R.template topRows<D>();
+    auto W = R.row(D);
+    auto edge_cob = edge_coboundary_map(mesh(), active_cells);
+    tbb::parallel_for(
+        int(0), int(mesh().edge_count()), [&](int edge_index) {
+            if (indexer.is_edge_inactive(edge_index)) {
+                return;
+            }
+            auto samples = indexer.weighted_edge_samples(edge_index);
+            const auto &cob = edge_cob.at(edge_index);
+            int sample_count = cob.size() * samples.cols();
+            auto indices =
+                indexer.boundary_indexer().coefficient_indices(edge_index);
+            if (indices.size() == 0) {
+                return;
+            }
+
+            auto pblock = Dat.block(0, *indices.begin(), D, indices.size());
+            auto wblock = W.segment(*indices.begin(), indices.size());
+
+            pblock.setZero();
+            double weight_sum = 0;
+
+            for (int j = 0; j < samples.cols(); ++j) {
+                auto s = samples.col(j);
+                auto pt = s.template head<2>();
+                double w = s(2);
+                auto v = f(pt);
+                auto mom =
+                    indexer.boundary_indexer().evaluate_monomials_by_size(
+                        edge_index, pblock.cols(), pt);
+                pblock += w * v * mom.transpose();
+                weight_sum += w;
+
+                // pblock /= sample_count;
+            }
+            wblock.setConstant(weight_sum);
+        });
+    return R;
+}
+template <>
+template <int D>
+mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
+    homogeneous_boundary_coefficients_from_point_values(
+        const mtao::ColVectors<double, D> &V, const mtao::ColVecs2d &P,
+        const std::vector<std::set<int>> &cell_particles,
+        const std::set<int> &active_cells, const RBFFunc &rbf) const {
+    mtao::ColVectors<double, D + 1> R(D + 1, indexer.boundary_size());
+
+    R.setZero();
+    auto Dat = R.template topRows<D>();
+    auto W = R.row(D);
+
+    auto edge_cob = edge_coboundary_map(mesh(), active_cells);
+    auto edge_cell_neighbors =
+        utils::cells_adjacent_to_edge(mesh(), active_cells);
+    int edge_index = 0;
+    // mtao::vector<mtao::Vec4d> backprojections;
+    tbb::parallel_for(
+        int(edge_index), int(mesh().edge_count()), [&](int edge_index) {
+            if (indexer.is_edge_inactive(edge_index)) {
+                return;
+            }
+            auto samples = indexer.weighted_edge_samples(edge_index);
+            const auto &cob = edge_cob.at(edge_index);
+            const auto &cell_neighbors = edge_cell_neighbors.at(edge_index);
+            int sample_count = cob.size() * samples.cols();
+            auto indices =
+                indexer.boundary_indexer().coefficient_indices(edge_index);
+            if (indices.size() == 0) {
+                return;
+            }
+            const bool is_interior = cob.size() == 2;
+
+            auto pblock = Dat.block(0, *indices.begin(), D, indices.size());
+            auto wblock = W.segment(*indices.begin(), indices.size());
+
+            for (auto &&cell_index : cell_neighbors) {
+                const auto &particles = cell_particles[cell_index];
+                auto c = indexer.get_cell(cell_index);
+                for (auto &&p : particles) {
+                    auto pposition = P.col(p);
+                    auto val = V.col(p);
+                    // std::cout << pvelocity.transpose() << std::endl;
+                    // std::cout << pposition.transpose() << " => " << val
+                    //          << std::endl;
+
+                    for (int j = 0; j < samples.cols(); ++j) {
+                        auto pt = samples.col(j).head<2>();
+
+                        double weight =
+                            rbf(pposition,
+                                pt);  // * (p - center).normalized();
+
+                        // std::cout << "Weight: " << weight
+                        //          << "(d = " << (pposition - pt).norm() << ")"
+                        //          << std::endl;
+                        auto moms =
+                            c.evaluate_monomials_by_size(pblock.cols(), pt);
+                        pblock += weight * val * moms.transpose();
+                        // std::cout << wblock << " <=== " << weight <<
+                        // std::endl;
+                        wblock.array() += weight;
+                        //    * v;
+                    }
+                }
+            }
+        });
+
+    return R;
+}
+}
+namespace vem::two {
 template <typename Func>
 Eigen::SparseMatrix<double> FluxMomentIndexer::sample_to_poly_cell_matrix(
     Func &&f, const std::set<int> &active_cells) const {

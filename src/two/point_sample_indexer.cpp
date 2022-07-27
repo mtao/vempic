@@ -1,4 +1,4 @@
-#include "vem/point_sample_indexer.hpp"
+#include "vem/two/point_sample_indexer.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -6,9 +6,9 @@
 #include <mtao/quadrature/gauss_lobatto.hpp>
 #include <numeric>
 
-#include "vem/utils/parent_maps.hpp"
+#include "vem/two/parent_maps.hpp"
 
-namespace vem {
+namespace vem::two {
 // the vertex_count offsets are so that the internal edges are offset by the
 // boundary ones
 PointSampleIndexer::PointSampleIndexer(const VEMMesh2 &mesh,
@@ -255,8 +255,8 @@ mtao::Vec2d PointSampleIndexer::get_position(size_t index) const {
     }
 }
 std::map<size_t, std::set<size_t>> PointSampleIndexer::sample_faces() const {
-    auto ret = vem::utils::vertex_faces(_mesh);
-    auto edge_face_map = vem::utils::edge_faces(_mesh);
+    auto ret = two::vertex_faces(_mesh);
+    auto edge_face_map = two::edge_faces(_mesh);
     for (size_t eidx = 0; eidx < size(); ++eidx) {
         if (!edge_face_map.contains(eidx)) {
             continue;

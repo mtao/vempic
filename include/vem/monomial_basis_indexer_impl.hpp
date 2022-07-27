@@ -6,7 +6,7 @@ namespace vem {
 
 namespace {
     template<int D>
-    std::vector<size_t> make_num_coeffs(const std::vector<size_t> &s) {
+    std::vector<size_t> make_num_coeffs(std::vector<size_t> s) {
         for (auto &&v : s) {
             if (v == size_t(-1)) {
                 v = 0;
@@ -150,7 +150,7 @@ namespace detail {
 
     template<int D, int E>
     void MonomialBasisIndexer<D, E>::fill_diameters() {
-        static_assert(D == E);
+        //static_assert(D == E);
         // spdlog::info("Filling diameter of a {} {}", D, E);
         _diameters.resize(_mesh.cell_count());
         // first compute the radii - i.e the furthest distance from teh center

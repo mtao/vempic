@@ -1,7 +1,7 @@
-#include "vem/edge_lengths.hpp"
+#include "vem/two/edge_lengths.hpp"
 #include <mtao/iterator/enumerate.hpp>
 
-namespace vem {
+namespace vem::two {
 mtao::VecXd edge_lengths(const VEMMesh2 &mesh) {
     mtao::VecXd L(mesh.edge_count());
     for (int j = 0; j < mesh.edge_count(); ++j) {

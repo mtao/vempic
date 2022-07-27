@@ -2,7 +2,7 @@
 #include <array>
 #include <tuple>
 
-namespace vem {
+namespace vem::utils {
 // names in structured bindings are technically temporaries, and temporaries
 // can't be captured in a lambda. because clang conforms too much to this asepct
 // of the standard we can't do 

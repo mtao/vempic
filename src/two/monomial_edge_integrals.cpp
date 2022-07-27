@@ -1,4 +1,4 @@
-#include "vem/monomial_edge_integrals.hpp"
+#include "vem/two/monomial_edge_integrals.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -6,7 +6,7 @@
 #include <mtao/eigen/stl2eigen.hpp>
 #include <mtao/geometry/edge_monomial_integrals.hpp>
 
-namespace vem {
+namespace vem::two {
 namespace internal {
 template <typename Derived>
 std::vector<double> single_edge_monomial_edge_integrals(

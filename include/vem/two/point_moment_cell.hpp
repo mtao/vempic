@@ -6,7 +6,7 @@
 #include "mesh.hpp"
 #include "moment_basis_indexer.hpp"
 #include "point_sample_indexer.hpp"
-namespace vem {
+namespace vem::two {
 class PointMomentIndexer;
 class PointMomentVEM2Cell : public VEM2Cell {
    public:
@@ -103,7 +103,7 @@ class PointMomentVEM2Cell : public VEM2Cell {
     const MonomialBasisIndexer& monomial_indexer() const;
 
     const MomentBasisIndexer& moment_indexer() const;
-    const RKHSBasisIndexer& point_sample_indexer() const;
+    const PointSampleIndexer& point_sample_indexer() const;
 
    private:
     const PointMomentIndexer* _indexer;

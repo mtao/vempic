@@ -3,7 +3,7 @@
 
 #include "mesh.hpp"
 
-namespace vem {
+namespace vem::two {
 class VEMMesh2Creator {
    public:
     enum class MeshType { Grid, TriangleMesh, Cutmesh, None };

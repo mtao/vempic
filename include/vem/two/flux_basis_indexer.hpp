@@ -1,12 +1,12 @@
 #pragma once
 
-#include "vem/monomial_basis_indexer.hpp"
+#include "vem/two/monomial_basis_indexer.hpp"
 
-namespace vem {
+namespace vem::two {
 class FluxBasisIndexer : public detail::MonomialBasisIndexer<1, 2> {
    public:
     using Base = detail::MonomialBasisIndexer<1, 2>;
-    using MonomialBasisIndexer::MonomialBasisIndexer;
+    using Base::Base;
 
     mtao::Matrix<double, 1, 3> point_to_t(int edge_index) const {
         auto c = center(edge_index);

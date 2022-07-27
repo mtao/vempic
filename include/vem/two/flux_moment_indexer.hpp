@@ -4,7 +4,7 @@
 #include "mesh.hpp"
 #include "vem/monomial_basis_indexer.hpp"
 
-namespace vem {
+namespace vem::two {
 class FluxMomentIndexer {
    public:
     // this is passed by value to allow for moving of the data

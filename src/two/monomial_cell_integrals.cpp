@@ -1,4 +1,4 @@
-#include "vem/monomial_cell_integrals.hpp"
+#include "vem/two/monomial_cell_integrals.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -7,9 +7,9 @@
 #include <mtao/eigen/stl2eigen.hpp>
 #include <mtao/geometry/triangle_monomial_integrals.hpp>
 
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::two {
 namespace internal {
 
 template <typename Derived>

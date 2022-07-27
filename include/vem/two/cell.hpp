@@ -5,7 +5,7 @@
 
 #include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::two {
 
 class VEM2Cell {
    public:

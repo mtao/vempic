@@ -11,4 +11,8 @@ template <>
 std::function<mtao::Vec2d(const mtao::Vec2d &)>
 MonomialBasisIndexer<2, 2>::monomial_gradient(size_t cell, size_t index) const;
 }
+
+namespace two {
+using MonomialBasisIndexer = detail::MonomialBasisIndexer<2,2>;
+}
 }  // namespace vem

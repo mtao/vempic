@@ -39,7 +39,64 @@ std::vector<size_t> max_edge_samples(const vem::VEMMesh2 &mesh,
 }
 }  // namespace
 
-namespace vem {
+namespace vem::utils {
+template <>
+template <int D>
+mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::PointMomentIndexer>::
+    homogeneous_boundary_coefficients_from_point_function(
+        const std::function<
+            typename mtao::Vector<double, D>(const mtao::Vec2d &)> &f,
+        const mtao::ColVecs2d &P,
+        const std::vector<std::set<int>> &cell_particles,
+        const std::set<int> &active_cells) const {
+    mtao::ColVectors<double, D + 1> R(D + 1, indexer.boundary_size());
+    R.setZero();
+    auto Dat = R.template topRows<D>();
+    auto W = R.row(D);
+    W.setConstant(1);
+    tbb::parallel_for(size_t(0), indexer.point_sample_size(), [&](size_t j) {
+        mtao::Vec2d p = indexer.point_sample_indexer().get_position(j);
+        Dat.col(j) = f(p);
+    });
+    return R;
+}
+
+template <>
+template <int D>
+mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::PointMomentIndexer>::
+    homogeneous_boundary_coefficients_from_point_values(
+        const mtao::ColVectors<double, D> &V, const mtao::ColVecs2d &P,
+        const std::vector<std::set<int>> &cell_particles,
+        const std::set<int> &active_cells, const RBFFunc &rbf) const {
+    mtao::ColVectors<double, D + 1> R(D + 1, indexer.boundary_size());
+
+    auto Dat = R.template topRows<D>();
+    auto W = R.row(D);
+
+    W.setZero();
+    auto B = Dat.leftCols(W.size());
+    B.setZero();
+    for (auto &&[cell_index, particles] :
+         mtao::iterator::enumerate(cell_particles)) {
+        auto c = indexer.get_cell(cell_index);
+        for (auto &&point_sample_index : c.point_sample_indices()) {
+            auto s =
+                indexer.point_sample_indexer().get_position(point_sample_index);
+            auto sample_vel = Dat.col(point_sample_index);
+            double &weight_sum = W(point_sample_index);
+            for (auto &&p : particles) {
+                double weight =
+                    rbf(s, P.col(p));  // * (p - center).normalized();
+
+                weight_sum += weight;
+                sample_vel += weight * V.col(p);
+            }
+        }
+    }
+    return R;
+}
+}
+namespace vem::two {
 
 PointMomentVEM2Cell PointMomentIndexer::get_cell(size_t index) const {
     return PointMomentVEM2Cell(*this, index);
@@ -316,7 +373,7 @@ PointMomentIndexer::_homogeneous_coefficients_from_point_values(
     const std::function<double(const mtao::Vec2d &, const mtao::Vec2d &)> &rbf,
     const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator<PointMomentIndexer> ca(*this);
+    CoefficientAccumulator<PointMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_values(V, P, cell_particles,
                                                          active_cells, rbf);
 }
@@ -327,7 +384,7 @@ PointMomentIndexer::_homogeneous_coefficients_from_point_sample_function(
         &f,
     const mtao::ColVecs2d &P, const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator<PointMomentIndexer> ca(*this);
+    CoefficientAccumulator<PointMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_function(f, P, cell_particles,
                                                            active_cells);
 }

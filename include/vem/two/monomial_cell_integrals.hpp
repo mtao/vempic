@@ -4,7 +4,7 @@
 
 #include "mesh.hpp"
 
-namespace vem {
+namespace vem::two {
 
 mtao::VecXd monomial_cell_integrals(const VEMMesh2 &mesh, int index, int max_degree);
 mtao::VecXd monomial_cell_integrals(const VEMMesh2 &mesh, int index, int max_degree, const mtao::Vec2d &center);
