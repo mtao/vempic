@@ -1,7 +1,7 @@
-#include "vem/visualize/asset_viewer.hpp"
+#include "vem/two/visualize/asset_viewer.hpp"
 
-namespace vem::visualize {
-bool AssetViewer::load(const Inventory& inv, const std::string& name) {
+namespace vem::two::visualize {
+bool AssetViewer::load(const serialization::Inventory& inv, const std::string& name) {
     const auto& meta = my_inv.asset_metadata(name);
     std::string type = meta["type"];
     std::string storage_type = meta["storage_type"];
@@ -10,7 +10,9 @@ bool AssetViewer::load(const Inventory& inv, const std::string& name) {
         spdlog::warn(
             "Viewer[{}] cannot open storage type {}. Valid types are [{}]",
             viewer_type(), storage_type, fmt::join(valid_storage_types(), ";"));
+        return false;
     }
+    return true;
 }
 
 bool AssetViewer::valid_type(const std::string& name) const {

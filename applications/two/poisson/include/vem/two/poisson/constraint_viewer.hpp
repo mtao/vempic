@@ -7,15 +7,15 @@
 #include <map>
 #include <mtao/python/load_python_function.hpp>
 #include <mtao/types.hpp>
-#include <vem/mesh.hpp>
+#include <vem/two/mesh.hpp>
 
-#include "vem/poisson_2d/constraints.hpp"
-#include "vem/visualize/vem_scalar_field_viewer.hpp"
+#include "vem/two/poisson/constraints.hpp"
+#include "vem/two/visualize/vem_scalar_field_viewer.hpp"
 
 namespace vem::serialization {
 class Inventory;
 }
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 struct ScalarConstraintsGui : public ScalarConstraints,
                               public mtao::opengl::Object2D,

@@ -1,18 +1,18 @@
-#include "vem/poisson_2d/poisson_vem_cell.hpp"
+#include "vem/two/poisson/cell.hpp"
 
 #include <spdlog/spdlog.h>
 
 #include <mtao/quadrature/gauss_lobatto.hpp>
 #include <ranges>
-#include <vem/edge_lengths.hpp>
-#include <vem/monomial_cell_integrals.hpp>
-#include <vem/monomial_edge_integrals.hpp>
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
-#include <vem/utils/volumes.hpp>
+#include <vem/two/edge_lengths.hpp>
+#include <vem/two/monomial_cell_integrals.hpp>
+#include <vem/two/monomial_edge_integrals.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
+#include <vem/two/volumes.hpp>
 using namespace vem::polynomials::two;
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 PoissonVEM2Cell::PoissonVEM2Cell(const VEMMesh2 &mesh, size_t index,
                                  const PointSampleIndexer &a,

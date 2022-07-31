@@ -1,4 +1,4 @@
-#include "vem/poisson_2d/constraint_viewer.hpp"
+#include "vem/two/poisson/constraint_viewer.hpp"
 #include <vem/serialization/inventory.hpp>
 #include <fstream>
 
@@ -9,9 +9,9 @@
 #include <pybind11/eigen.h>
 #include <spdlog/spdlog.h>
 
-#include "vem/poisson_2d/example_constraints.hpp"
+#include "vem/two/poisson/example_constraints.hpp"
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 ScalarConstraintsGui::ScalarConstraintsGui(
     const visualize::VEM2ScalarFieldViewer &viewer,
     Magnum::SceneGraph::DrawableGroup2D *group)
@@ -98,7 +98,7 @@ void ScalarConstraintsGui::update_boundary_condition_from_func(
         return;
     }
     try {
-        *this = vem::poisson_2d::neumann_from_boundary_function(
+        *this = neumann_from_boundary_function(
             m,
             [&](const mtao::Vec2d &a,
                 double t) -> std::tuple<mtao::Vec2d, double> {
@@ -160,17 +160,17 @@ bool ScalarConstraintsGui::gui(const VEMMesh2 &mesh) {
         }
 
         if (ImGui::Button("Linear Dirichlet Boundaries")) {
-            *this = vem::poisson_2d::linear_function_dirichlet(
+            *this = linear_function_dirichlet(
                 mesh, poly_constant, poly_linear.cast<double>());
             ret = true;
         }
         if (ImGui::Button("Linear Neumann")) {
-            *this = vem::poisson_2d::linear_function_neumann(
+            *this = linear_function_neumann(
                 mesh, poly_constant, poly_linear.cast<double>());
             ret = true;
         }
         if (ImGui::Button("Zero Dirichlet Boundary")) {
-            *this = vem::poisson_2d::linear_function_dirichlet(
+            *this = linear_function_dirichlet(
                 mesh, 0, mtao::Vec2d::Zero());
             ret = true;
         }

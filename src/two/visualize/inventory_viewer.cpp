@@ -1,8 +1,8 @@
-#include "vem/visualize/inventory_viewer.hpp"
+#include "vem/two/visualize/inventory_viewer.hpp"
 
 #include <imgui.h>
 
-#include "vem/creator2.hpp"
+#include "vem/two/creator.hpp"
 #include "vem/serialization//serialize_eigen.hpp"
 namespace {
 
@@ -50,7 +50,7 @@ bool ListBox(const char* label, int* currIndex,
 
 }  // namespace ImGui
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 
 template <typename DataMap>
 auto InventoryViewer::update_data(const std::string& current,
@@ -480,17 +480,17 @@ void InventoryViewer::create_mesh() {
     const auto& meta = _inventory->metadata();
     if (meta.contains("per_degrees")) {
         const auto& degs = meta.at("per_degrees");
-        monomial_indexer = std::make_shared<vem::MonomialBasisIndexer>(
+        monomial_indexer = std::make_shared<MonomialBasisIndexer>(
             *_mesh, degs.get<std::vector<size_t>>());
-        monomial_indexer_up = std::make_shared<vem::MonomialBasisIndexer>(
+        monomial_indexer_up = std::make_shared<MonomialBasisIndexer>(
             monomial_indexer->antiderivative_indexer());
 
     } else if (meta.contains("degree")) {
         int degree = meta.at("degree");
         monomial_indexer =
-            std::make_shared<vem::MonomialBasisIndexer>(*_mesh, degree);
+            std::make_shared<MonomialBasisIndexer>(*_mesh, degree);
 
-        monomial_indexer_up = std::make_shared<vem::MonomialBasisIndexer>(
+        monomial_indexer_up = std::make_shared<MonomialBasisIndexer>(
             monomial_indexer->antiderivative_indexer());
     } else {
         spdlog::error("Metadta does not include a degree");

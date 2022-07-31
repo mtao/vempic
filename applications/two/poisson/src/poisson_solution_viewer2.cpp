@@ -11,20 +11,20 @@
 #include <mtao/opengl/shaders/vector_field.hpp>
 #include <mtao/solvers/linear/preconditioned_conjugate_gradient.hpp>
 #include <optional>
-#include <vem/monomial_field_embedder.hpp>
-#include <vem/poisson_2d/constraint_viewer.hpp>
-#include <vem/poisson_2d/example_constraints.hpp>
-#include <vem/poisson_2d/poisson_vem.hpp>
-#include <vem/utils/boundary_facets.hpp>
-#include <vem/visualize/vem_mesh_creation_gui.hpp>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/monomial_field_embedder.hpp>
+#include <vem/two/poisson/constraint_viewer.hpp>
+#include <vem/two/poisson/example_constraints.hpp>
+#include <vem/two/poisson/poisson.hpp>
+#include <vem/two/boundary_facets.hpp>
+#include <vem/two/visualize/vem_mesh_creation_gui.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
 
 class VemViewer2d : public mtao::opengl::Window2 {
    public:
-    std::shared_ptr<const vem::VEMMesh2> mesh;
-    std::optional<vem::poisson_2d::PoissonVEM2> poisson_vem;
-    std::optional<vem::MonomialVectorFieldEmbedder> vector_field;
-    std::optional<vem::poisson_2d::ScalarConstraintsGui> constraints;
+    std::shared_ptr<const vem::two::VEMMesh2> mesh;
+    std::optional<vem::two::poisson::PoissonVEM2> poisson_vem;
+    std::optional<vem::two::MonomialVectorFieldEmbedder> vector_field;
+    std::optional<vem::two::poisson::ScalarConstraintsGui> constraints;
     // set of cells used for each region
     std::vector<std::set<int>> cell_regions;
     // our currently chosen region
@@ -44,10 +44,10 @@ class VemViewer2d : public mtao::opengl::Window2 {
 
    private:
     mtao::opengl::PolynomialScalarFieldShader<2> poly_shader;
-    std::optional<vem::visualize::VEM2ScalarFieldViewer> pmesh;
+    std::optional<vem::two::visualize::VEM2ScalarFieldViewer> pmesh;
     Magnum::SceneGraph::DrawableGroup2D post_mesh_drawables;
 
-    vem::visualize::VEMMesh2CreationGui mesh_gui;
+    vem::two::visualize::VEMMesh2CreationGui mesh_gui;
     mtao::opengl::objects::Mesh<2> boundary_mesh;
     mtao::opengl::MeshDrawable<Magnum::Shaders::Flat2D>
         *boundary_mesh_drawable = nullptr;
@@ -125,7 +125,7 @@ void VemViewer2d::refresh_mesh_visualization() {
     cell_regions = mesh->cell_regions();
     poisson_vem.emplace(*mesh, system_degree);
     pmesh.emplace(*mesh,
-                  std::make_shared<vem::MonomialBasisIndexer>(
+                  std::make_shared<vem::two::MonomialBasisIndexer>(
                       poisson_vem->monomial_indexer()),
                   &drawables());
     vector_field.emplace(poisson_vem->monomial_indexer());
@@ -150,9 +150,9 @@ void VemViewer2d::refresh_mesh_visualization() {
     std::cout << P.rows() << std::endl;
     pmesh->set_coefficients(P);
     pmesh->set_scales(mtao::eigen::stl2eigen(
-        poisson_vem->monomial_indexer().cell_diameters()));
+        poisson_vem->monomial_indexer().diameters()));
     pmesh->set_degrees(
-        mtao::eigen::stl2eigen(poisson_vem->monomial_indexer().cell_degrees())
+        mtao::eigen::stl2eigen(poisson_vem->monomial_indexer().degrees())
             .cast<int>());
 
     pmesh->set_degrees(mtao::VecXi::Constant(mesh->cell_count(), 2));
@@ -278,17 +278,17 @@ void VemViewer2d::gui() {
         }
 
         if (ImGui::Button("Linear Dirichlet Boundaries")) {
-            *constraints = vem::poisson_2d::linear_function_dirichlet(
+            *constraints = vem::two::poisson::linear_function_dirichlet(
                 *mesh, poly_constant, poly_linear.cast<double>());
             update_constraint_view();
         }
         if (ImGui::Button("Linear Neumann")) {
-            *constraints = vem::poisson_2d::linear_function_neumann(
+            *constraints = vem::two::poisson::linear_function_neumann(
                 *mesh, poly_constant, poly_linear.cast<double>());
             update_constraint_view();
         }
         if (ImGui::Button("Zero Dirichlet Boundary")) {
-            *constraints = vem::poisson_2d::linear_function_dirichlet(
+            *constraints = vem::two::poisson::linear_function_dirichlet(
                 *mesh, 0, mtao::Vec2d::Zero());
             update_constraint_view();
         }
@@ -387,8 +387,8 @@ void VemViewer2d::solve_constraints() {
 }
 
 void VemViewer2d::view_boundary_vertices() {
-    auto boundary_vertices = vem::utils::boundary_vertices(*mesh);
-    auto boundary_edges_map = vem::utils::boundary_edge_map(*mesh);
+    auto boundary_vertices = vem::two::boundary_vertices(*mesh);
+    auto boundary_edges_map = boundary_edge_map(*mesh);
     std::set<size_t> boundary_edges;
     for (auto &&[a, b] : boundary_edges_map) {
         boundary_edges.emplace(a);

@@ -1,10 +1,10 @@
-#include "vem/visualize/vem_scalar_field_viewer.hpp"
+#include "vem/two/visualize/vem_scalar_field_viewer.hpp"
 
 #include <Magnum/GL/Renderer.h>
 
 #include <mtao/eigen/stack.hpp>
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 
 VEM2ScalarFieldViewer::VEM2ScalarFieldViewer(
     const VEMMesh2 &mesh, std::shared_ptr<const MonomialBasisIndexer> mi,

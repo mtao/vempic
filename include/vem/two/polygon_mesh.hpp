@@ -4,7 +4,7 @@
 
 #include "mesh.hpp"
 
-namespace vem {
+namespace vem::two {
 
 class PolygonVEMMesh2 : public VEMMesh2 {
    public:

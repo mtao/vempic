@@ -1,7 +1,7 @@
-#include "vem/mesh.hpp"
-#include "vem/poisson_2d/constraints.hpp"
+#include "vem/two/mesh.hpp"
+#include "vem/two/poisson/constraints.hpp"
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 // constructs dirichlet boundary conditions for a linear function
 ScalarConstraints linear_function_dirichlet(const VEMMesh2 &mesh,
                                             const double constant,

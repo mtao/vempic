@@ -7,13 +7,13 @@
 
 #include <mtao/opengl/shaders/vector_field.hpp>
 #include <set>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
 
 #include "vem/serialization/frame_inventory.hpp"
 #include "vem/serialization/inventory.hpp"
-#include "vem/visualize/inventory_viewer.hpp"
+//#include "vem/two/visualize/inventory_viewer.hpp"
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 
 class InventoryViewer : public mtao::opengl::Object2D,
                         Magnum::SceneGraph::Drawable2D {
@@ -61,8 +61,8 @@ class InventoryViewer : public mtao::opengl::Object2D,
 
     std::shared_ptr<const VEMMesh2> _mesh;
     int frame_index = 0;
-    std::shared_ptr<vem::MonomialBasisIndexer> monomial_indexer;
-    std::shared_ptr<vem::MonomialBasisIndexer> monomial_indexer_up;
+    std::shared_ptr<MonomialBasisIndexer> monomial_indexer;
+    std::shared_ptr<MonomialBasisIndexer> monomial_indexer_up;
 
     std::map<std::string, std::vector<std::string>> assets_by_type;
 
@@ -100,7 +100,7 @@ class InventoryViewer : public mtao::opengl::Object2D,
     const std::string &current_point_vector() const;
 
     // actual vis
-    vem::visualize::VEM2ScalarFieldViewer scalar_field_viewer;
+    VEM2ScalarFieldViewer scalar_field_viewer;
     // vis setup
     void update_scalar_field();
     // vis data

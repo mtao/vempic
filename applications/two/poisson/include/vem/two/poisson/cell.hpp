@@ -1,12 +1,12 @@
 #pragma once
 #include <Eigen/Sparse>
-#include <vem/cell.hpp>
-#include <vem/mesh.hpp>
-#include <vem/moment_basis_indexer.hpp>
-#include <vem/monomial_basis_indexer.hpp>
-#include <vem/point_sample_indexer.hpp>
+#include <vem/two/cell.hpp>
+#include <vem/two/mesh.hpp>
+#include <vem/two/moment_basis_indexer.hpp>
+#include <vem/two/monomial_basis_indexer.hpp>
+#include <vem/two/point_sample_indexer.hpp>
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 class PoissonVEM2Cell : public VEM2Cell {
    public:

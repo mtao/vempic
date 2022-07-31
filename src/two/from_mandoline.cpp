@@ -27,12 +27,4 @@ MandolineVEMMesh2 from_mandoline(const Eigen::AlignedBox<double, 2> &bb, int nx,
 
     return from_mandoline(ccm, delaminate);
 }
-std::set<int> MandolineVEMMesh2::boundary_edge_indices() const {
-    if (boundary_edges.empty()) {
-        return mandoline::operators::region_boundaries(_ccm);
-    } else {
-        return boundary_edges;
-        // return VEMMesh2::boundary_edge_indices();
-    }
-}
 }  // namespace vem

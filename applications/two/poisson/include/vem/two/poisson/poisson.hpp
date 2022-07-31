@@ -1,14 +1,14 @@
 #pragma once
 #include <Eigen/Sparse>
-#include <vem/mesh.hpp>
-#include <vem/moment_basis_indexer.hpp>
-#include <vem/monomial_basis_indexer.hpp>
-#include <vem/point_sample_indexer.hpp>
+#include <vem/two/mesh.hpp>
+#include <vem/two/moment_basis_indexer.hpp>
+#include <vem/two/monomial_basis_indexer.hpp>
+#include <vem/two/point_sample_indexer.hpp>
 
-#include "vem/poisson_2d/constraints.hpp"
-#include "vem/poisson_2d/poisson_vem_cell.hpp"
+#include "vem/two/poisson/constraints.hpp"
+#include "vem/two/poisson/cell.hpp"
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 struct PoissonVEM2 {
     enum class CellWeightWeightMode : char { Unweighted, AreaWeighted };
     PoissonVEM2Cell get_cell(size_t index) const;

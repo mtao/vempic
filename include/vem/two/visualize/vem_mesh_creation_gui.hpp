@@ -6,10 +6,10 @@
 #include <Magnum/SceneGraph/Object.h>
 #include <mtao/opengl/drawables.h>
 
-#include "vem/creator2.hpp"
+#include "vem/two/creator.hpp"
 
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 class VEMMesh2CreationGui : public mtao::opengl::Object2D,
                             Magnum::SceneGraph::Drawable2D, public VEMMesh2Creator {
    public:

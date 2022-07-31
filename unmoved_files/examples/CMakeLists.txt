@@ -28,11 +28,6 @@ ADD_EXECUTABLE(test_creating_cutmesh
     test_creating_cutmesh.cpp
     )
 TARGET_LINK_LIBRARIES(test_creating_cutmesh vem)
-if(VEM_USE_OPENGL)
-ADD_EXECUTABLE(poisson2_example
-    poisson2_example.cpp
-    )
-TARGET_LINK_LIBRARIES(poisson2_example poisson_vem2)
 
 ADD_EXECUTABLE(flux_moment_example flux_moment_example.cpp
     )
@@ -56,14 +51,8 @@ TARGET_LINK_LIBRARIES(moment_sample_reconstruction_experiment3 vem
     cxxopts
     OpenMP::OpenMP_CXX)
 
-ADD_EXECUTABLE(poisson_solution_viewer2
-    poisson_solution_viewer2.cpp
-    )
-TARGET_LINK_LIBRARIES(poisson_solution_viewer2 poisson_vem2 vem_visualize
 
-    MagnumPlugins::PngImageConverter
-    )
-
+if(VEM_USE_OPENGL)
 ADD_EXECUTABLE(wavesim_gui_example2
     wavesim_gui_example2.cpp
     )

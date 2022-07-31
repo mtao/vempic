@@ -1,9 +1,9 @@
-#include <vem/normals.hpp>
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/two/normals.hpp>
+#include <vem/two/boundary_facets.hpp>
 
-#include "vem/poisson_2d/constraints.hpp"
+#include "vem/two/poisson/constraints.hpp"
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 // constructs dirichlet boundary conditions for a linear function
 ScalarConstraints linear_function_dirichlet(const VEMMesh2 &mesh,
@@ -40,7 +40,7 @@ ScalarConstraints linear_function_neumann(const VEMMesh2 &mesh,
 
     auto &pd = con.edge_integrated_flux_neumann;
     auto Es = mesh.boundary_edge_indices();
-    auto N = vem::normals(mesh);
+    auto N = normals(mesh);
 
     for (auto &&eidx : Es) {
         auto e = mesh.E.col(eidx);
@@ -94,7 +94,7 @@ ScalarConstraints neumann_from_boundary_function(
 
     auto &pd = con.edge_integrated_flux_neumann;
     auto Es = mesh.boundary_edge_indices();
-    auto N = vem::normals(mesh);
+    auto N = normals(mesh);
 
     for (auto &&eidx : Es) {
         auto e = mesh.E.col(eidx);

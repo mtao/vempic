@@ -95,8 +95,8 @@ set(VEM_TWO_SRCS
     src/two/monomial_cell_integrals.cpp 
     src/two/monomial_face_integrals.cpp 
 
-    #src/two/from_polygons.cpp
-    #src/two/polygon_mesh.cpp
+    src/two/from_polygons.cpp
+    src/two/polygon_mesh.cpp
     )
 
 set(VEM_THREE_SRCS
@@ -153,15 +153,18 @@ target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt
 target_include_directories(vem_serialization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 #
 #
-#if(VEM_USE_OPENGL)
-#add_library(vem_visualize
-#    src/visualize/vem_scalar_field_viewer.cpp
-#    src/visualize/vem_mesh_creation_gui.cpp
-#    src/visualize/inventory_viewer.cpp
-#    )
-#target_link_libraries(vem_visualize PUBLIC vem mtao::visualization
-#    nlohmann_json::nlohmann_json)
-#endif()
+if(VEM_USE_OPENGL)
+add_library(vem_visualize
+    src/two/visualize/vem_scalar_field_viewer.cpp
+    src/two/visualize/vem_mesh_creation_gui.cpp
+    src/two/visualize/inventory_viewer.cpp
+
+    # Not used:
+    #src/two/visualize/asset_viewer.cpp
+    )
+target_link_libraries(vem_visualize PUBLIC vem mtao::visualization
+    nlohmann_json::nlohmann_json)
+endif()
 #
 #
 #if(BUILD_TESTING AND CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)

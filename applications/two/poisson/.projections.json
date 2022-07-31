@@ -1,0 +1,8 @@
+{
+    "src/*.cpp": {
+        "alternate": "include/vem/two/poisson/{}.hpp"
+    },
+    "include/vem/two/poisson/*.hpp": {
+        "alternate": "src/{}.cpp"
+    }
+}

@@ -4,15 +4,15 @@
 #include <set>
 #include <string>
 
-#include "vem/visualize/inventory.hpp"
+#include "vem/serialization/inventory.hpp"
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 
-class AssetViewer : public mtao::opengl::objects::Object2D {
+class AssetViewer : public mtao::opengl::Object2D {
    public:
     AssetViewer();
-    AssetViewer(const Inventory& inv, const std::string& name);
-    bool load(const Inventory& inv, const std::string& name);
+    AssetViewer(const serialization::Inventory& inv, const std::string& name);
+    bool load(const serialization::Inventory& inv, const std::string& name);
 
     virtual std::string viewer_type() const = 0;
 
@@ -22,7 +22,7 @@ class AssetViewer : public mtao::opengl::objects::Object2D {
     virtual std::set<std::string> valid_storage_types() const = 0;
 
    protected:
-    virtual bool load_implementation(const Inventory& inv,
+    virtual bool load_implementation(const serialization::Inventory& inv,
                                      const std::string& name) const = 0;
 };
 

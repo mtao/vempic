@@ -2,7 +2,7 @@
 
 #include "polygon_mesh.hpp"
 
-namespace vem {
+namespace vem::two {
 
 // generates VEMMeshes. by default the centers chosen are centroidal
 PolygonVEMMesh2 from_polygons(const mtao::ColVecs2d &V,

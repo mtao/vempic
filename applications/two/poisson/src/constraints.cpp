@@ -1,8 +1,8 @@
-#include "vem/poisson_2d/constraints.hpp"
+#include "vem/two/poisson/constraints.hpp"
 
 #include <set>
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 void ScalarConstraints::clear() { *this = ScalarConstraints(); }
 bool ScalarConstraints::empty() const {
     return !(pointwise_dirichlet.empty() && pointwise_neumann.empty() && edge_integrated_flux_neumann.empty() && edge_dirichlet.empty() && edge_flux_neumann.empty() && !bool(mean_value));

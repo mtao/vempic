@@ -3,10 +3,10 @@
 
 #include <mtao/opengl/objects/partitioned_polynomial_shaded_mesh.hpp>
 
-#include "vem/mesh.hpp"
-#include "vem/monomial_basis_indexer.hpp"
+#include "vem/two/mesh.hpp"
+#include "vem/two/monomial_basis_indexer.hpp"
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 
 class VEM2ScalarFieldViewer
     : public mtao::opengl::objects::PartitionedPolynomialShadedMesh<2> {

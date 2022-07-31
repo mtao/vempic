@@ -4,15 +4,15 @@
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
 #include <mtao/iterator/enumerate.hpp>
 #include <mtao/solvers/linear/preconditioned_conjugate_gradient.hpp>
-#include <vem/from_polygons.hpp>
-#include <vem/mesh.hpp>
-#include <vem/monomial_cell_integrals.hpp>
-#include <vem/polynomial_utils.hpp>
-#include <vem/point_sample_indexer.hpp>
+#include <vem/two/from_polygons.hpp>
+#include <vem/two/mesh.hpp>
+#include <vem/two/monomial_cell_integrals.hpp>
+#include <vem/polynomials/utils.hpp>
+#include <vem/two/point_sample_indexer.hpp>
 
-#include "vem/poisson_2d/poisson_vem.hpp"
+#include "vem/two/poisson/poisson.hpp"
 
-void show_operator(const vem::poisson_2d::PoissonVEM2 &mesh) {
+void show_operator(const vem::two::poisson::PoissonVEM2 &mesh) {
     auto c = mesh.get_cell(0);
     // auto G = c.G();
     // std::cout << "G: " << std::endl;
@@ -170,10 +170,10 @@ void show_operator(const vem::poisson_2d::PoissonVEM2 &mesh) {
     // std::cout << c.CoGrad() * c.Grad() << std::endl;
 }
 
-void show_operators(const vem::VEMMesh2 &vem, int max_degree) {
+void show_operators(const vem::two::VEMMesh2 &vem, int max_degree) {
     spdlog::info("max degree = {}", max_degree);
     show_operator(
-      vem::poisson_2d::PoissonVEM2(vem, max_degree, max_degree - 1));
+      vem::two::poisson::PoissonVEM2(vem, max_degree, max_degree - 1));
 }
 
 int main(int argc, char *argv[]) {
@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
     P.col(2) << 1, 1;
     P.col(3) << 0, 1;
 
-    auto vem = vem::from_polygons(polys);
+    auto vem = vem::two::from_polygons(polys);
     show_operators(vem, 1);
     show_operators(vem, 3);
     show_operators(vem, 4);

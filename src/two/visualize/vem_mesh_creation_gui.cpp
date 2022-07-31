@@ -1,4 +1,4 @@
-#include "vem/visualize/vem_mesh_creation_gui.hpp"
+#include "vem/two/visualize/vem_mesh_creation_gui.hpp"
 
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <fstream>
 
-namespace vem::visualize {
+namespace vem::two::visualize {
 VEMMesh2CreationGui::VEMMesh2CreationGui(
     mtao::opengl::Object2D *parent, Magnum::SceneGraph::DrawableGroup2D *group)
     : mtao::opengl::Object2D{parent},

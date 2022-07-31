@@ -3,7 +3,7 @@
 #include <mtao/types.hpp>
 #include <optional>
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 struct ScalarConstraints {
     std::map<size_t, double> pointwise_dirichlet;

@@ -1,4 +1,4 @@
-#include "vem/poisson_2d/poisson_vem.hpp"
+#include "vem/two/poisson/poisson.hpp"
 
 #include <omp.h>
 
@@ -6,18 +6,18 @@
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
 #include <mtao/eigen/stack.hpp>
 //#include <vem/cells/l2_cell.hpp>
-#include <vem/edge_lengths.hpp>
-#include <vem/monomial_cell_integrals.hpp>
-#include <vem/monomial_edge_integrals.hpp>
-#include <vem/normals.hpp>
-#include <vem/polynomial_gradient.hpp>
+#include <vem/two/edge_lengths.hpp>
+#include <vem/two/monomial_cell_integrals.hpp>
+#include <vem/two/monomial_edge_integrals.hpp>
+#include <vem/two/normals.hpp>
+#include <vem/polynomials/gradient.hpp>
 #include <vem/utils/cell_identifier.hpp>
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
 #include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
-#include <vem/utils/volumes.hpp>
+#include <vem/two/parent_maps.hpp>
+#include <vem/two/volumes.hpp>
 
-namespace vem::poisson_2d {
+namespace vem::two::poisson {
 
 PoissonVEM2::PoissonVEM2(const VEMMesh2 &_mesh, size_t max_degree)
     : PoissonVEM2(_mesh, max_degree, std::max<size_t>(0, max_degree - 1)) {}
@@ -40,7 +40,7 @@ PoissonVEM2::PoissonVEM2(const VEMMesh2 &mesh, std::vector<size_t> max_degrees,
       _moment_indexer(_mesh, std::move(moment_degrees), std::move(diameters)) {}
 
 PoissonVEM2 PoissonVEM2::relative_order_mesh(int relative_order) const {
-    auto degrees = _monomial_indexer.cell_degrees();
+    auto degrees = _monomial_indexer.degrees();
 
     for (auto &&deg : degrees) {
         deg = std::max<size_t>(0, deg - relative_order);
@@ -51,9 +51,9 @@ PoissonVEM2 PoissonVEM2::relative_order_mesh(int relative_order) const {
         k = std::max<size_t>(0, k - relative_order);
     }
 
-    auto diameters = _monomial_indexer.cell_diameters();
+    auto diameters = _monomial_indexer.diameters();
 
-    auto moment_degrees = _moment_indexer.cell_degrees();
+    auto moment_degrees = _moment_indexer.degrees();
 
     for (auto &&k : moment_degrees) {
         k = std::max<size_t>(0, k - relative_order);
@@ -250,8 +250,8 @@ std::tuple<Eigen::SparseMatrix<double>, mtao::VecXd> PoissonVEM2::kkt_system(
 std::tuple<Eigen::SparseMatrix<double>, mtao::VecXd>
 PoissonVEM2::point_constraint_matrix(const ScalarConstraints &constraints,
                                      const std::set<int> &used_cells) const {
-    auto vertex_face_map = vem::utils::vertex_faces(_mesh);
-    auto edge_face_map = vem::utils::edge_faces(_mesh);
+    auto vertex_face_map = vertex_faces(_mesh);
+    auto edge_face_map = edge_faces(_mesh);
     std::vector<Eigen::Triplet<double>> trips;
 
     std::list<double> rhs_values;
@@ -332,8 +332,8 @@ std::tuple<Eigen::SparseMatrix<double>, mtao::VecXd>
 PoissonVEM2::polynomial_constraint_matrix(
     const ScalarConstraints &constraints,
     const std::set<int> &used_cells) const {
-    auto vertex_face_map = vem::utils::vertex_faces(_mesh);
-    auto edge_face_map = vem::utils::edge_faces(_mesh);
+    auto vertex_face_map = vertex_faces(_mesh);
+    auto edge_face_map = edge_faces(_mesh);
     std::vector<Eigen::Triplet<double>> trips;
 
     std::list<double> rhs_values;
@@ -369,7 +369,7 @@ PoissonVEM2::polynomial_constraint_matrix(
                                    n(1) * G.bottomRows(num_monomials));
 
             auto edge_integrals =
-                vem::single_edge_scaled_monomial_edge_integrals(
+                single_edge_scaled_monomial_edge_integrals(
                     _mesh, fidx, edge_idx, c.diameter(), c.monomial_degree());
             mtao::RowVecXd row =
                 mtao::eigen::stl2eigen(edge_integrals).transpose() * GN;
@@ -401,7 +401,7 @@ Eigen::SparseMatrix<double> PoissonVEM2::polynomial_to_sample_evaluation_matrix(
             weights.setConstant(1);
             break;
         case CellWeightWeightMode::AreaWeighted:
-            weights = utils::volumes(_mesh);
+            weights = volumes(_mesh);
     }
 
     std::vector<Eigen::Triplet<double>> trips;
