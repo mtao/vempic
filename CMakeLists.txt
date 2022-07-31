@@ -44,7 +44,6 @@ set(VEM_POLY_SRCS
 #add_library(vem 
 set(STUFF
     #src/monomial_basis_indexer.cpp
-    src/utils/face_boundary_facets.cpp
     src/utils/merge_cells.cpp
     src/utils/monomial_coefficient_projection.cpp
     src/utils/boundary_intersector3.cpp
@@ -113,6 +112,7 @@ set(VEM_THREE_SRCS
     #src/three/cell.cpp
     #src/three/creator.cpp
     #src/three/flux_moment_cell3.cpp
+    #src/utils/face_boundary_facets.cpp
     )
 
 set(VEM_SRCS
@@ -168,6 +168,7 @@ target_include_directories(vem_serialization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/
 #    ADD_SUBDIRECTORY(tests)
 #endif()
 
+add_subdirectory(applications)
 #add_subdirectory(poisson_2d)
 #add_subdirectory(fluidsim_2d)
 #add_subdirectory(fluidsim_3d)

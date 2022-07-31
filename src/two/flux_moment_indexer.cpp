@@ -7,7 +7,7 @@
 
 #include "vem/two/boundary_facets.hpp"
 #include "vem/two/cells_adjacent_to_edge.hpp"
-#include "vem/utils/coefficient_accumulator.hpp"
+#include "vem/two/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 
 namespace {
@@ -47,7 +47,7 @@ std::vector<size_t> max_edge_samples(const vem::two::VEMMesh2 &mesh,
 }
 }  // namespace
 
-namespace vem::utils {
+namespace vem::two {
 template <>
 template <int D>
 mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
@@ -329,7 +329,7 @@ FluxMomentIndexer::_homogeneous_coefficients_from_point_values(
     const std::function<double(const mtao::Vec2d &, const mtao::Vec2d &)> &rbf,
     const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator<FluxMomentIndexer> ca(*this);
+    CoefficientAccumulator<FluxMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_values(V, P, cell_particles,
                                                          active_cells, rbf);
 }
@@ -340,7 +340,7 @@ FluxMomentIndexer::_homogeneous_coefficients_from_point_sample_function(
         &f,
     const mtao::ColVecs2d &P, const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator<FluxMomentIndexer> ca(*this);
+    CoefficientAccumulator<FluxMomentIndexer> ca(*this);
     return ca.homogeneous_coefficients_from_point_function(f, P, cell_particles,
                                                            active_cells);
 }

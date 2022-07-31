@@ -5,7 +5,7 @@
 #include <vem/utils/loop_over_active.hpp>
 
 
-namespace vem::utils{
+namespace vem::two {
 template <typename IndexerType>
 struct CoefficientAccumulator {
     const IndexerType &indexer;
