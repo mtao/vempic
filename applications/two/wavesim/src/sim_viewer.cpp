@@ -1,4 +1,4 @@
-#include "vem/wavesim_2d/sim_viewer.hpp"
+#include "vem/two/wavesim/sim_viewer.hpp"
 
 #include <misc/cpp/imgui_stdlib.h>
 #include <omp.h>
@@ -6,7 +6,7 @@
 
 #include <fstream>
 #include <vem/utils/loop_over_active.hpp>
-namespace vem::wavesim_2d {
+namespace vem::two::wavesim {
 
 SimViewer::SimViewer(Sim &sim, mtao::opengl::Object2D *parent,
                      Magnum::SceneGraph::DrawableGroup2D *group)
@@ -148,10 +148,10 @@ void SimViewer::refresh_from_sim() {
 
     scalar_field_viewer.set_degrees(
         mtao::eigen::stl2eigen(
-            _sim.poisson_vem.monomial_indexer().cell_degrees())
+            _sim.poisson_vem.monomial_indexer().degrees())
             .cast<int>());
     scalar_field_viewer.set_scales(mtao::eigen::stl2eigen(
-        _sim.poisson_vem.monomial_indexer().cell_diameters()));
+        _sim.poisson_vem.monomial_indexer().diameters()));
     scalar_field_viewer.update_mesh_visualization();
     if (_sim.pressure.size() > 0) {
         spdlog::info("SimViewer: Updating from viewer");

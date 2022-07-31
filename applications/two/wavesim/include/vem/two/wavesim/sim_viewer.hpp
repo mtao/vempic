@@ -6,14 +6,14 @@
 #include <mtao/opengl/objects/types.h>
 
 #include <mtao/opengl/shaders/vector_field.hpp>
-#include <vem/mesh.hpp>
-#include <vem/poisson_2d/constraint_viewer.hpp>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
-#include <vem/wavesim_2d/sim.hpp>
+#include <vem/two/mesh.hpp>
+#include <vem/two/poisson/constraint_viewer.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/wavesim/sim.hpp>
 
 #include <mtao/python/load_python_function.hpp>
 
-namespace vem::wavesim_2d {
+namespace vem::two::wavesim {
 
 class SimViewer : public mtao::opengl::Object2D,
                   Magnum::SceneGraph::Drawable2D {
@@ -44,7 +44,7 @@ class SimViewer : public mtao::opengl::Object2D,
     Magnum::SceneGraph::DrawableGroup2D foreground_drawables;
 
     // render the resulting pressure field
-    vem::visualize::VEM2ScalarFieldViewer scalar_field_viewer;
+    visualize::VEM2ScalarFieldViewer scalar_field_viewer;
     // vem::poisson_2d::ScalarConstraintsGui constraint_viewer;
 
     // Data for rendering the domain boundary

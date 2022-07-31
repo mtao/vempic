@@ -1,4 +1,4 @@
-#include "vem/wavesim_2d/sim.hpp"
+#include "vem/two/wavesim/sim.hpp"
 
 #include <mtao/eigen/diagonal_to_sparse.hpp>
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
@@ -8,7 +8,7 @@
 #include <vem/serialization/frame_inventory.hpp>
 #include <vem/serialization/serialize_eigen.hpp>
 
-namespace vem::wavesim_2d {
+namespace vem::two::wavesim {
 Sim::Sim(const VEMMesh2& mesh, int degree, serialization::Inventory* parent)
     : poisson_vem(mesh, degree),
 

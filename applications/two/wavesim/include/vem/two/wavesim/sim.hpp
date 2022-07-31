@@ -1,9 +1,9 @@
 #pragma once
-#include <vem/monomial_field_embedder.hpp>
-#include <vem/poisson_2d/poisson_vem.hpp>
+#include <vem/two/monomial_field_embedder.hpp>
+#include <vem/two/poisson/poisson.hpp>
 #include <vem/serialization/prioritizing_inventory.hpp>
 
-namespace vem::wavesim_2d {
+namespace vem::two::wavesim {
 
 class Sim {
   public:
@@ -26,9 +26,9 @@ class Sim {
     double c = .1;
     // domain definition stuff
     std::set<int> active_cells;
-    poisson_2d::ScalarConstraints boundary_conditions;
+    poisson::ScalarConstraints boundary_conditions;
 
-    const vem::poisson_2d::PoissonVEM2 poisson_vem;
+    const poisson::PoissonVEM2 poisson_vem;
     mtao::VecXd pressure;
     mtao::VecXd pressure_previous;
     mtao::VecXd pressure_dtdt;

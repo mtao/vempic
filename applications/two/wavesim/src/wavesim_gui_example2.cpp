@@ -6,12 +6,12 @@
 #include <mtao/geometry/mesh/stack_meshes.hpp>
 #include <mtao/opengl/shaders/polynomial_scalar_field.hpp>
 #include <optional>
-#include <vem/poisson_2d/constraint_viewer.hpp>
-#include <vem/poisson_2d/poisson_vem.hpp>
+#include <vem/two/poisson/constraint_viewer.hpp>
+#include <vem/two/poisson/poisson.hpp>
 #include <vem/utils/boundary_facets.hpp>
-#include <vem/visualize/vem_mesh_creation_gui.hpp>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
-#include <vem/wavesim_2d/sim_viewer.hpp>
+#include <vem/two/visualize/vem_mesh_creation_gui.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/wavesim/sim_viewer.hpp>
 #include <mtao/python/load_python_function.hpp>
 
 template <class T>
@@ -21,9 +21,9 @@ auto stuff_into_unique_ptr(T &&obj) {
 
 class VemViewer2d : public mtao::opengl::Window2 {
    public:
-    std::shared_ptr<const vem::VEMMesh2> mesh;
-    std::optional<vem::wavesim_2d::Sim> sim;
-    std::optional<vem::wavesim_2d::SimViewer> sim_viewer;
+    std::shared_ptr<const vem::two::VEMMesh2> mesh;
+    std::optional<vem::two::wavesim::Sim> sim;
+    std::optional<vem::two::wavesim::SimViewer> sim_viewer;
 
     // set of cells used for each region
     std::vector<std::set<int>> cell_regions;
@@ -40,7 +40,7 @@ class VemViewer2d : public mtao::opengl::Window2 {
 
    private:
     Magnum::SceneGraph::DrawableGroup2D post_mesh_drawables;
-    vem::visualize::VEMMesh2CreationGui mesh_gui;
+    vem::two::visualize::VEMMesh2CreationGui mesh_gui;
 
     bool show_mesh_selection_window = true;
     bool show_sim_window = true;

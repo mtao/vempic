@@ -53,11 +53,6 @@ TARGET_LINK_LIBRARIES(moment_sample_reconstruction_experiment3 vem
 
 
 if(VEM_USE_OPENGL)
-ADD_EXECUTABLE(wavesim_gui_example2
-    wavesim_gui_example2.cpp
-    )
-TARGET_LINK_LIBRARIES(wavesim_gui_example2 wavesim_vem2 vem_visualize
-    mtao::visualization MagnumPlugins::PngImageConverter)
 
 #ADD_EXECUTABLE(gradwavesim_gui_example2
 #    gradwavesim_gui_example2.cpp
