@@ -1,4 +1,4 @@
-#include "vem/utils/cells_adjacent_to_edge.hpp"
+#include "vem/two/cells_adjacent_to_edge.hpp"
 
 #include "vem/utils/loop_over_active.hpp"
 

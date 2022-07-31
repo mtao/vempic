@@ -44,24 +44,18 @@ set(VEM_POLY_SRCS
 #add_library(vem 
 set(STUFF
     #src/monomial_basis_indexer.cpp
-    src/utils/cells_adjacent_to_edge.cpp
-    src/utils/cells_adjacent_to_face.cpp
-    src/utils/cell_boundary_facets.cpp
     src/utils/face_boundary_facets.cpp
-    src/utils/volumes.cpp
     src/utils/merge_cells.cpp
-    src/utils/face_neighboring_cells.cpp
     src/utils/monomial_coefficient_projection.cpp
     src/utils/boundary_intersector3.cpp
     src/utils/in_triangle_mesh.cpp
-    src/cell3.cpp
-    src/creator3.cpp
-    src/flux_moment_cell3.cpp
     )
 
 set(VEM_BASE_SRCS
     src/polygon_boundary_indices.cpp
     src/partitioned_coefficient_indexer.cpp
+    src/utils/face_neighboring_cells.cpp
+    src/utils/boundary_facets.cpp
 )
 
 set(VEM_TWO_SRCS
@@ -83,7 +77,10 @@ set(VEM_TWO_SRCS
     src/two/cell_normals.cpp
     src/two/boundary_intersector.cpp
     src/two/boundary_facets.cpp
+    src/two/cell_boundary_facets.cpp
+    src/two/face_neighboring_cells.cpp
 
+    src/two/volumes.cpp
 
 
     src/two/from_grid.cpp
@@ -106,10 +103,16 @@ set(VEM_TWO_SRCS
 set(VEM_THREE_SRCS
     #src/from_mandoline3.cpp
     #src/from_grid3.cpp
-    #src/mesh3.cpp
+    #src/three/mesh.cpp
     #src/three/flux_moment_indexer.cpp
     #src/monomial_cell_integrals3.cpp 
+    #src/utils/cells_adjacent_to_face.cpp
     #src/monomial_face_integrals3.cpp 
+    #src/three/volumes.cpp
+    #src/three/cell_boundary_facets.cpp
+    #src/three/cell.cpp
+    #src/three/creator.cpp
+    #src/three/flux_moment_cell3.cpp
     )
 
 set(VEM_SRCS

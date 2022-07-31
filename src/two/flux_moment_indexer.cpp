@@ -6,7 +6,6 @@
 #include <vem/utils/loop_over_active.hpp>
 
 #include "vem/two/boundary_facets.hpp"
-#include "vem/two/boundary_facets.hpp"
 #include "vem/two/cells_adjacent_to_edge.hpp"
 #include "vem/utils/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
@@ -63,41 +62,39 @@ mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
     auto Dat = R.template topRows<D>();
     auto W = R.row(D);
     auto edge_cob = edge_coboundary_map(mesh(), active_cells);
-    tbb::parallel_for(
-        int(0), int(mesh().edge_count()), [&](int edge_index) {
-            if (indexer.is_edge_inactive(edge_index)) {
-                return;
-            }
-            auto samples = indexer.weighted_edge_samples(edge_index);
-            const auto &cob = edge_cob.at(edge_index);
-            int sample_count = cob.size() * samples.cols();
-            auto indices =
-                indexer.boundary_indexer().coefficient_indices(edge_index);
-            if (indices.size() == 0) {
-                return;
-            }
+    tbb::parallel_for(int(0), int(mesh().edge_count()), [&](int edge_index) {
+        if (indexer.is_edge_inactive(edge_index)) {
+            return;
+        }
+        auto samples = indexer.weighted_edge_samples(edge_index);
+        const auto &cob = edge_cob.at(edge_index);
+        int sample_count = cob.size() * samples.cols();
+        auto indices =
+            indexer.boundary_indexer().coefficient_indices(edge_index);
+        if (indices.size() == 0) {
+            return;
+        }
 
-            auto pblock = Dat.block(0, *indices.begin(), D, indices.size());
-            auto wblock = W.segment(*indices.begin(), indices.size());
+        auto pblock = Dat.block(0, *indices.begin(), D, indices.size());
+        auto wblock = W.segment(*indices.begin(), indices.size());
 
-            pblock.setZero();
-            double weight_sum = 0;
+        pblock.setZero();
+        double weight_sum = 0;
 
-            for (int j = 0; j < samples.cols(); ++j) {
-                auto s = samples.col(j);
-                auto pt = s.template head<2>();
-                double w = s(2);
-                auto v = f(pt);
-                auto mom =
-                    indexer.boundary_indexer().evaluate_monomials_by_size(
-                        edge_index, pblock.cols(), pt);
-                pblock += w * v * mom.transpose();
-                weight_sum += w;
+        for (int j = 0; j < samples.cols(); ++j) {
+            auto s = samples.col(j);
+            auto pt = s.template head<2>();
+            double w = s(2);
+            auto v = f(pt);
+            auto mom = indexer.boundary_indexer().evaluate_monomials_by_size(
+                edge_index, pblock.cols(), pt);
+            pblock += w * v * mom.transpose();
+            weight_sum += w;
 
-                // pblock /= sample_count;
-            }
-            wblock.setConstant(weight_sum);
-        });
+            // pblock /= sample_count;
+        }
+        wblock.setConstant(weight_sum);
+    });
     return R;
 }
 template <>
@@ -114,8 +111,7 @@ mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
     auto W = R.row(D);
 
     auto edge_cob = edge_coboundary_map(mesh(), active_cells);
-    auto edge_cell_neighbors =
-        utils::cells_adjacent_to_edge(mesh(), active_cells);
+    auto edge_cell_neighbors = cells_adjacent_to_edge(mesh(), active_cells);
     int edge_index = 0;
     // mtao::vector<mtao::Vec4d> backprojections;
     tbb::parallel_for(
@@ -171,7 +167,7 @@ mtao::ColVectors<double, D + 1> CoefficientAccumulator<two::FluxMomentIndexer>::
 
     return R;
 }
-}
+}  // namespace vem::utils
 namespace vem::two {
 template <typename Func>
 Eigen::SparseMatrix<double> FluxMomentIndexer::sample_to_poly_cell_matrix(
@@ -459,5 +455,5 @@ Eigen::SparseMatrix<double> FluxMomentIndexer::poly_l2_grammian(
         },
         active_cells);
 }
-}  // namespace vem
+}  // namespace vem::two
 

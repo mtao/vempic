@@ -2,7 +2,7 @@
 #include "../utils/boundary_facets.hpp"
 #include "mesh.hpp"
 
-namespace vem::utils {
+namespace vem::three {
 
 // generic call where we pass in teh boundary map data directly
 std::map<size_t, size_t> boundary_facet_map(

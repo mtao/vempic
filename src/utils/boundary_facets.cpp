@@ -1,7 +1,10 @@
+#include "vem/utils/boundary_facets.hpp"
+#include "vem/utils/loop_over_active.hpp"
 
+namespace vem::utils {
 std::map<size_t, size_t> boundary_facet_indices(
     const std::vector<std::map<int, bool>> &cells, size_t facet_count,
-    const std::set<int> &active_cells = {}) {
+    const std::set<int> &active_cells) {
     std::vector<int> sizes(facet_count, 0);
 
     std::map<size_t, size_t> ret;
@@ -26,3 +29,4 @@ std::map<size_t, size_t> boundary_facet_indices(
     return ret;
 }
 
+}

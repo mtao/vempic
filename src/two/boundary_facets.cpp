@@ -1,14 +1,14 @@
-
 #include "vem/two/boundary_facets.hpp"
+#include "vem/utils/boundary_facets.hpp"
+#include "vem/utils/loop_over_active.hpp"
 
 #include "vem/two/cell_boundary_facets.hpp"
-#include "vem/utils/loop_over_active.hpp"
 namespace vem::two {
 
 // 2d version
 std::map<size_t, size_t> boundary_edge_map(const VEMMesh2 &mesh,
                                            const std::set<int> &active_cells) {
-    auto r = boundary_facet_indices(mesh.face_boundary_map, mesh.edge_count(),
+    auto r = utils::boundary_facet_indices(mesh.face_boundary_map, mesh.edge_count(),
                                     active_cells);
     return r;
 }
@@ -37,31 +37,4 @@ std::vector<std::set<size_t>> edge_coboundary_map(
     return ret;
 }
 
-std::map<size_t, size_t> boundary_face_map(const VEMMesh3 &mesh,
-                                           const std::set<int> &active_cells) {
-    return boundary_facet_indices(mesh.cell_boundary_map, mesh.face_count(),
-                                  active_cells);
-}
-std::set<size_t> boundary_vertices(const VEMMesh3 &mesh,
-                                   const std::set<int> &active_cells) {
-    std::set<size_t> ret;
-    utils::loop_over_active_indices(
-        mesh.cell_count(), active_cells, [&](size_t cell_index) {
-            auto s = cell_boundary_vertices(mesh, cell_index);
-            ret.merge(std::move(s));
-        });
-    return ret;
-}
-std::vector<std::set<size_t>> face_coboundary_map(
-    const VEMMesh3 &mesh, const std::set<int> &active_cells) {
-    std::vector<std::set<size_t>> ret(mesh.face_count());
-
-    utils::loop_over_active_indices(
-        mesh.cell_count(), active_cells, [&](size_t cell_index) {
-            for (auto &&[f, s] : mesh.cell_boundary_map.at(cell_index)) {
-                ret.at(f).emplace(cell_index);
-            }
-        });
-    return ret;
-}
 }  // namespace vem::utils

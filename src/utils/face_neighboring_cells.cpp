@@ -37,10 +37,4 @@ std::vector<std::set<int>> face_neighboring_cells(
     }
     return face_neighboring_cells(cells, face_count + 1);
 }
-std::vector<std::set<int>> face_neighboring_cells(const VEMMesh3& mesh) {
-    return face_neighboring_cells(mesh.cell_boundary_map, mesh.face_count());
-}
-std::vector<std::set<int>> face_neighboring_cells(const VEMMesh2& mesh) {
-    return face_neighboring_cells(mesh.face_boundary_map, mesh.edge_count());
-}
 }  // namespace vem::utils
