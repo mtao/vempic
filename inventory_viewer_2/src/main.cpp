@@ -1,6 +1,6 @@
 #include <Corrade/Utility/Arguments.h>
 
-#include <vem/visualize/inventory_viewer.hpp>
+#include <vem/two/visualize/inventory_viewer.hpp>
 
 #include "imgui.h"
 #include "mtao/opengl/Window.h"
@@ -13,7 +13,7 @@ class Viewer : public mtao::opengl::Window2 {
 
    private:
     std::shared_ptr<vem::serialization::Inventory> _inventory;
-    std::shared_ptr<vem::visualize::InventoryViewer> _viewer;
+    std::shared_ptr<vem::two::visualize::InventoryViewer> _viewer;
 };
 Viewer::Viewer(const Arguments &args) : Window2(args) {
     Corrade::Utility::Arguments myargs;
@@ -22,7 +22,7 @@ Viewer::Viewer(const Arguments &args) : Window2(args) {
 
     _inventory = std::make_shared<vem::serialization::Inventory>(path);
     _inventory->unset_immediate_mode();
-    _viewer = std::make_shared<vem::visualize::InventoryViewer>(
+    _viewer = std::make_shared<vem::two::visualize::InventoryViewer>(
         _inventory, &root(), &drawables());
 
     _viewer->setParent(&root());
