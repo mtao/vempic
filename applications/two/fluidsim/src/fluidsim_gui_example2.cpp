@@ -8,9 +8,9 @@
 #include <mtao/geometry/mesh/stack_meshes.hpp>
 #include <mtao/opengl/shaders/polynomial_scalar_field.hpp>
 #include <optional>
-#include <vem/fluidsim_2d/sim_viewer.hpp>
-#include <vem/utils/boundary_facets.hpp>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/fluidsim/sim_viewer.hpp>
+#include <vem/two/boundary_facets.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
 
 template <class T>
 auto stuff_into_unique_ptr(T &&obj) {
@@ -19,7 +19,7 @@ auto stuff_into_unique_ptr(T &&obj) {
 
 class VemViewer2d : public mtao::opengl::Window2 {
    public:
-    vem::fluidsim_2d::SimViewer sim_viewer;
+    vem::two::fluidsim::SimViewer sim_viewer;
 
     VemViewer2d(const Arguments &args);
     void gui() override;

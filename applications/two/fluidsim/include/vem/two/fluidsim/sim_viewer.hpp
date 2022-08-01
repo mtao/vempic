@@ -9,13 +9,13 @@
 #if defined(VEM_USE_PYTHON)
 #include <mtao/python/load_python_function.hpp>
 #endif
-#include <vem/poisson_2d/constraint_viewer.hpp>
-#include <vem/visualize/vem_mesh_creation_gui.hpp>
-#include <vem/visualize/vem_scalar_field_viewer.hpp>
+#include <vem/two/poisson/constraint_viewer.hpp>
+#include <vem/two/visualize/vem_mesh_creation_gui.hpp>
+#include <vem/two/visualize/vem_scalar_field_viewer.hpp>
 
-#include "vem/fluidsim_2d/sim_scene.hpp"
+#include "vem/two/fluidsim/sim_scene.hpp"
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 
 class SimViewer : public mtao::opengl::Object2D,
                   Magnum::SceneGraph::Drawable2D,
@@ -50,10 +50,10 @@ class SimViewer : public mtao::opengl::Object2D,
     Magnum::SceneGraph::DrawableGroup2D drawables;
     Magnum::SceneGraph::DrawableGroup2D foreground_drawables;
 
-    vem::visualize::VEMMesh2CreationGui mesh_gui;
+    vem::two::visualize::VEMMesh2CreationGui mesh_gui;
     // render the resulting pressure field
-    vem::visualize::VEM2ScalarFieldViewer scalar_field_viewer;
-    vem::poisson_2d::ScalarConstraintsGui constraint_viewer;
+    vem::two::visualize::VEM2ScalarFieldViewer scalar_field_viewer;
+    vem::two::poisson::ScalarConstraintsGui constraint_viewer;
 
     // Data for rendering the domain boundary
     mtao::opengl::objects::Mesh<2> boundary_mesh;

@@ -3,14 +3,14 @@
 #include <mtao/eigen/stack.hpp>
 #include <mtao/geometry/interpolation/radial_basis_function.hpp>
 #include <vem/serialization/serialize_eigen.hpp>
-#include <vem/utils/boundary_facets.hpp>
-#include <vem/utils/cells_adjacent_to_edge.hpp>
+#include <vem/two/boundary_facets.hpp>
+#include <vem/two/cells_adjacent_to_edge.hpp>
 #include <vem/utils/dehomogenize_vector_points.hpp>
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/fluidsim_2d/sim.hpp"
-#include "vem/utils/coefficient_accumulator.hpp"
-namespace vem::fluidsim_2d {
+#include "vem/two/fluidsim/sim.hpp"
+#include "vem/two/coefficient_accumulator.hpp"
+namespace vem::two::fluidsim {
 // void Sim::update_particle_velocities_flip() {}
 // void Sim::update_particle_velocities_pic() {
 //    set_particle_velocities_from_grid();
@@ -127,9 +127,9 @@ mtao::ColVecs2d Sim::advect_points_rk2(const mtao::ColVecs2d &P, double dt) {
 }
 auto Sim::semilagrangian_advected_edge_sample_velocities(double dt)
     -> mtao::ColVecs2d {
-    auto edge_cob = utils::edge_coboundary_map(mesh(), active_cells());
+    auto edge_cob = edge_coboundary_map(mesh(), active_cells());
     auto edge_cell_neighbors =
-        utils::cells_adjacent_to_edge(mesh(), active_cells());
+        cells_adjacent_to_edge(mesh(), active_cells());
     mtao::ColVecs3d R(2, velocity_stride_sample_size());
     R.setZero();
 
@@ -151,9 +151,9 @@ auto Sim::semilagrangian_advected_edge_sample_velocities(double dt)
 #if defined(VEM_FLUX_MOMENT_FLUID)
 
 void Sim::semilagrangian_advect_fluxes(double dt) {
-    auto edge_cob = utils::edge_coboundary_map(mesh(), active_cells());
+    auto edge_cob = edge_coboundary_map(mesh(), active_cells());
     auto edge_cell_neighbors =
-        utils::cells_adjacent_to_edge(mesh(), active_cells());
+        cells_adjacent_to_edge(mesh(), active_cells());
     auto B = sample_velocities.block(0, 0, 2, velocity_stride_sample_size());
     B.setZero();
     auto D = sample_density.head(velocity_stride_sample_size());
@@ -249,7 +249,7 @@ void Sim::update_fluxes_using_particles(double radius) {
         return rbf.evaluate(a, radius, b);
     };
 
-    utils::CoefficientAccumulator<FluxMomentIndexer> ca(velocity_indexer());
+    CoefficientAccumulator<FluxMomentIndexer> ca(velocity_indexer());
     auto vho = ca.homogeneous_boundary_coefficients_from_point_values(
         particle_velocities().eval(), particle_positions(), particle_cell_cache,
         active_cells(), myfunc);
@@ -492,7 +492,7 @@ void Sim::update_moments_from_particles() {
     }
     auto moments = sample_velocities.rightCols(velocity_stride_moment_size());
 
-    utils::CoefficientAccumulator<FluxMomentIndexer> ca(velocity_indexer());
+    CoefficientAccumulator<FluxMomentIndexer> ca(velocity_indexer());
     auto homo_coeffs = ca.homogeneous_interior_coefficients_from_point_values(
         particle_velocities().eval(), particle_positions(), particle_cell_cache,
         active_cells());

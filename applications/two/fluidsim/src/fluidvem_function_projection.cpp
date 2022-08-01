@@ -1,14 +1,14 @@
 
 
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/two/boundary_facets.hpp>
 #include <vem/utils/cell_identifier.hpp>
 #include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
+#include <vem/two/parent_maps.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
-#include "vem/fluidsim_2d/fluidvem2.hpp"
+#include "vem/two/fluidsim/fluidvem.hpp"
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 
 mtao::VecXd FluidVEM2::coefficients_from_point_sample_function(
     const std::function<double(const mtao::Vec2d &)> &f) const {

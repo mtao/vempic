@@ -1,10 +1,12 @@
 #include "vem/serialization/serialize_mesh.hpp"
+#include "vem/two/mesh.hpp"
+#include "vem/three/mesh.hpp"
 
 #include "vem/serialization/serialize_eigen.hpp"
 namespace vem::serialization {
 
 void serialize_mesh(Inventory& inventory, const std::string& name,
-                    const VEMMesh2& mesh) {
+                    const two::VEMMesh2& mesh) {
     Inventory subinv = inventory.make_subinventory(name);
     subinv.add_metadata("storage_type", "vem_mesh");
     subinv.add_metadata("dimension", 2);
@@ -24,7 +26,7 @@ void serialize_mesh(Inventory& inventory, const std::string& name,
 }
 
 void serialize_mesh(Inventory& inventory, const std::string& name,
-                    const VEMMesh3& mesh) {
+                    const three::VEMMesh3& mesh) {
     Inventory subinv = inventory.make_subinventory(name);
     subinv.add_metadata("storage_type", "vem_mesh");
     subinv.add_metadata("dimension", 3);

@@ -1,11 +1,10 @@
-#include "vem/fluidsim_2d//sim_scene.hpp"
+#include "vem/two/fluidsim/sim_scene.hpp"
 
 #if defined(VEM_USE_PYTHON)
 #include <pybind11/eigen.h>
 #endif
 
 #include <fstream>
-#include <vem/creator2.hpp>
 
 #include "vem/serialization/serialize_mesh.hpp"
 
@@ -27,7 +26,7 @@ std::string default_velocity_function =
 }
 
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 void SimScene::set_mesh_settings(const nlohmann::json& js) {
     _mesh_creator.configure_from_json(js, true);
 

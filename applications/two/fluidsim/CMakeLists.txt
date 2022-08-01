@@ -1,20 +1,19 @@
 if(VEM_USE_OPENGL)
     SET(VIEWER_SRCS
     src/sim_viewer.cpp
-    include/vem/fluidsim_2d/sim_viewer.hpp
         )
 endif()
 add_library(fluidsim_vem2
     src/sim.cpp
-    #src/sim_serialization.cpp
-    #src/sim_advection.cpp
-    #src/sim_pressure.cpp
-    #src/sim_scene.cpp
+    src/sim_serialization.cpp
+    src/sim_advection.cpp
+    src/sim_pressure.cpp
+    src/sim_scene.cpp
     #src/cell.cpp
     src/fluidvem.cpp
-    #src/fluidvem2_function_projection.cpp
-    #src/sim_buoyancy.cpp
-    #${VIEWER_SRCS}
+    #src/fluidvem_function_projection.cpp
+    src/sim_buoyancy.cpp
+    ${VIEWER_SRCS}
     )
 #find_package(CHOLMOD REQUIRED)
 
@@ -39,3 +38,20 @@ target_include_directories(fluidsim_vem2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 
+add_executable(fluidsim_2d src/fluidsim_2d.cpp)
+target_link_libraries(fluidsim_2d vem fmt fluidsim_vem2)
+
+
+ADD_EXECUTABLE(fluidsim2_projection_check
+    src/fluidsim2_pressure_projection_check.cpp
+    )
+TARGET_LINK_LIBRARIES(fluidsim2_projection_check fluidsim_vem2 vem)
+if(VEM_USE_OPENGL)
+ADD_EXECUTABLE(fluidsim_gui_example2
+    src/fluidsim_gui_example2.cpp
+    )
+TARGET_LINK_LIBRARIES(fluidsim_gui_example2 fluidsim_vem2 vem_visualize
+    MagnumPlugins::PngImageConverter
+    nlohmann_json::nlohmann_json
+    )
+endif()

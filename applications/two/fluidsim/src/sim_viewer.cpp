@@ -1,10 +1,10 @@
-#include "vem/fluidsim_2d/sim_viewer.hpp"
+#include "vem/two/fluidsim/sim_viewer.hpp"
 
 #include <misc/cpp/imgui_stdlib.h>
 
 #include <fstream>
-#include <vem/poisson_2d/example_constraints.hpp>
-namespace vem::fluidsim_2d {
+#include <vem/two/poisson/example_constraints.hpp>
+namespace vem::two::fluidsim {
 
 SimViewer::SimViewer(mtao::opengl::Object2D* parent,
                      Magnum::SceneGraph::DrawableGroup2D* group)

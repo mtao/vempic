@@ -4,13 +4,13 @@
 #include <mtao/eigen/stack.hpp>
 #include <mtao/solvers/linear/conjugate_gradient.hpp>
 #include <mtao/solvers/linear/preconditioned_conjugate_gradient.hpp>
-#include <vem/normals.hpp>
-#include <vem/utils/parent_maps.hpp>
+#include <vem/two/normals.hpp>
+#include <vem/two/parent_maps.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
-#include "vem/fluidsim_2d/sim.hpp"
+#include "vem/two/fluidsim/sim.hpp"
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim{
 
 void Sim::add_buoyancy_force(double dt) {
     sample_velocities.row(1) += dt * sample_density;

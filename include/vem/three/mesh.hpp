@@ -6,8 +6,18 @@
 #include "../polygon_boundary_indices.hpp"
 #include "../mesh.hpp"
 
-namespace vem {
-    using VEMMesh3 = VEMMesh<3>;
+namespace vem::three
+{
+    class VEMMesh3;
+}
+namespace vem::internal{
+
+template<>
+struct VEMMeshType<3> {
+using type = three::VEMMesh3;
+};
+}
+namespace vem::three {
 
 struct VEMMesh3 : public std::enable_shared_from_this<VEMMesh3> {
     // a cached copy of the VEMTopology2's face_loops
@@ -72,7 +82,5 @@ struct VEMMesh3 : public std::enable_shared_from_this<VEMMesh3> {
     collision_mesh(const std::set<int> &active_cells = {}) const;
 };
 
-template <int D>
-using VEMMesh = std::conditional_t<D == 2, VEMMesh2, VEMMesh3>;
 
 }  // namespace vem

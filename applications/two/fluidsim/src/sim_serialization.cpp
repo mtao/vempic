@@ -2,7 +2,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
-#include "vem/fluidsim_2d/sim.hpp"
+#include "vem/two/fluidsim/sim.hpp"
 
 namespace vem::fluidsim_2d {
 /*

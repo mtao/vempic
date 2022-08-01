@@ -1,15 +1,15 @@
-#include <vem/fluidsim_2d/fluidvem2.hpp>
-#include <vem/fluidsim_2d/sim.hpp>
-#include <vem/from_grid.hpp>
-#include <vem/poisson_2d/example_constraints.hpp>
+#include <vem/two/fluidsim/fluidvem.hpp>
+#include <vem/two/fluidsim/sim.hpp>
+#include <vem/two/from_grid.hpp>
+#include <vem/two/poisson/example_constraints.hpp>
 
-#include "vem/point_moment_indexer.hpp"
+#include "vem/two/point_moment_indexer.hpp"
 
 auto make_mesh(int N) {
     Eigen::AlignedBox<double, 2> bb;
     bb.min().setConstant(0);
     bb.max().setConstant(1);
-    auto mesh = vem::from_grid(bb, N, N);
+    auto mesh = vem::two::from_grid(bb, N, N);
 
     return mesh;
 }
@@ -17,8 +17,8 @@ auto make_mesh(int N) {
 void get_eigen_decomposition(int N, int D) {
     spdlog::info("N = {}, D = {}", N, D);
     auto mesh = make_mesh(N);
-    vem::FluxMomentIndexer flux_vem(mesh, D);
-    vem::PointMomentIndexer point_vem(mesh, D);
+    vem::two::FluxMomentIndexer flux_vem(mesh, D);
+    vem::two::PointMomentIndexer point_vem(mesh, D);
 
     auto get_eigenvalues = [](const Eigen::MatrixXd& L) {
         Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> eigs(L);
@@ -38,7 +38,7 @@ void get_eigen_decomposition(int N, int D) {
 
 void test_projection_operators(int N, int D) {
     auto mesh = make_mesh(N);
-    vem::fluidsim_2d::FluxMomentFluidVEM2 fvem(mesh, D);
+    vem::two::fluidsim::FluxMomentFluidVEM2 fvem(mesh, D);
     auto c = fvem.get_velocity_cell(0);
     auto pc = fvem.get_pressure_cell(0);
 

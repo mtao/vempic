@@ -1,12 +1,18 @@
 #pragma once
 
-#include "vem/two/mesh.hpp"
-#include "vem/three/mesh.hpp"
 #include "vem/serialization/inventory.hpp"
+namespace vem {
+    namespace two {
+    class VEMMesh2;
+    }
+    namespace three {
+    class VEMMesh3;
+    }
+}
 namespace vem::serialization {
 
 void serialize_mesh(Inventory& inventory, const std::string& name,
-                    const VEMMesh2& mesh);
+                    const two::VEMMesh2& mesh);
 void serialize_mesh(Inventory& inventory, const std::string& name,
-                    const VEMMesh3& mesh);
+                    const three::VEMMesh3& mesh);
 }  // namespace vem::serialization

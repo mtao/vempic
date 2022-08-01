@@ -3,11 +3,11 @@
 #if defined(VEM_USE_PYTHON)
 #include <mtao/python/load_python_function.hpp>
 #endif
-#include <vem/creator2.hpp>
-#include <vem/fluidsim_2d/sim.hpp>
-#include <vem/mesh.hpp>
+#include <vem/two/creator.hpp>
+#include <vem/two/fluidsim/sim.hpp>
+#include <vem/two/mesh.hpp>
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 // you can set the mesh, set sim parameters, set boundary conditions, choose
 // which cells to use, and finally run the simulation
 struct SimScene {

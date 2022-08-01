@@ -2,14 +2,14 @@
 #include <iostream>
 #include <mtao/eigen/stack.hpp>
 #include <mtao/geometry/bounding_box.hpp>
-#include <vem/fluidsim_2d/sim_scene.hpp>
+#include <vem/two/fluidsim/sim_scene.hpp>
 
 //#include "vem/from_mandoline3.hpp"
 
 int main(int argc, char* argv[]) {
     std::string bi = argv[1];
     const vem::serialization::Inventory invent(bi, nullptr, true, false);
-    vem::fluidsim_2d::SimScene scene;
+    vem::two::fluidsim::SimScene scene;
     {
         spdlog::info("Loading mesh info");
         auto mipath = invent.get_asset_path("mesh_info");
@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
         spdlog::error("Sim object was not created");
         return 1;
     }
-    vem::fluidsim_2d::Sim& sim = *scene._sim;
+    vem::two::fluidsim::Sim& sim = *scene._sim;
     // std::cout << sim.sample_laplacian() << std::endl;
     // return 0;
 

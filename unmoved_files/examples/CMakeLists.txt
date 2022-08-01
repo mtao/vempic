@@ -13,8 +13,6 @@ target_link_libraries(make_collision_mesh3 vem fmt)
 add_executable(load_mandoline load_mandoline.cpp)
 target_link_libraries(load_mandoline vem fmt)
 
-add_executable(fluidsim_2d fluidsim_2d.cpp)
-target_link_libraries(fluidsim_2d vem fmt fluidsim_vem2)
 
 add_executable(fluidsim_3d fluidsim_3d.cpp)
 target_link_libraries(fluidsim_3d vem fmt fluidsim_vem3 partio)
@@ -51,6 +49,10 @@ TARGET_LINK_LIBRARIES(moment_sample_reconstruction_experiment3 vem
     cxxopts
     OpenMP::OpenMP_CXX)
 
+ADD_EXECUTABLE(monomial_eval_test
+    monomial_eval_test.cpp
+    )
+TARGET_LINK_LIBRARIES(monomial_eval_test poisson_vem2 )
 
 if(VEM_USE_OPENGL)
 
@@ -58,13 +60,6 @@ if(VEM_USE_OPENGL)
 #    gradwavesim_gui_example2.cpp
 #    )
 #TARGET_LINK_LIBRARIES(gradwavesim_gui_example2 gradwavesim_vem2 vem_visualize)
-ADD_EXECUTABLE(fluidsim_gui_example2
-    fluidsim_gui_example2.cpp
-    )
-TARGET_LINK_LIBRARIES(fluidsim_gui_example2 fluidsim_vem2 vem_visualize
-    MagnumPlugins::PngImageConverter
-    nlohmann_json::nlohmann_json
-    )
 
 ADD_EXECUTABLE(fluidsim_gui_example3
     fluidsim_gui_example3.cpp
@@ -74,10 +69,6 @@ TARGET_LINK_LIBRARIES(fluidsim_gui_example3 fluidsim_vem3 vem_visualize
     nlohmann_json::nlohmann_json
     )
 
-ADD_EXECUTABLE(fluidsim2_projection_check
-    fluidsim2_pressure_projection_check.cpp
-    )
-TARGET_LINK_LIBRARIES(fluidsim2_projection_check fluidsim_vem2 vem)
 
 ADD_EXECUTABLE(fluidsim3_projection_check
     fluidsim3_pressure_projection_check.cpp
@@ -90,7 +81,3 @@ ADD_EXECUTABLE(fluidsim3_product_performance_test
 TARGET_LINK_LIBRARIES(fluidsim3_product_performance_test fluidsim_vem3 vem)
 endif()
 
-ADD_EXECUTABLE(monomial_eval_test
-    monomial_eval_test.cpp
-    )
-TARGET_LINK_LIBRARIES(monomial_eval_test poisson_vem2 )

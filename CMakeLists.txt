@@ -45,9 +45,7 @@ set(VEM_POLY_SRCS
 set(STUFF
     #src/monomial_basis_indexer.cpp
     src/utils/merge_cells.cpp
-    src/utils/monomial_coefficient_projection.cpp
-    src/utils/boundary_intersector3.cpp
-    src/utils/in_triangle_mesh.cpp
+    #src/utils/monomial_coefficient_projection.cpp
     )
 
 set(VEM_BASE_SRCS
@@ -78,6 +76,7 @@ set(VEM_TWO_SRCS
     src/two/boundary_facets.cpp
     src/two/cell_boundary_facets.cpp
     src/two/face_neighboring_cells.cpp
+    src/two/cells_adjacent_to_edge.cpp
 
     src/two/volumes.cpp
 
@@ -113,6 +112,8 @@ set(VEM_THREE_SRCS
     #src/three/creator.cpp
     #src/three/flux_moment_cell3.cpp
     #src/utils/face_boundary_facets.cpp
+    #src/three/boundary_intersector.cpp
+    #src/three/in_triangle_mesh.cpp
     )
 
 set(VEM_SRCS
@@ -138,7 +139,7 @@ add_library(vem_serialization
     src/serialization/frame_inventory.cpp
     src/serialization/serialize_text.cpp
     src/serialization/serialize_particles.cpp
-    #src/serialization/serialize_mesh.cpp
+    src/serialization/serialize_mesh.cpp
     #src/serialization/serialize_vdb.cpp
     )
 target_link_libraries(vem_serialization PUBLIC mtao::geometry fmt
