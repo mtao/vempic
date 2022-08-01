@@ -2,13 +2,14 @@
 //#include <Eigen/CholmodSupport>
 //#include <Eigen/SPQRSupport>
 #include <nlohmann/json.hpp>
-#include <vem/fluidsim_2d/flux_moment_fluidvem2.hpp>
-#include <vem/monomial_field_embedder.hpp>
+#include <vem/two/fluidsim/flux_moment_fluidvem.hpp>
+#include "vem/two/monomial_basis_indexer.hpp"
+#include <vem/two/monomial_field_embedder.hpp>
 #include <vem/serialization/frame_inventory.hpp>
 #include <vem/serialization/inventory.hpp>
 #include <vem/serialization/prioritizing_inventory.hpp>
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 
 class Sim : public FluxMomentFluidVEM2 {
    public:
@@ -137,7 +138,7 @@ class Sim : public FluxMomentFluidVEM2 {
     mtao::ColVecs2d sample_velocities;
     mtao::VecXd sample_density;
 
-    vem::MonomialVectorFieldEmbedder velocity;
+    MonomialVectorFieldEmbedder velocity;
     mtao::VecXd polynomial_density;
 
     mtao::VecXd pressure;
@@ -184,4 +185,4 @@ class Sim : public FluxMomentFluidVEM2 {
     bool do_advect = true;
     bool do_pressure = true;
 };
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two/fluidsim

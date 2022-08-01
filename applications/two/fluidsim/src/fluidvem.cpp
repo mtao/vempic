@@ -1,19 +1,14 @@
 
-#include "vem/fluidsim_2d/fluidvem2.hpp"
+#include "vem/two/fluidsim/fluidvem.hpp"
 
 #include <mtao/eigen/mat_to_triplets.hpp>
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
 #include <mtao/eigen/stack.hpp>
-#include <vem/fluidsim_2d/fluidvem2_cell.hpp>
-#include <vem/polynomial_utils.hpp>
-#include <vem/utils/cell_identifier.hpp>
-#include <vem/utils/local_to_world_sparse_triplets.hpp>
-#include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
-#include <vem/utils/volumes.hpp>
+#include <vem/two/fluidsim/cell.hpp>
+#include <vem/polynomials/utils.hpp>
 
 using namespace vem::polynomials::two;
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 
 FluidVEM2Base_noT::FluidVEM2Base_noT(const VEMMesh2 &_mesh) : _mesh(_mesh) {}
 size_t FluidVEM2Base_noT::cell_count() const { return mesh().cell_count(); }
@@ -42,4 +37,4 @@ size_t FluidVEM2Base_noT::active_cell_count() const {
 }
 
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim

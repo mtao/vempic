@@ -1,12 +1,12 @@
 #pragma once
 #if defined(VEM_FLUX_MOMENT_FLUID)
-#include "vem/flux_moment_cell.hpp"
+#include "vem/two/flux_moment_cell.hpp"
 #else
-#include "vem/point_moment_cell.hpp"
+#include "vem/two/point_moment_cell.hpp"
 #endif
-#include "vem/flux_moment_cell.hpp"
-#include "vem/point_moment_cell.hpp"
-namespace vem::fluidsim_2d {
+#include "vem/two/flux_moment_cell.hpp"
+#include "vem/two/point_moment_cell.hpp"
+namespace vem::two::fluidsim {
 //#if defined(VEM_FLUX_MOMENT_FLUID)
 //class FluidVEM2Cell : public FluxMomentVEM2Cell {
 //    using FluxMomentVEM2Cell::FluxMomentVEM2Cell;
@@ -17,4 +17,4 @@ namespace vem::fluidsim_2d {
 //};
 //#endif
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim

@@ -5,18 +5,18 @@
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
 #include <mtao/eigen/stack.hpp>
 #include <set>
-#include <vem/fluidsim_2d/fluidvem2_cell.hpp>
+#include <vem/two/fluidsim/cell.hpp>
 #include <vem/mesh.hpp>
-#include <vem/point_moment_indexer.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/two/point_moment_indexer.hpp>
+#include <vem/polynomials/utils.hpp>
 #include <vem/utils/cell_identifier.hpp>
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
 #include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
-#include <vem/utils/volumes.hpp>
+#include <vem/two/parent_maps.hpp>
+#include <vem/two/volumes.hpp>
 
-#include "vem/fluidsim_2d/fluidvem2_cell.hpp"
-namespace vem::fluidsim_2d {
+#include "vem/two/fluidsim/cell.hpp"
+namespace vem::two::fluidsim {
 
 // Uses K degree velocities with K+1 degree pressures
 //
@@ -300,4 +300,4 @@ FluidVEM2Base<Derived>::sample_active_cells(size_t samples_per_cell) const {
     return {points, ownerships};
 }
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim

@@ -1,9 +1,9 @@
-#include "vem/fluidsim_2d/fluidvem2_cell.hpp"
+#include "vem/two/fluidsim/cell.hpp"
 
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
 using namespace vem::polynomials::two;
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 
 FluidVEM2Cell::FluidVEM2Cell(const PointMomentIndexer& mom, size_t index)
     : VEM2Cell(mom.mesh(), index), _indexer(mom) {}
@@ -364,4 +364,4 @@ Eigen::SparseMatrix<double> FluidVEM2Cell::local_to_world_sample_map() const {
     return R;
 }
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim

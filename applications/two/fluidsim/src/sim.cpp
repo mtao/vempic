@@ -1,7 +1,7 @@
-#include "vem/fluidsim_2d/sim.hpp"
+#include "vem/two/fluidsim/sim.hpp"
 
-#include "vem/fluidsim_2d/fluidvem2.hpp"
-#include "vem/fluidsim_2d/flux_moment_fluidvem2.hpp"
+#include "vem/two/fluidsim/fluidvem.hpp"
+#include "vem/two/fluidsim/flux_moment_fluidvem.hpp"
 #define USE_RBF_PARTICLE_GRID_PROJECTION
 
 #include <eigen3/unsupported/Eigen/SparseExtra>
@@ -14,9 +14,9 @@
 #include <vem/serialization/serialize_text.hpp>
 #include <vem/utils/loop_over_active.hpp>
 #include <vem/utils/monomial_coefficient_projection.hpp>
-#include <vem/utils/parent_maps.hpp>
+#include <vem/two/parent_maps.hpp>
 
-namespace vem::fluidsim_2d {
+namespace vem::two::fluidsim {
 Sim::Sim(const VEMMesh2& mesh, int degree,
          std::shared_ptr<serialization::Inventory> inventory)
     : FluxMomentFluidVEM2(mesh, degree),
@@ -374,4 +374,4 @@ double Sim::particle_radius_estimate_from_per_cell_count(size_t count) const {
     return dx / side_count;
 }
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim

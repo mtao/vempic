@@ -6,18 +6,17 @@ if(VEM_USE_OPENGL)
 endif()
 add_library(fluidsim_vem2
     src/sim.cpp
-    include/vem/fluidsim_2d/sim.hpp
-    src/sim_serialization.cpp
-    src/sim_advection.cpp
-    src/sim_pressure.cpp
-    src/sim_scene.cpp
-    #src/fluidvem2_cell.cpp
-    src/fluidvem2.cpp
+    #src/sim_serialization.cpp
+    #src/sim_advection.cpp
+    #src/sim_pressure.cpp
+    #src/sim_scene.cpp
+    #src/cell.cpp
+    src/fluidvem.cpp
     #src/fluidvem2_function_projection.cpp
-    src/sim_buoyancy.cpp
-    ${VIEWER_SRCS}
+    #src/sim_buoyancy.cpp
+    #${VIEWER_SRCS}
     )
-find_package(CHOLMOD REQUIRED)
+#find_package(CHOLMOD REQUIRED)
 
 
 target_compile_options(fluidsim_vem2 PUBLIC -DVEM_FLUX_MOMENT_FLUID)
@@ -30,7 +29,7 @@ if(VEM_USE_PYTHON)
 target_compile_options(fluidsim_vem2 PUBLIC -DVEM_USE_PYTHON)
 endif()
 
-target_include_directories(fluidsim_vem2 PUBLIC ${CHOLMOD_INCLUDES})
+#target_include_directories(fluidsim_vem2 PUBLIC ${CHOLMOD_INCLUDES})
 if(VEM_USE_OPENGL)
     TARGET_LINK_LIBRARIES(fluidsim_vem2 PUBLIC mtao::visualization
         )

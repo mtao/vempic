@@ -1,13 +1,13 @@
 #pragma once
 #include <Eigen/Sparse>
 #include <set>
-#include <vem/flux_moment_indexer.hpp>
+#include <vem/two/flux_moment_indexer.hpp>
 #include <vem/mesh.hpp>
 
-#include "vem/fluidsim_2d/fluidvem2.hpp"
-#include "vem/fluidsim_2d/fluidvem2_cell.hpp"
-#include "vem/flux_moment_cell.hpp"
-namespace vem::fluidsim_2d {
+#include "vem/two/fluidsim/fluidvem.hpp"
+#include "vem/two/fluidsim/cell.hpp"
+#include "vem/two/flux_moment_cell.hpp"
+namespace vem::two::fluidsim {
 
 // Uses K degree velocities with K+1 degree pressures
 //
@@ -99,4 +99,4 @@ struct FluxMomentFluidVEM2 : public FluidVEM2Base<FluxMomentFluidVEM2> {
     using Base::set_active_cells;
 };
 
-}  // namespace vem::fluidsim_2d
+}  // namespace vem::two::fluidsim
