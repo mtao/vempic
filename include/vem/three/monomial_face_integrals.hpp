@@ -4,7 +4,7 @@
 
 #include "mesh.hpp"
 
-namespace vem {
+namespace vem::three {
 
 
 mtao::VecXd monomial_face_integrals(const VEMMesh3 &mesh, int cell_index,

@@ -99,16 +99,16 @@ set(VEM_TWO_SRCS
     )
 
 set(VEM_THREE_SRCS
-    #src/from_mandoline3.cpp
+    src/three/cell.cpp
+    src/three/mesh.cpp
+    src/from_mandoline.cpp
     #src/from_grid3.cpp
-    #src/three/mesh.cpp
     #src/three/flux_moment_indexer.cpp
     #src/monomial_cell_integrals3.cpp 
     #src/utils/cells_adjacent_to_face.cpp
     #src/monomial_face_integrals3.cpp 
     #src/three/volumes.cpp
     #src/three/cell_boundary_facets.cpp
-    #src/three/cell.cpp
     #src/three/creator.cpp
     #src/three/flux_moment_cell3.cpp
     #src/utils/face_boundary_facets.cpp
@@ -120,7 +120,7 @@ set(VEM_SRCS
     ${VEM_POLY_SRCS}
     ${VEM_BASE_SRCS}
     ${VEM_TWO_SRCS}
-    #${VEM_THREE_SRCS}
+    ${VEM_THREE_SRCS}
     )
 
 add_library(vem ${VEM_SRCS})

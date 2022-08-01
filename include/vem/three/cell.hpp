@@ -1,11 +1,11 @@
 #pragma once
 #include <Eigen/Sparse>
 #include <mtao/eigen/stl2eigen.hpp>
-#include <vem/mesh.hpp>
+#include "mesh.hpp"
 
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::three {
 
 class VEM3Cell {
    public:

@@ -2,17 +2,17 @@
 #include <spdlog/spdlog.h>
 
 #include <mtao/algebra/pascal_triangle.hpp>
-#include <vem/cell3.hpp>
-#include <vem/utils/cell_boundary_facets.hpp>
+#include <vem/three/cell.hpp>
+#include <vem/three/cell_boundary_facets.hpp>
 
-#include "vem/clang_hacks.hpp"
-#include "vem/monomial_cell_integrals.hpp"
-#include "vem/monomial_face_integrals.hpp"
-#include "vem/polynomial_gradient.hpp"
-#include "vem/polynomial_utils.hpp"
-#include "vem/utils/volumes.hpp"
+#include "vem/utils/clang_hacks.hpp"
+#include "vem/three/monomial_cell_integrals.hpp"
+#include "vem/three/monomial_face_integrals.hpp"
+#include "vem/polynomials/gradient.hpp"
+#include "vem/polynomials/utils.hpp"
+#include "vem/three/volumes.hpp"
 
-namespace vem {
+namespace vem::three {
 using namespace polynomials::three;
 VEM3Cell::VEM3Cell(const VEMMesh3& mesh, const size_t cell_index)
     : VEM3Cell(mesh, cell_index, mesh.diameter(cell_index)) {}
@@ -29,7 +29,7 @@ std::optional<int> VEM3Cell::cell_category() const {
     return mesh().cell_category(cell_index());
 }
 std::set<size_t> VEM3Cell::vertices() const {
-    return utils::cell_boundary_vertices(_mesh, cell_index());
+    return cell_boundary_vertices(_mesh, cell_index());
 }
 Eigen::AlignedBox<double, 3> VEM3Cell::bounding_box() const {
     Eigen::AlignedBox<double, 3> bbox;
@@ -48,7 +48,7 @@ double VEM3Cell::boundary_area() const {
     }
     return v;
 }
-double VEM3Cell::volume() const { return utils::volume(_mesh, _cell_index); }
+double VEM3Cell::volume() const { return three::volume(_mesh, _cell_index); }
 double VEM3Cell::surface_area(size_t face_index) const {
     return mesh().surface_area(face_index);
 }
@@ -250,7 +250,7 @@ std::function<double(const mtao::Vec3d&)> VEM3Cell::monomial(
     double cz = C.z();
     //auto [xexp, yexp, zexp] = polynomials::three::index_to_exponents(index);
     size_t xexp, yexp, zexp;
-    assign_array_to_tuple(polynomials::three::index_to_exponents(index),
+    utils::assign_array_to_tuple(polynomials::three::index_to_exponents(index),
                           std::tie(xexp, yexp, zexp));
 
     double diameter = _diameter;
@@ -272,7 +272,7 @@ mtao::VecXd VEM3Cell::project_monomial_to_boundary(
     size_t face_index, size_t cell_monomial_index) const {
     //auto [xexp, yexp, zexp] = index_to_exponents(cell_monomial_index);
     size_t xexp, yexp, zexp;
-    assign_array_to_tuple(index_to_exponents(cell_monomial_index),
+    utils::assign_array_to_tuple(index_to_exponents(cell_monomial_index),
                           std::tie(xexp, yexp, zexp));
 
     mtao::algebra::PascalTriangle pt(std::max({xexp, yexp, zexp}));
@@ -373,7 +373,7 @@ std::function<mtao::Vec3d(const mtao::Vec3d&)> VEM3Cell::monomial_gradient(
     //auto [xexp, yexp, zexp] = polynomials::three::index_to_exponents(index);
     size_t xexp, yexp, zexp;
     // double a, b, c;
-    assign_array_to_tuple(polynomials::three::index_to_exponents(index),
+    utils::assign_array_to_tuple(polynomials::three::index_to_exponents(index),
                           std::tie(xexp, yexp, zexp));
 
     auto [a, b, c] = polynomials::three::gradient_single_index(index);
@@ -388,18 +388,18 @@ std::function<mtao::Vec3d(const mtao::Vec3d&)> VEM3Cell::monomial_gradient(
     // std::tie(ac,ai) = a;
     // std::tie(bc,bi) = b;
     // std::tie(cc,ci) = c;
-    assign_array_to_tuple(a, std::tie(ac, ai));
-    assign_array_to_tuple(b, std::tie(bc, bi));
-    assign_array_to_tuple(c, std::tie(cc, ci));
+    utils::assign_array_to_tuple(a, std::tie(ac, ai));
+    utils::assign_array_to_tuple(b, std::tie(bc, bi));
+    utils::assign_array_to_tuple(c, std::tie(cc, ci));
 
     size_t xexp1, yexp1, zexp1;
     size_t xexp2, yexp2, zexp2;
     size_t xexp3, yexp3, zexp3;
-    assign_array_to_tuple(polynomials::three::index_to_exponents(ai),
+    utils::assign_array_to_tuple(polynomials::three::index_to_exponents(ai),
                           std::tie(xexp1, yexp1, zexp1));
-    assign_array_to_tuple(polynomials::three::index_to_exponents(bi),
+    utils::assign_array_to_tuple(polynomials::three::index_to_exponents(bi),
                           std::tie(xexp2, yexp2, zexp2));
-    assign_array_to_tuple(polynomials::three::index_to_exponents(ci),
+    utils::assign_array_to_tuple(polynomials::three::index_to_exponents(ci),
                           std::tie(xexp3, yexp3, zexp3));
 
     // note that xexp2 is the original exp of index and yexp2 is the original

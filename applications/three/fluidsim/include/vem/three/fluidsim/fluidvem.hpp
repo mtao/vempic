@@ -4,7 +4,7 @@
 
 #include <Eigen/Sparse>
 #include <set>
-#include <vem/flux_moment_indexer3.hpp>
+#include <vem/three/flux_moment_indexer.hpp>
 #include <vem/mesh.hpp>
 
 #include "vem/fluidsim_3d/fluidvem3_cell.hpp"

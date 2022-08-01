@@ -2,9 +2,9 @@
 #include <map>
 #include <mtao/types.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
-namespace vem {
+namespace vem::three {
 
 
 mtao::VecXd monomial_cell_integrals(const VEMMesh3 &mesh, int index, int max_degree);

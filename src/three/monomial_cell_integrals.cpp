@@ -4,10 +4,10 @@
 #include <mtao/eigen/stl2eigen.hpp>
 #include <mtao/geometry/tetrahedron_monomial_integrals.hpp>
 
-#include "vem/monomial_cell_integrals.hpp"
-#include "vem/polynomial_utils.hpp"
+#include "vem/three/monomial_cell_integrals.hpp"
+#include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::three {
 namespace internal {
 
 template <typename Derived>

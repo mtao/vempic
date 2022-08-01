@@ -1,7 +1,7 @@
 
 #include "vem/three/cell_boundary_facets.hpp"
 
-namespace vem::utils {
+namespace vem::three {
 
 /*
 std::set<size_t> cell_boundary_edge_indices(const VEMMesh3& mesh,

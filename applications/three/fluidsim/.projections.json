@@ -1,0 +1,8 @@
+{
+    "src/*.cpp": {
+        "alternate": "include/vem/two/fluidsim/{}.hpp"
+    },
+    "include/vem/two/fluidsim/*.hpp": {
+        "alternate": "src/{}.cpp"
+    }
+}

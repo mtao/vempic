@@ -6,8 +6,8 @@
 #include <mtao/eigen/stl2eigen.hpp>
 #include <mtao/geometry/triangle_monomial_integrals.hpp>
 
-#include "vem/monomial_face_integrals.hpp"
-#include "vem/polynomial_utils.hpp"
+#include "vem/three/monomial_face_integrals.hpp"
+#include "vem/polynomials/utils.hpp"
 
 namespace vem {
 namespace internal {

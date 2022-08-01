@@ -12,12 +12,11 @@
 #endif
 #include <numeric>
 
-#include "vem/edge_lengths.hpp"
-#include "vem/mesh.hpp"
-#include "vem/utils/boundary_facets.hpp"
-#include "vem/utils/cell_boundary_facets.hpp"
-#include "vem/utils/face_boundary_facets.hpp"
-namespace vem {
+#include "vem/three/mesh.hpp"
+#include "vem/three/boundary_facets.hpp"
+#include "vem/three/cell_boundary_facets.hpp"
+#include "vem/three/face_boundary_facets.hpp"
+namespace vem::three {
 VEMMesh3::~VEMMesh3() {}
 
 int VEMMesh3::grade(size_t cell_index) const { return 0; }
@@ -58,7 +57,7 @@ double VEMMesh3::diameter(size_t cell_index) const {
     // std::cout << E << std::endl;
     // std::cout << V.cols() << std::endl;
     // first compute the radii - i.e the furthest distance from teh center
-    auto verts = utils::cell_boundary_vertices(*this, cell_index);
+    auto verts = cell_boundary_vertices(*this, cell_index);
     double r = 0;
     auto c = C.col(cell_index);
     // we're doing things twice, which is stupid. but who cares
@@ -75,7 +74,7 @@ double VEMMesh3::face_diameter(size_t face_index) const {
     // std::cout << E << std::endl;
     // std::cout << V.cols() << std::endl;
     // first compute the radii - i.e the furthest distance from teh center
-    auto verts = utils::face_boundary_vertices(*this, face_index);
+    auto verts = face_boundary_vertices(*this, face_index);
     double r = 0;
     auto c = FC.col(face_index);
     // we're doing things twice, which is stupid. but who cares
@@ -100,7 +99,7 @@ mtao::Vec4d VEMMesh3::plane_equation(int face_index) const {
 }
 std::tuple<mtao::ColVecs3d, mtao::ColVecs3i, std::map<size_t, std::set<size_t>>>
 VEMMesh3::collision_mesh(const std::set<int>& active_cells) const {
-    auto bfm = utils::boundary_face_map(*this, active_cells);
+    auto bfm = boundary_face_map(*this, active_cells);
     mtao::vector<mtao::ColVecs3i> Fs;
     Fs.reserve(bfm.size());
     std::map<size_t, std::set<size_t>> mp;

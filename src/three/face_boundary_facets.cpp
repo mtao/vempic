@@ -1,7 +1,7 @@
 
-#include "vem/utils/face_boundary_facets.hpp"
+#include "vem/there/face_boundary_facets.hpp"
 
-namespace vem::utils {
+namespace vem::three {
 
 std::set<size_t> face_boundary_vertices(const VEMMesh3& mesh, int face_index) {
     std::set<size_t> ret;

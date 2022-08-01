@@ -5,18 +5,21 @@ if(VEM_USE_OPENGL)
         )
 endif()
 add_library(fluidsim_vem3
-    src/sim.cpp
+    src/fluidvem.cpp
+    #src/fluidvem_function_projection.cpp
+    #src/operator_cache.cpp
+    #src/sim.cpp
+    #src/sim_advection.cpp
+    #src/sim_pressure.cpp
+    #src/sim_scene.cpp
+    #src/sim_buoyancy.cpp
+
+
+    ${VIEWER_SRCS}
+
+    #src/fluidvem3_cell.cpp
     #include/vem/fluidsim_3d/sim.hpp
     #src/sim_serialization.cpp
-    src/sim_advection.cpp
-    src/sim_pressure.cpp
-    src/sim_scene.cpp
-    #src/fluidvem3_cell.cpp
-    src/fluidvem3.cpp
-    src/fluidvem3_function_projection.cpp
-    src/sim_buoyancy.cpp
-    src/operator_cache.cpp
-    ${VIEWER_SRCS}
     )
 find_package(CHOLMOD REQUIRED)
 message(STATUS "CHOLMOD INCLUDE: ${CHOLMOD_INCLUDES}")
