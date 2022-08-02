@@ -11,6 +11,7 @@ In Two dimensions:
 * poisson - a poisson equation solver, GUI includes some fun advection tools IIRC
 * wavesim - a semi-implicit wave simulator
 * fluidsim - the two dimensional implementation of VEMPIC
+
 In Three dimensions:
 * fluidsim - the full three dimensional VEMPIC
 
