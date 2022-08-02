@@ -1,4 +1,6 @@
 
+#include "vem/three/monomial_face_integrals.hpp"
+
 #include <spdlog/spdlog.h>
 
 #include <iostream>
@@ -6,10 +8,9 @@
 #include <mtao/eigen/stl2eigen.hpp>
 #include <mtao/geometry/triangle_monomial_integrals.hpp>
 
-#include "vem/three/monomial_face_integrals.hpp"
 #include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::three {
 namespace internal {
 
 template <typename Derived>
@@ -77,8 +78,9 @@ mtao::VecXd face_monomial_face_integrals(
         // spdlog::info("Monomial integrals made {} values", v.size());
         monomial_integrals += mtao::eigen::stl2eigen(v);
     }
-    // fix potential orientation issues, integral of the constant function should always be positive here
-    if(monomial_integrals(0) < 0) {
+    // fix potential orientation issues, integral of the constant function
+    // should always be positive here
+    if (monomial_integrals(0) < 0) {
         monomial_integrals *= -1;
     }
     return monomial_integrals * (scale * scale);
@@ -158,4 +160,4 @@ mtao::VecXd scaled_face_monomial_face_integrals(const VEMMesh3 &mesh, int index,
                                                   center, scale);
 }
 
-}  // namespace vem
+}  // namespace vem::three

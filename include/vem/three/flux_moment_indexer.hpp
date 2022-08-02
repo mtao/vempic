@@ -4,7 +4,7 @@
 #include "mesh.hpp"
 #include "vem/monomial_basis_indexer.hpp"
 
-namespace vem {
+namespace vem::three {
 class FluxMomentIndexer3 {
    public:
     using MonomialIndexer = detail::MonomialBasisIndexer<3, 3>;
@@ -143,4 +143,4 @@ class FluxMomentIndexer3 {
     Eigen::SparseMatrix<double> poly_to_poly_cell_matrix(
         Func &&f, const std::set<int> &active_cells = {}) const;
 };
-}  // namespace vem
+}  // namespace vem::three

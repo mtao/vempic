@@ -2,14 +2,14 @@
 #include <mtao/eigen/stack.hpp>
 #include <mtao/geometry/interpolation/radial_basis_function.hpp>
 #include <vem/serialization/serialize_eigen.hpp>
-#include <vem/utils/boundary_facets.hpp>
-#include <vem/utils/cells_adjacent_to_face.hpp>
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/flux_moment_indexer3.hpp"
-#include "vem/mesh.hpp"
+#include "flux_moment_indexer.hpp"
+#include "mesh.hpp"
+#include "boundary_facets.hpp"
+#include "cells_adjacent_to_face.hpp"
 
-namespace vem::utils {
+namespace vem::three {
 struct CoefficientAccumulator3 {
     const FluxMomentIndexer3 &indexer;
     const auto &mesh() const { return indexer.mesh(); }
@@ -208,9 +208,9 @@ CoefficientAccumulator3::homogeneous_boundary_coefficients_from_point_values(
     auto Dat = R.template topRows<D>();
     auto W = R.row(D);
 
-    auto face_cob = utils::face_coboundary_map(mesh(), active_cells);
+    auto face_cob = face_coboundary_map(mesh(), active_cells);
     auto face_cell_neighbors =
-        utils::cells_adjacent_to_face(mesh(), active_cells);
+        cells_adjacent_to_face(mesh(), active_cells);
     // mtao::vector<mtao::Vec4d> backprojections;
     tbb::parallel_for(
         size_t(0), size_t(mesh().face_count()), [&](size_t face_index) {
@@ -286,9 +286,9 @@ CoefficientAccumulator3::homogeneous_boundary_coefficients_from_point_function(
     R.setZero();
     auto Dat = R.template topRows<D>();
     auto W = R.row(D);
-    auto face_cob = utils::face_coboundary_map(mesh(), active_cells);
+    auto face_cob = face_coboundary_map(mesh(), active_cells);
     auto face_cell_neighbors =
-        utils::cells_adjacent_to_face(mesh(), active_cells);
+        cells_adjacent_to_face(mesh(), active_cells);
     //std::mutex mut;
     tbb::parallel_for(
         size_t(0), size_t(mesh().face_count()), [&](size_t face_index) {

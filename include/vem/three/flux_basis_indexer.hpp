@@ -2,10 +2,10 @@
 
 #include <mtao/eigen/shape_checks.hpp>
 
-#include "vem/monomial_basis_indexer.hpp"
-#include "vem/polynomial_utils.hpp"
+#include "monomial_basis_indexer.hpp"
+#include "vem/polynomials/utils.hpp"
 
-namespace vem {
+namespace vem::three {
 class FluxBasisIndexer3 : public detail::MonomialBasisIndexer<2, 3> {
    public:
     using Base = detail::MonomialBasisIndexer<2, 3>;
@@ -62,4 +62,4 @@ class FluxBasisIndexer3 : public detail::MonomialBasisIndexer<2, 3> {
         return evaluate_monomials_by_size_local(count, st);
     }
 };
-}  // namespace vem
+}  // namespace vem::three

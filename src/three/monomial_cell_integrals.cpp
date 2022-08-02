@@ -86,3 +86,9 @@ mtao::VecXd scaled_monomial_cell_integrals(const VEMMesh3 &mesh, int index,
                                              scale);
 }
 }  // namespace vem
+ namespace vem {
+mtao::VecXd scaled_monomial_cell_integrals(const three::VEMMesh3 &mesh, int index, double scale, int max_degree)
+{
+    return three::scaled_monomial_cell_integrals(mesh,index,scale,max_degree);
+}
+ }

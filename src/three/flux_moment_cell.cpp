@@ -1,12 +1,12 @@
-#include "vem/flux_moment_cell3.hpp"
+#include "vem/three/flux_moment_cell.hpp"
 
 #include <mtao/algebra/pascal_triangle.hpp>
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
 
-#include "vem/flux_moment_indexer3.hpp"
+#include "vem/three/flux_moment_indexer.hpp"
 using namespace vem::polynomials::three;
-namespace vem {
+namespace vem::three {
 
 FluxMomentVEM3Cell::FluxMomentVEM3Cell(const FluxMomentIndexer3& mom,
                                        size_t index)
@@ -467,4 +467,4 @@ mtao::VecXd FluxMomentVEM3Cell::project_monomial_to_boundary(
     return VEM3Cell::project_monomial_to_boundary(face_index,
                                                   cell_monomial_index);
 }
-}  // namespace vem
+}  // namespace vem::three

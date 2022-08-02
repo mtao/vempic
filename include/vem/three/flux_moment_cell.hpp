@@ -2,11 +2,11 @@
 
 #include <Eigen/Sparse>
 
-#include "vem/cell3.hpp"
-#include "vem/flux_basis_indexer3.hpp"
-#include "vem/mesh.hpp"
+#include "cell.hpp"
+#include "flux_basis_indexer.hpp"
+#include "mesh.hpp"
 
-namespace vem {
+namespace vem::three {
 class FluxMomentIndexer3;
 class FluxMomentVEM3Cell : public VEM3Cell {
    public:
@@ -160,4 +160,4 @@ double FluxMomentVEM3Cell::evaluate_monomial_function_from_block(
     auto C = coeffs.segment(start, end - start);
     return VEM3Cell::evaluate_monomial_function(p, C);
 }
-}  // namespace vem
+}  // namespace vem::three

@@ -101,17 +101,19 @@ set(VEM_TWO_SRCS
 set(VEM_THREE_SRCS
     src/three/cell.cpp
     src/three/mesh.cpp
-    src/from_mandoline.cpp
-    #src/from_grid3.cpp
-    #src/three/flux_moment_indexer.cpp
-    #src/monomial_cell_integrals3.cpp 
-    #src/utils/cells_adjacent_to_face.cpp
-    #src/monomial_face_integrals3.cpp 
-    #src/three/volumes.cpp
-    #src/three/cell_boundary_facets.cpp
+    src/three/from_grid.cpp
+    src/three/from_mandoline.cpp
+    src/three/mandoline_mesh.cpp
+    src/three/grid_mesh.cpp
+    src/three/flux_moment_indexer.cpp
+    src/three/monomial_cell_integrals.cpp 
+    src/three/cells_adjacent_to_face.cpp
+    src/three/monomial_face_integrals.cpp 
+    src/three/volumes.cpp
+    src/three/cell_boundary_facets.cpp
     #src/three/creator.cpp
-    #src/three/flux_moment_cell3.cpp
-    #src/utils/face_boundary_facets.cpp
+    src/three/flux_moment_cell.cpp
+    src/three/face_boundary_facets.cpp
     #src/three/boundary_intersector.cpp
     #src/three/in_triangle_mesh.cpp
     )

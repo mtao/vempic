@@ -4,12 +4,12 @@
 #include <igl/random_points_on_mesh.h>
 
 #include <mtao/geometry/interpolation/radial_basis_function.hpp>
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/three/boundary_facets.hpp>
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/utils/boundary_facets.hpp"
-#include "vem/utils/coefficient_accumulator3.hpp"
+#include "vem/three/boundary_facets.hpp"
+#include "vem/three/coefficient_accumulator.hpp"
 #include "vem/utils/dehomogenize_vector_points.hpp"
 namespace {
 std::vector<size_t> offset_values(const std::vector<size_t> &o, size_t offset) {
@@ -26,7 +26,7 @@ std::vector<size_t> offset_values(const std::vector<size_t> &o, size_t offset) {
     return ret;
 }
 
-std::vector<size_t> max_face_samples(const vem::VEMMesh3 &mesh,
+std::vector<size_t> max_face_samples(const vem::three::VEMMesh3 &mesh,
                                      const std::vector<size_t> &o) {
     std::vector<size_t> face_degrees(mesh.face_count(), 0);
     for (auto &&[degree, fbm] :
@@ -43,7 +43,7 @@ std::vector<size_t> max_face_samples(const vem::VEMMesh3 &mesh,
 }
 }  // namespace
 
-namespace vem {
+namespace vem::three {
 
 template <typename Func>
 Eigen::SparseMatrix<double> FluxMomentIndexer3::sample_to_poly_cell_matrix(
@@ -229,7 +229,7 @@ FluxMomentIndexer3::_homogeneous_coefficients_from_point_values(
     const std::function<double(const mtao::Vec3d &, const mtao::Vec3d &)> &rbf,
     const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator3 ca(*this);
+    CoefficientAccumulator3 ca(*this);
     return ca.homogeneous_coefficients_from_point_values(V, P, cell_particles,
                                                          active_cells, rbf);
 }
@@ -240,7 +240,7 @@ FluxMomentIndexer3::_homogeneous_coefficients_from_point_sample_function(
         &f,
     const mtao::ColVecs3d &P, const std::vector<std::set<int>> &cell_particles,
     const std::set<int> &active_cells) const {
-    utils::CoefficientAccumulator3 ca(*this);
+    CoefficientAccumulator3 ca(*this);
     return ca.homogeneous_coefficients_from_point_function(f, P, cell_particles,
                                                            active_cells);
 }
@@ -337,7 +337,7 @@ Eigen::SparseMatrix<double> FluxMomentIndexer3::sample_laplacian(
 
             ////
             auto B = cell.monomial_evaluation();
-             return Pis.transpose() * G * Pis;
+            return Pis.transpose() * G * Pis;
             mtao::MatXd E = B * Pis;
             E.noalias() = mtao::MatXd::Identity(E.rows(), E.cols()) - E;
 
@@ -387,5 +387,5 @@ Eigen::SparseMatrix<double> FluxMomentIndexer3::poly_l2_grammian(
         active_cells);
 }
 
-}  // namespace vem
+}  // namespace vem::three
 

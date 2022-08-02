@@ -1,4 +1,4 @@
-#include "vem/two/volumes.hpp"
+#include "vem/three/volumes.hpp"
 
 namespace vem::three {
 
@@ -25,4 +25,4 @@ mtao::VecXd volumes(const VEMMesh3 &mesh) {
     }
     return R;
 }
-}  // namespace vem::utils
+}  // namespace vem::three
