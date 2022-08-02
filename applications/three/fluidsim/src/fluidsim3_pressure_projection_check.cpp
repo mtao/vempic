@@ -2,19 +2,19 @@
 #include <igl/read_triangle_mesh.h>
 
 #include <mtao/eigen/sparse_block_diagonal_repmats.hpp>
-#include <vem/fluidsim_3d/fluidvem3.hpp>
-#include <vem/fluidsim_3d/sim.hpp>
-#include <vem/from_grid3.hpp>
-#include <vem/from_mandoline3.hpp>
+#include <vem/three/fluidsim/fluidvem.hpp>
+#include <vem/three/fluidsim/sim.hpp>
+#include <vem/three/from_grid.hpp>
+#include <vem/three/from_mandoline.hpp>
 
-#include "vem/polynomial_utils.hpp"
+#include "vem/polynomials/utils.hpp"
 
 void prune(auto&& A) { A = (A.array().abs() > 1e-10).select(A, 0); }
 auto make_mesh(int N) {
     Eigen::AlignedBox<double, 3> bb;
     bb.min().setConstant(0);
     bb.max().setConstant(1);
-    auto mesh = vem::from_grid(bb, N, N, N);
+    auto mesh = vem::three::from_grid(bb, N, N, N);
     return mesh;
 
     Eigen::MatrixXd V;
@@ -30,7 +30,7 @@ auto make_mesh(int N) {
 
 void test_projection_operators(int N, int D) {
     auto mesh = make_mesh(N);
-    vem::fluidsim_3d::FluidVEM3 fvem(mesh, D);
+    vem::three::fluidsim::FluidVEM3 fvem(mesh, D);
 
     {
         auto pc = fvem.get_pressure_cell(0);

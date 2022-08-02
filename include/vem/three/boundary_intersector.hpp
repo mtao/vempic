@@ -1,6 +1,6 @@
 #include <map>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
 namespace igl {
 template <typename DerivedV, int DIM>
@@ -10,7 +10,7 @@ class EmbreeIntersector;
 }
 }  // namespace igl
 
-namespace vem::utils {
+namespace vem::three {
 
 struct BoundaryIntersectionDetector3 {
    public:

@@ -2,9 +2,9 @@
 #pragma once
 #include <nlohmann/json.hpp>
 
-#include "vem/mesh.hpp"
+#include "mesh.hpp"
 
-namespace vem {
+namespace vem::three {
 class VEMMesh3Creator {
    public:
     enum class MeshType { Grid, TriangleMesh, Cutmesh, None };

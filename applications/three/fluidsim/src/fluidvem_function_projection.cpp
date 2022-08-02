@@ -4,16 +4,15 @@
 
 #include <chrono>
 #include <thread>
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/three/boundary_facets.hpp>
 #include <vem/utils/cell_identifier.hpp>
 #include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
-#include "vem/fluidsim_3d/fluidvem3.hpp"
+#include "vem/three/fluidsim/fluidvem.hpp"
 
 using namespace std::chrono_literals;
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 mtao::VecXd FluidVEM3::coefficients_from_point_sample_function(
     const std::function<double(const mtao::Vec3d &)> &f) const {
@@ -45,7 +44,7 @@ mtao::VecXd FluidVEM3::coefficients_from_point_sample_function(
     }
     mtao::VecXd A(pressure_sample_size());
 
-    auto face_cob = utils::face_coboundary_map(mesh(), active_cells());
+    auto face_cob = face_coboundary_map(mesh(), active_cells());
 
     tbb::parallel_for(int(0), mesh().face_count(), [&](int face_index) {
         auto samples = pressure_weighted_face_samples(face_index);
@@ -142,7 +141,7 @@ mtao::ColVecs3d FluidVEM3::coefficients_from_point_sample_vector_function(
     mtao::ColVecs3d R(3, velocity_stride_sample_size());
 
     int face_index = 0;
-    auto face_cob = utils::face_coboundary_map(mesh(), active_cells());
+    auto face_cob = face_coboundary_map(mesh(), active_cells());
     //spdlog::info("Sleeping for 5 secs for getting cob");
     //std::this_thread::sleep_for(5s);
 

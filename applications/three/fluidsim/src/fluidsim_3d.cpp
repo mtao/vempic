@@ -8,7 +8,7 @@
 #include <mtao/logging/json_sink.hpp>
 #include <mtao/logging/stopwatch.hpp>
 #include <nlohmann/json.hpp>
-#include <vem/fluidsim_3d/sim_scene.hpp>
+#include <vem/three/fluidsim/sim_scene.hpp>
 
 #include "mtao/geometry/mesh/read_obj.hpp"
 
@@ -21,13 +21,13 @@ int main(int argc, char* argv[]) {
     options.add_options()
         ("h,help", "Print usage");
 
-    vem::fluidsim_3d::SimScene::add_options(options);
+    vem::three::fluidsim::SimScene::add_options(options);
     // clang-format on
     options.parse_positional({"config"});
     options.positional_help({"<config>"});
 
     auto result = options.parse(argc, argv);
-    vem::fluidsim_3d::SimScene scene(result);
+    vem::three::fluidsim::SimScene scene(result);
 
 
     std::string log_name = fmt::format("{}.log", scene.name);
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
     
     {
 
-    vem::fluidsim_3d::Sim& sim = *scene._sim;
+    vem::three::fluidsim::Sim& sim = *scene._sim;
 
     auto root = sim.inventory->real_path();
     auto log_file =  root / "timings.log";

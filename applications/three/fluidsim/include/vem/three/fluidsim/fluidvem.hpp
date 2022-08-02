@@ -5,10 +5,10 @@
 #include <Eigen/Sparse>
 #include <set>
 #include <vem/three/flux_moment_indexer.hpp>
-#include <vem/mesh.hpp>
+#include "vem/three/mesh.hpp"
 
-#include "vem/fluidsim_3d/fluidvem3_cell.hpp"
-namespace vem::fluidsim_3d {
+#include "vem/three/fluidsim/cell.hpp"
+namespace vem::three::fluidsim {
 
 // Uses K degree velocities with K+1 degree pressures
 //

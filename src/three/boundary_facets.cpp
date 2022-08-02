@@ -1,7 +1,9 @@
 
 #include "vem/utils/boundary_facets.hpp"
 #include "vem/three/boundary_facets.hpp"
-namespace vem::two {
+#include "vem/three/cell_boundary_facets.hpp"
+#include "vem/utils/loop_over_active.hpp"
+namespace vem::three {
 
 std::map<size_t, size_t> boundary_face_map(const VEMMesh3 &mesh,
                                            const std::set<int> &active_cells) {

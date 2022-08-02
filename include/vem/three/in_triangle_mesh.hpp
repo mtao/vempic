@@ -3,8 +3,8 @@
 #include <mtao/types.hpp>
 
 #include "vem/utils/inside_geometry_predicate.hpp"
-namespace vem::utils {
-class InTriangleMesh : public InsideGeometryPredicate {
+namespace vem::three {
+class InTriangleMesh : public utils::InsideGeometryPredicate {
    public:
     bool operator()(const mtao::Vec3d& p) const;
     InTriangleMesh(Eigen::MatrixXd V, Eigen::MatrixXi F);

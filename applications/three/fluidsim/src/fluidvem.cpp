@@ -1,18 +1,17 @@
 
-#include "vem/fluidsim_3d/fluidvem3.hpp"
+#include "vem/three/fluidsim/fluidvem.hpp"
 
 #include <mtao/eigen/stack.hpp>
 #include <mtao/logging/stopwatch.hpp>
 #include <vem/utils/cell_identifier.hpp>
 #include <vem/utils/local_to_world_sparse_triplets.hpp>
 #include <vem/utils/loop_over_active.hpp>
-#include <vem/utils/parent_maps.hpp>
-#include <vem/utils/volumes.hpp>
+#include <vem/three/volumes.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
 #include "mtao/eigen/sparse_block_diagonal_repmats.hpp"
-#include "vem/fluidsim_3d/fluidvem3_cell.hpp"
-#include "vem/polynomial_utils.hpp"
+#include "vem/three/fluidsim/cell.hpp"
+#include "vem/polynomials/utils.hpp"
 namespace {
 bool is_sparse_finite(const Eigen::SparseMatrix<double> &A) {
     using II = typename Eigen::SparseMatrix<double>::InnerIterator;
@@ -29,7 +28,7 @@ bool is_sparse_finite(const Eigen::SparseMatrix<double> &A) {
 }  // namespace
 
 using namespace vem::polynomials::two;
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 FluidVEM3::FluidVEM3(const VEMMesh3 &mesh, size_t velocity_max_degree)
     : _mesh(mesh),
@@ -332,7 +331,7 @@ Eigen::SparseMatrix<double> FluidVEM3::polynomial_to_sample_evaluation_matrix(
             weights.setOnes();
             break;
         case CellWeightWeightMode::AreaWeighted:
-            weights = utils::volumes(_mesh);
+            weights = volumes(_mesh);
     }
 
     std::vector<Eigen::Triplet<double>> trips;

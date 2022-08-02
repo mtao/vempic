@@ -1,8 +1,8 @@
 {
     "src/*.cpp": {
-        "alternate": "include/vem/two/fluidsim/{}.hpp"
+        "alternate": "include/vem/three/fluidsim/{}.hpp"
     },
-    "include/vem/two/fluidsim/*.hpp": {
+    "include/vem/three/fluidsim/*.hpp": {
         "alternate": "src/{}.cpp"
     }
 }

@@ -1,11 +1,10 @@
 #pragma once
 #include <Eigen/Sparse>
 
-#include "vem/flux_moment_cell3.hpp"
-#include "vem/mesh.hpp"
-#include "vem/flux_moment_cell3.hpp"
+#include "vem/three/flux_moment_cell.hpp"
+#include "vem/three/mesh.hpp"
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 class FluidVEM3Cell : public FluxMomentVEM3Cell {
     using FluxMomentVEM3Cell::FluxMomentVEM3Cell;

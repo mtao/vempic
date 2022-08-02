@@ -1,7 +1,7 @@
 #pragma once
-#include "vem/fluidsim_3d/fluidvem3.hpp"
+#include "vem/three/fluidsim/fluidvem.hpp"
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 class OperatorCache {
    public:
     OperatorCache(const FluidVEM3& fvem, bool build = false);

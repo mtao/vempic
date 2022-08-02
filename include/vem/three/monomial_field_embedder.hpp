@@ -9,8 +9,8 @@
 #include <set>
 
 #include "monomial_basis_indexer.hpp"
-#include "vem/utils/boundary_intersector3.hpp"
-namespace vem {
+#include "boundary_intersector.hpp"
+namespace vem::three {
 
 template <typename Der>
 class MonomialFieldEmbedderBase3 {
@@ -262,7 +262,7 @@ class MonomialFieldEmbedderBase3 {
         // -1).count()), int((get_cells(Q).array() == -1).count()), count);
     }
 
-    const utils::BoundaryIntersectionDetector3 &boundary_intersector() const {
+    const BoundaryIntersectionDetector3 &boundary_intersector() const {
         return _boundary_intersector;
     }
     const VEMMesh3 &mesh() const { return monomial_indexer().mesh(); }
@@ -395,7 +395,7 @@ class MonomialFieldEmbedderBase3 {
    private:
     const MonomialBasisIndexer3 &_monomial_indexer;
     std::set<int> active_cells;
-    utils::BoundaryIntersectionDetector3 _boundary_intersector;
+    BoundaryIntersectionDetector3 _boundary_intersector;
 };
 
 class MonomialScalarFieldEmbedder3

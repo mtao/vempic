@@ -1,14 +1,14 @@
-#include "vem/fluidsim_3d/operator_cache.hpp"
+#include "vem/three/fluidsim/operator_cache.hpp"
 #include <mtao/logging/stopwatch.hpp>
 
 #include <chrono>
 #include <thread>
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/three/boundary_facets.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
 #include "mtao/eigen/sparse_block_diagonal_repmats.hpp"
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 OperatorCache::OperatorCache(const FluidVEM3& fvem, bool build) : _fvem(fvem) {
     if (build) {
         build_cache();
@@ -116,7 +116,7 @@ void OperatorCache::build_cache() {
     //
 
     _face_coboundary =
-        utils::face_coboundary_map(_fvem.mesh(), _fvem.active_cells());
+        face_coboundary_map(_fvem.mesh(), _fvem.active_cells());
 
     spdlog::info("Done building operator cache");
     // invert things in the pressure solution

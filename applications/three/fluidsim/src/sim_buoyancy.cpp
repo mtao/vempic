@@ -5,13 +5,11 @@
 #include <mtao/logging/stopwatch.hpp>
 #include <mtao/solvers/linear/conjugate_gradient.hpp>
 #include <mtao/solvers/linear/preconditioned_conjugate_gradient.hpp>
-#include <vem/normals.hpp>
-#include <vem/utils/parent_maps.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
-#include "vem/fluidsim_3d/sim.hpp"
+#include "vem/three/fluidsim/sim.hpp"
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 void Sim::add_buoyancy_force(double dt) {
     spdlog::info("Adding buoyancy force");

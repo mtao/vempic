@@ -1,13 +1,13 @@
 #define EIGEN_DONT_PARALLELIZE
 #include <mtao/geometry/interpolation/radial_basis_function.hpp>
 #include <mtao/logging/stopwatch.hpp>
-#include <vem/utils/boundary_facets.hpp>
+#include <vem/three/boundary_facets.hpp>
 #include <vem/utils/dehomogenize_vector_points.hpp>
 #include <vem/utils/loop_over_active.hpp>
 
-#include "vem/fluidsim_3d/sim.hpp"
-#include "vem/utils/coefficient_accumulator3.hpp"
-namespace vem::fluidsim_3d {
+#include "vem/three/fluidsim/sim.hpp"
+#include "vem/three/coefficient_accumulator.hpp"
+namespace vem::three::fluidsim {
 // void Sim::update_particle_velocities_flip() {}
 // void Sim::update_particle_velocities_pic() {
 //    set_particle_velocities_from_grid();
@@ -227,7 +227,7 @@ void Sim::update_fluxes_using_particles(double radius) {
         return rbf.evaluate(a, radius, b);
     };
 
-    utils::CoefficientAccumulator3 ca(velocity_indexer());
+    CoefficientAccumulator3 ca(velocity_indexer());
 
     spdlog::info("Writing velocities");
     auto vho = ca.homogeneous_boundary_coefficients_from_point_values(

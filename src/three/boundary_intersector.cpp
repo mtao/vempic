@@ -1,4 +1,4 @@
-#include "vem/utils/boundary_intersector3.hpp"
+#include "vem/three/boundary_intersector.hpp"
 
 #include <igl/AABB.h>
 #include <igl/embree/EmbreeIntersector.h>
@@ -7,8 +7,8 @@
 #include <mtao/eigen/stack.hpp>
 #include <mtao/geometry/mesh/write_obj.hpp>
 
-#include "vem/utils/boundary_facets.hpp"
-namespace vem::utils {
+#include "vem/three/boundary_facets.hpp"
+namespace vem::three {
 void BoundaryIntersectionDetector3::make_boundaries() {
     _boundary_cell_map.clear();
     _cell_boundary_map.clear();

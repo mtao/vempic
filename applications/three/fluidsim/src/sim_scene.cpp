@@ -1,4 +1,4 @@
-#include "vem/fluidsim_3d//sim_scene.hpp"
+#include "vem/three/fluidsim/sim_scene.hpp"
 
 #include <mtao/logging/json_sink.hpp>
 #include <mtao/logging/stopwatch.hpp>
@@ -12,11 +12,9 @@
 #include <mtao/geometry/mesh/read_obj.hpp>
 #include <mtao/geometry/point_cloud/partio_loader_impl.hpp>
 #include <mtao/json/bounding_box.hpp>
-#include <vem/creator3.hpp>
 
 #include "vem/serialization/inventory.hpp"
 #include "vem/serialization/serialize_mesh.hpp"
-#include "vem/utils/in_triangle_mesh.hpp"
 
 namespace {
 
@@ -36,7 +34,7 @@ std::string default_velocity_function =
 #endif
 }  // namespace
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 cxxopts::OptionAdder &SimScene::add_options(cxxopts::Options &opts) {
     serialization::Inventory::add_options(opts);
@@ -129,7 +127,7 @@ void SimScene::load_config(const nlohmann::json &js, int start_frame_index,
         VV = V.transpose();
         FF = F.transpose();
 
-        _in_geo_pred = std::make_unique<utils::InTriangleMesh>(std::move(VV),
+        _in_geo_pred = std::make_unique<InTriangleMesh>(std::move(VV),
                                                                std::move(FF));
         update_density_from_predicate();
         spdlog::info("Done Loading initial density field");

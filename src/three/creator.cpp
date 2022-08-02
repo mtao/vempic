@@ -1,4 +1,4 @@
-#include "vem/creator3.hpp"
+#include "vem/three/creator.hpp"
 
 #include <mtao/logging/stopwatch.hpp>
 #include <igl/read_triangle_mesh.h>
@@ -11,9 +11,8 @@
 #include <mtao/geometry/mesh/read_obj.hpp>
 #include <mtao/json/bounding_box.hpp>
 #include <tuple>
-#include <vem/from_grid3.hpp>
-#include <vem/from_mandoline3.hpp>
-#include <vem/from_simplicial_matrices.hpp>
+#include <vem/three/from_grid.hpp>
+#include <vem/three/from_mandoline.hpp>
 
 namespace {
 template <class T>
@@ -21,7 +20,7 @@ auto stuff_into_shared_ptr(T &&obj) {
     return std::make_shared<T>(obj);
 }
 }  // namespace
-namespace vem {
+namespace vem::three {
 
 std::string VEMMesh3Creator::MeshType2string(MeshType m) {
     switch (m) {
@@ -43,7 +42,7 @@ bool VEMMesh3Creator::make_grid_mesh() {
         return false;
     }
     _stored_mesh = stuff_into_shared_ptr(
-        vem::from_grid(grid_mesh_bbox.cast<double>(), x, y, z));
+        three::from_grid(grid_mesh_bbox.cast<double>(), x, y, z));
     last_made_mesh = MeshType::Grid;
     return true;
 }
@@ -82,7 +81,7 @@ bool VEMMesh3Creator::make_mandoline_mesh(bool load_boundary) {
     std::filesystem::path path(mesh_filename);
     if (mesh_filename.ends_with(".cutmesh")) {
         spdlog::info("Loading cutmesh {}", mesh_filename);
-        auto mptr = stuff_into_shared_ptr(vem::from_mandoline(
+        auto mptr = stuff_into_shared_ptr(vem::three::from_mandoline(
             mandoline::CutCellMesh<3>::from_file(mesh_filename)));
         const auto &ccm = mptr->_ccm;
         mptr->_ccm.write("/tmp/vemsim.cutmesh");
@@ -122,7 +121,7 @@ bool VEMMesh3Creator::make_mandoline_mesh(bool load_boundary) {
                   << grid_mesh_bbox.max().transpose() << std::endl;
         std::cout << F.cols() << " " << V.cols() << " " << adaptive_grid_level
                   << std::endl;
-        auto mptr = stuff_into_shared_ptr(vem::from_mandoline(
+        auto mptr = stuff_into_shared_ptr(vem::three::from_mandoline(
             grid_mesh_bbox.cast<double>(), x, y, z, V, F, adaptive_grid_level));
         spdlog::info("Made a cut-cell mesh with #V={} #F={}", V.cols(),
                      F.cols());

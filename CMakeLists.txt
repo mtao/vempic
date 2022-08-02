@@ -110,12 +110,14 @@ set(VEM_THREE_SRCS
     src/three/cells_adjacent_to_face.cpp
     src/three/monomial_face_integrals.cpp 
     src/three/volumes.cpp
+    src/three/in_triangle_mesh.cpp
     src/three/cell_boundary_facets.cpp
-    #src/three/creator.cpp
+    src/three/creator.cpp
     src/three/flux_moment_cell.cpp
     src/three/face_boundary_facets.cpp
-    #src/three/boundary_intersector.cpp
-    #src/three/in_triangle_mesh.cpp
+    src/three/boundary_intersector.cpp
+    src/three/boundary_facets.cpp
+    src/three/monomial_basis_indexer.cpp
     )
 
 set(VEM_SRCS

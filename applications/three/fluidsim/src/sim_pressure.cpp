@@ -7,11 +7,9 @@
 #include <mtao/solvers/linear/conjugate_gradient.hpp>
 #include <mtao/solvers/linear/preconditioned_conjugate_gradient.hpp>
 #include <mtao/types.hpp>
-#include <vem/normals.hpp>
-#include <vem/utils/parent_maps.hpp>
 
 #include "mtao/eigen/mat_to_triplets.hpp"
-#include "vem/fluidsim_3d/sim.hpp"
+#include "vem/three/fluidsim/sim.hpp"
 
 namespace Eigen::internal {
 
@@ -152,7 +150,7 @@ void SparseCholeskyPCGSolve_ramp(const Matrix& A, const Vector& b, Vector& x,
 }
 }  // namespace mtao::solvers::linear
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 /*
 std::tuple<Eigen::SparseMatrix<double>, mtao::VecXd>

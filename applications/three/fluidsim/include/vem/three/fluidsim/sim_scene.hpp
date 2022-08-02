@@ -4,14 +4,14 @@
 #if defined(VEM_USE_PYTHON)
 #include <mtao/python/load_python_function.hpp>
 #endif
-#include <vem/creator3.hpp>
-#include <vem/fluidsim_3d/sim.hpp>
-#include <vem/mesh.hpp>
+#include <vem/three/creator.hpp>
+#include <vem/three/fluidsim/sim.hpp>
+#include <vem/three/mesh.hpp>
 #include <vem/utils/inside_geometry_predicate.hpp>
+#include "vem/three/in_triangle_mesh.hpp"
 
-#include "vem/utils/in_triangle_mesh.hpp"
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 // you can set the mesh, set sim parameters, set boundary conditions, choose
 // which cells to use, and finally run the simulation
 struct SimScene {

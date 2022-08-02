@@ -110,5 +110,9 @@ namespace detail {
         return ((P - C) / diameter).array().pow(EE).prod();
     }
 }// namespace detail
+namespace three {
+using MonomialBasisIndexer = detail::MonomialBasisIndexer<3,3>;
+using MonomialBasisIndexer3 = detail::MonomialBasisIndexer<3,3>;
+}
 }// namespace vem
 #include "vem/monomial_basis_indexer_impl.hpp"

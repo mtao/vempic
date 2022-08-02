@@ -1,11 +1,11 @@
-#include "vem/fluidsim_3d/fluidvem3_cell.hpp"
+#include "vem/three/fluidsim/cell.hpp"
 
-#include <vem/polynomial_gradient.hpp>
-#include <vem/polynomial_utils.hpp>
+#include <vem/polynomials/gradient.hpp>
+#include <vem/polynomials/utils.hpp>
 
-#include "vem/flux_moment_cell2.hpp"
+#include "vem/three/flux_moment_cell.hpp"
 using namespace vem::polynomials::two;
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 FluidVEM3Cell::FluidVEM3Cell(const FluxMomentIndexer3& mom, size_t index)
     : FluxMomentVEM3Cell(mom, index), _indexer(mom) {}

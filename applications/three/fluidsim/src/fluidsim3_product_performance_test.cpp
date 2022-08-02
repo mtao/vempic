@@ -1,9 +1,9 @@
 #include <fmt/format.h>
 
 #include <chrono>
-#include <vem/fluidsim_3d/fluidvem3.hpp>
-#include <vem/fluidsim_3d/sim.hpp>
-#include <vem/from_grid3.hpp>
+#include <vem/three/fluidsim/fluidvem.hpp>
+#include <vem/three/fluidsim/sim.hpp>
+#include <vem/three/from_grid.hpp>
 
 using clock_type = std::chrono::high_resolution_clock;
 
@@ -11,7 +11,7 @@ auto make_mesh(int N) {
     Eigen::AlignedBox<double, 3> bb;
     bb.min().setConstant(0);
     bb.max().setConstant(1);
-    auto mesh = vem::from_grid(bb, N, N, N);
+    auto mesh = vem::three::from_grid(bb, N, N, N);
     return mesh;
 }
 
@@ -87,7 +87,7 @@ void mult_tbb(auto &&A, const auto &rhs, auto &res) {
 
 void test_projection_operators(int N, int D) {
     auto mesh = make_mesh(N);
-    vem::fluidsim_3d::FluidVEM3 fvem(mesh, D);
+    vem::three::fluidsim::FluidVEM3 fvem(mesh, D);
 
     spdlog::info("Building laplacian");
     Eigen::SparseMatrix<double> LC = fvem.sample_laplacian();

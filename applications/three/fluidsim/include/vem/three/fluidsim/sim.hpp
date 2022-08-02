@@ -3,14 +3,14 @@
 //#include <Eigen/SPQRSupport>
 #include <nlohmann/json.hpp>
 #include <optional>
-#include <vem/fluidsim_3d/fluidvem3.hpp>
-#include <vem/fluidsim_3d/operator_cache.hpp>
-#include <vem/monomial_field_embedder3.hpp>
+#include "vem/three/fluidsim/fluidvem.hpp"
+#include <vem/three/fluidsim/operator_cache.hpp>
+#include <vem/three/monomial_field_embedder.hpp>
 #include <vem/serialization/inventory.hpp>
 #include <vem/serialization/prioritizing_inventory.hpp>
 #define VEM_STATIC_OPERATORS const static
 
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 
 class Sim : public FluidVEM3 {
    public:
@@ -162,7 +162,7 @@ class Sim : public FluidVEM3 {
     // does per-cell integration stuff + holds the velocity field itself
     mtao::ColVecs3d sample_velocities;
     mtao::ColVecs3d sample_pressure_gradient;
-    vem::MonomialVectorFieldEmbedder3 velocity;
+    MonomialVectorFieldEmbedder3 velocity;
 
     mtao::VecXi particle_cells;
     std::vector<std::set<int>> particle_cell_cache;

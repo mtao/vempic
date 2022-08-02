@@ -1,9 +1,9 @@
 
-#include "vem/utils/in_triangle_mesh.hpp"
+#include "vem/three/in_triangle_mesh.hpp"
 
 #include <igl/WindingNumberAABB.h>
 #include <igl/fast_winding_number.h>
-namespace vem::utils {
+namespace vem::three {
 
 struct InTriangleMesh::_Impl {
     _Impl(Eigen::MatrixXd V, Eigen::MatrixXi F)

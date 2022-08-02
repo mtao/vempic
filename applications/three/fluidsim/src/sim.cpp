@@ -1,4 +1,4 @@
-#include "vem/fluidsim_3d/sim.hpp"
+#include "vem/three/fluidsim/sim.hpp"
 #define USE_RBF_PARTICLE_GRID_PROJECTION
 #include <chrono>
 #include <eigen3/unsupported/Eigen/SparseExtra>
@@ -17,10 +17,9 @@
 #include <mtao/geometry/point_cloud/partio_loader.hpp>
 #include <vem/utils/loop_over_active.hpp>
 #include <vem/utils/monomial_coefficient_projection.hpp>
-#include <vem/utils/parent_maps.hpp>
 
 using namespace std::chrono_literals;
-namespace vem::fluidsim_3d {
+namespace vem::three::fluidsim {
 Sim::Sim(const VEMMesh3& mesh, int degree,
          std::shared_ptr<serialization::Inventory> inventory)
     : Sim(mesh, degree, {}, inventory) {}
