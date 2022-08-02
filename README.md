@@ -2,14 +2,24 @@
 A reference implementation for VEMPIC, a fluid simulator that combines cut-cell meshes, the Virtual Element Method, and the PIC framework.
 This library uses [Mandoline](github.com/mtao/mandoline) to construct its cut-cell meshes, so please make sure you can build Mandoline's dependencies as well.
 
+## Organization
+There is a core set of tools in the root `./include` and `./src` directories for VEM.
+If you're interested in conformal VEM look at the `Point*` code, if you're interested in non-Conformal VEM look at the `Flux*` code.
+In the `./applications` diretory there are a number of examples applications of VEM.
+
+In Two dimensions:
+* poisson - a poisson equation solver, GUI includes some fun advection tools IIRC
+* wavesim - a semi-implicit wave simulator
+* fluidsim - the two dimensional implementation of VEMPIC
+In Three dimensions:
+* fluidsim - the full three dimensional VEMPIC
+
+
 ## Status
-This codebase still requires quite a bit of cleanup and I would like to switch to using [meson](https://mesonbuild.com) instead of cmake.
-Switching to meson will also result in substantial changes on the dependencies held in Mandoline.
+The code, as it is, buildable, but requires some extra work to run the examples because I need to document the input format and change some hardcoded output directories.
+I'll also be switching to [meson](https://mesonbuild.com) instead of cmake, which will result in substantial changes on the dependencies held in Mandoline.
 For now please treat this codebase as a reference rather than as an implementation to build upon.
 As I plan on using this codebase for future projects it should naturally be cleaned up over time, just as Mandoline underwent some feature development and cleanup to make this project work.
-
-There's still un-organized source files in the `unmoved_files` directory.
-They'll be updated ASAP, but I need some time to re-arrange them.
 
 ## Compilation
 VEMPIC depends on a C++20 enabled compiler.
